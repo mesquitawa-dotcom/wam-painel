@@ -3,8 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel do dia — 31/08/2026 (v15)</title>
+<title>Painel do dia — 31/08/2026 (v16)</title>
 <!--
+  v16 (29/08/2026) — MUDANÇA DE ESCOPO no celular, pedida expressamente por Wagner e
+  adotada por decisão datada. NÃO é correção de defeito: retifica, quanto a este ponto,
+  o congelamento decidido no fechamento de 29/08. Recomendação da IA era esperar a
+  evidência de uso da #86 (04/09); foi RECUSADA, com o motivo declarado por Wagner
+  (a semana seguinte estará tomada). Divergência registrada — recusada.
+  O que muda, e só isso: no celular, a tela "Visão" passa a ser a porta e carrega as três
+  opções (WAM · Fábrica · Por resolver) como botões grandes; tocar em uma abre a lista.
+  Antes, na Visão as abas ficavam escondidas junto com o resto. Desktop inalterado.
+  Nenhuma mecânica, contagem, marcação ou formato de relato foi tocado.
+
   v15 (29/08/2026) — CORREÇÃO DE DEFEITO, apurada no primeiro uso do painel publicado.
   "Copiar relato do dia" não fazia nada. Causa: sobra da migração do v11. O relato ainda
   varria estado.itens supondo chaves por ÍNDICE (i0, i1); desde o v11 as chaves são IDs
@@ -307,7 +317,18 @@
     .tempo{display:none;}
     .tempo-depois{text-align:left;margin-top:8px;}
     button.b,.reload,.ancora button,.fechar{min-height:40px;}
-    body.tela-visao .colOps{display:none;}
+    /* v16: a Visão passa a ser a porta. colOps some, MENOS as abas, que viram
+       botões grandes e abrem a lista correspondente. Uma tela por vez. */
+    body.tela-visao .colOps > *:not(nav.abas){display:none;}
+    body.tela-visao .colOps{margin-top:12px;}
+    body.tela-visao nav.abas{display:flex;flex-direction:column;gap:8px;
+      border-bottom:none;margin-bottom:0;}
+    body.tela-visao nav.abas button{border:1px solid var(--line);border-radius:10px;
+      background:#fff;padding:14px 12px;font-size:15px;font-weight:800;
+      color:var(--ink);text-align:left;border-bottom:1px solid var(--line);}
+    body.tela-visao nav.abas button.on{border-color:var(--chip);
+      box-shadow:inset 3px 0 0 var(--chip);}
+    body.tela-visao nav.abas button::after{content:" ›";float:right;color:var(--muted);}
     body.tela-exec .colInt{display:none;}
     body.tela-tri .colInt{display:none;}
     body.tela-tri nav.abas{display:none;}
@@ -1055,7 +1076,15 @@ const hoje = () => {
 
 document.addEventListener('click', e=>{
   const abaBtn = e.target.closest('[data-aba]');
-  if(abaBtn){ estado.aba = abaBtn.dataset.aba; salvar(); render(); return; }
+  if(abaBtn){
+    estado.aba = abaBtn.dataset.aba; salvar(); render();
+    /* v16: a partir da Visão, escolher uma aba abre a lista dela. */
+    if(tela==='visao'){
+      tela = (estado.aba==='porresolver') ? 'tri' : 'exec';
+      telaAplicar(); window.scrollTo(0,0);
+    }
+    return;
+  }
 
   const tile = e.target.closest('[data-frente]');
   if(tile){
