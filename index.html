@@ -3,8 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel do dia — 31/08/2026 (v16)</title>
+<title>Painel do dia — 31/08/2026 (v17)</title>
 <!--
+  v17 (29/08/2026) — CORREÇÃO DE DEFEITO sobre o v16, apurada com print de Wagner.
+  O v16 condicionava a mecânica de telas a "largura < 900px". O navegador do celular
+  de Wagner opera com viewport largo, então caía no desenho de duas colunas do
+  desktop: coluna esquerda espremida, tudo junto, telanav invisível. A DETECÇÃO de
+  aparelho era o defeito. Conserto: a detecção foi removida. A mecânica de telas
+  (Visão como porta · Executar · Triagem, barra fixa embaixo) vale em qualquer
+  largura; o desenho de duas colunas do desktop foi removido; o enxuto é o padrão
+  universal, com ⤢ devolvendo régua e subtítulo. Em tela larga: coluna única centrada.
+  Mecânica, contagens, marcações e formato do relato: intocados.
+
   v16 (29/08/2026) — MUDANÇA DE ESCOPO no celular, pedida expressamente por Wagner e
   adotada por decisão datada. NÃO é correção de defeito: retifica, quanto a este ponto,
   o congelamento decidido no fechamento de 29/08. Recomendação da IA era esperar a
@@ -302,17 +312,18 @@
   #foco .facoes button{flex:1 1 30%;}
   #foco .fnada{font-size:15px;color:var(--muted);text-align:center;margin-top:30px;}
 
-  /* v9: navegação inferior por telas — só no celular */
-  .telanav{display:none;}
-  @media (max-width:899px){
-    .telanav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;
+  /* v17: navegação por telas em QUALQUER largura. O painel deixou de detectar
+     "celular × desktop" — a detecção falhava em navegador de celular operando com
+     viewport largo, e era essa a causa da tela espremida de 29/08. Uma tela por vez,
+     sempre: Visão é a porta; WAM/Fábrica/Por resolver abrem ao toque. */
+  .telanav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;
       background:#fff;border-top:1px solid var(--line);gap:6px;
       padding:7px 8px calc(7px + env(safe-area-inset-bottom));}
     .telanav button{flex:1;border:1px solid var(--line);background:#fff;border-radius:8px;
       padding:10px 2px;font-size:11.5px;font-weight:800;color:var(--muted);cursor:pointer;}
     .telanav button.on{background:var(--chip);color:#fff;border-color:var(--chip);}
     .telanav button.acao{flex:0 0 auto;padding:10px 10px;color:var(--ink);}
-    .rodape{display:none;}
+    .rodape{display:none!important;}
     .wrap{padding-bottom:110px;}
     .tempo{display:none;}
     .tempo-depois{text-align:left;margin-top:8px;}
@@ -333,31 +344,17 @@
     body.tela-tri .colInt{display:none;}
     body.tela-tri nav.abas{display:none;}
     nav.abas [data-aba="porresolver"]{display:none;}
-  }
 
   @media (min-width:560px){ .mapa{grid-template-columns:1fr 1fr 1fr;} }
 
-  /* ===== desktop (≥900px): integral fixa à esquerda, listas práticas à direita ===== */
+  /* v17: o desenho de duas colunas foi removido — era ele que aparecia espremido
+     quando o navegador do celular se declarava largo. Em tela larga: coluna única,
+     centrada, letra maior. A mecânica de telas acima vale para todo mundo. */
   @media (min-width:900px){
     body{font-size:15.5px;}
-    .wrap{max-width:1300px;display:grid;grid-template-columns:minmax(0,1fr) 560px;
-      column-gap:34px;align-items:start;padding:0 26px 96px;}
-    .regua{grid-column:1/-1;margin:0 -26px 12px;justify-content:center;}
-    header.top{grid-column:1/-1;}
-    .colInt{grid-column:1;position:sticky;top:50px;max-height:calc(100vh - 62px);
-      overflow:auto;padding:2px 4px 10px 2px;scrollbar-width:thin;}
-    .colOps{grid-column:2;min-width:0;}
-    details.integral>summary{display:none;}
-    .placar{gap:8px;} .placar .pz .n{font-size:36px;}
-    .ancora .tx{font-size:14.5px;} .ancora .tx b{font-size:15.5px;}
-    .tempo{height:96px;} .tempo .lb{font-size:11px;}
+    .wrap{max-width:760px;}
+    .placar .pz .n{font-size:32px;}
     .tile:hover{filter:brightness(.97);}
-    .rodape .inner{max-width:1300px;padding:0 26px;display:grid;
-      grid-template-columns:minmax(0,1fr) 560px;column-gap:34px;}
-    .footOps{grid-column:2;}
-    .fila{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start;}
-    .fila .gsec,.fila details.grupo,.fila .leitura{grid-column:1/-1;}
-    .gcards{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start;}
     #foco .topo,#focoTempo,#foco .tctrl,#focoCorpo,#foco .facoes{
       width:min(680px,100%);margin-left:auto;margin-right:auto;}
     #focoTempo{font-size:76px;}
@@ -370,9 +367,8 @@
   .gravaviso.ruim{background:var(--redbg);color:var(--red);border-color:#f3d4d1;}
   .gravhora{font-size:11px;color:var(--muted);text-align:right;margin:-2px 0 8px;}
 
-  @media (max-width:899px){
-    /* v13: no celular a altura é o recurso escasso — o enxuto é o padrão.
-       Régua, subtítulo e folgas só aparecem se você tocar em ⤢. */
+  /* v13 → v17: o enxuto é o padrão em qualquer largura.
+     Régua, subtítulo e folgas só aparecem ao tocar em ⤢. */
     .regua{display:none;}
     header.top .sub{display:none;}
     header.top h1{font-size:13.5px;}
@@ -404,7 +400,6 @@
     body.compacto h2.sec{margin:11px 0 6px;}
     body.compacto .gravhora{display:none;}
     .telanav button.acao.mini{padding:10px 8px;font-size:13px;}
-  }
   /* dentro de tela cheia real, nada de margem desperdiçada */
   :fullscreen .wrap{padding-top:2px;}
 
