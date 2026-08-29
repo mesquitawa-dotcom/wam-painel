@@ -3,8 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel do dia — 31/08/2026 (v17)</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Painel do dia — 31/08/2026 (v18)</title>
 <!--
+  v18 (29/08/2026) — CORREÇÃO DE DEFEITO da própria publicação, apurada com dois prints
+  em que Wagner via o v16 depois do v17 já estar no ar. O navegador guardava a página
+  em cache e servia a versão antiga: exatamente o risco que a decisão de 22/08 nomeou —
+  "tela fixa mostra dado velho com cara de atual". Dois consertos: cabeçalhos que
+  impedem o cache, e um carimbo de versão visível no alto, para dar para conferir de
+  olho se a tela é a do dia. Nada além disso mudou.
+
   v17 (29/08/2026) — CORREÇÃO DE DEFEITO sobre o v16, apurada com print de Wagner.
   O v16 condicionava a mecânica de telas a "largura < 900px". O navegador do celular
   de Wagner opera com viewport largo, então caía no desenho de duas colunas do
@@ -366,6 +376,10 @@
   .gravaviso.on{display:block;}
   .gravaviso.ruim{background:var(--redbg);color:var(--red);border-color:#f3d4d1;}
   .gravhora{font-size:11px;color:var(--muted);text-align:right;margin:-2px 0 8px;}
+  /* v18: carimbo de versão sempre visível — sem ele não dá para saber, olhando a
+     tela, se o endereço publicado serviu a versão do dia ou uma guardada em cache. */
+  .vcarimbo{font-size:11px;font-weight:800;color:var(--muted);border:1px solid var(--line);
+    border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:middle;}
 
   /* v13 → v17: o enxuto é o padrão em qualquer largura.
      Régua, subtítulo e folgas só aparecem ao tocar em ⤢. */
@@ -413,7 +427,7 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — segunda, 31/08/2026</h1>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v18</span></h1>
       <div class="sub">Derivado do WAM_MESTRE_28-08-2026_v4 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
