@@ -3,8 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel do dia — 31/08/2026 (v14)</title>
+<title>Painel do dia — 31/08/2026 (v15)</title>
 <!--
+  v15 (29/08/2026) — CORREÇÃO DE DEFEITO, apurada no primeiro uso do painel publicado.
+  "Copiar relato do dia" não fazia nada. Causa: sobra da migração do v11. O relato ainda
+  varria estado.itens supondo chaves por ÍNDICE (i0, i1); desde o v11 as chaves são IDs
+  estáveis (#61, OP:...). +k.slice(1) devolvia número errado ou NaN, ITENS[i] vinha
+  indefinido e o clique estourava em silêncio — a mesma família da "recusa silenciosa".
+  Corrigido: a varredura passa a percorrer ITENS e ler o estado pelo ID estável.
+  Formato do relato inalterado — o fechamento depende dele.
+  Não fura o congelamento: defeito, não refinamento (régua de 17/08).
+
   v14 (29/08/2026) — VERSÃO DE PUBLICAÇÃO. Mudança de CONTEÚDO, não de especificação,
   autorizada pela decisão datada de 29/08 de publicar o painel em endereço público.
   NÃO fura o congelamento: entra pela porta da decisão, e está registrada como tal.
@@ -1274,7 +1283,7 @@ const br = d => d ? d.split('-').reverse().join('/') : 'sem data';
 $('#copiar').addEventListener('click', ()=>{
   const L=[], nome = i => ITENS[i].id + ' ' + ITENS[i].tit;
   const grupo = (titulo, filtro, comNota) => {
-    const arr = Object.keys(estado.itens).map(k=>+k.slice(1)).filter(i=>filtro(estado.itens[chave(i)]));
+    const arr = ITENS.map((it,i)=>i).filter(i=>{ const st=estado.itens[chave(i)]; return st && filtro(st); });
     if(!arr.length) return;
     L.push(titulo);
     arr.forEach(i=>{ const n=estado.itens[chave(i)].nota.trim();
@@ -1286,7 +1295,7 @@ $('#copiar').addEventListener('click', ()=>{
   grupo('FEITO — TEM CONTEÚDO PARA O MESTRE', s=>s.status==='conteudo', true);
   grupo('NÃO FEITO — COM MOTIVO', s=>s.status==='naofeito', true);
 
-  const abertas = Object.keys(estado.itens).map(k=>+k.slice(1)).filter(i=>estado.itens[chave(i)].status==='ativa');
+  const abertas = ITENS.map((it,i)=>i).filter(i=>{ const st=estado.itens[chave(i)]; return st && st.status==='ativa'; });
   if(abertas.length){ L.push('AINDA ABERTAS AO FIM DO DIA'); abertas.forEach(i=>L.push('- '+nome(i))); L.push(''); }
 
   const tData = Object.keys(estado.triagem).filter(s=>estado.triagem[s].tipo==='data');
