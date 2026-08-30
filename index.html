@@ -6,8 +6,20 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 31/08/2026 (v20)</title>
+<title>Painel do dia — 31/08/2026 (v21)</title>
 <!--
+  v21 (30/08/2026) — BUSCA POR TERMO, pedida expressamente por Wagner (aval da R29,
+  que exige aval para mudanca visual). Base: v20 recuperado do repositorio por SHA,
+  nao reconstruido de leitura de tela. Um campo abaixo do cabecalho procura o termo
+  em todo o conteudo do painel: itens (titulo, detalhe, prazo, proximo passo, selo,
+  vinculo, por que/destrava e a NOTA digitada no dia), lista "Por resolver" com sua
+  triagem, frentes do mapa e o texto de interface, regua de datas e nota livre.
+  Acento e maiuscula nao contam. Clicar no resultado troca de aba/tela e rola ate o
+  item, abrindo grupo e detalhes recolhidos. Nenhuma mecanica, contagem, marcacao,
+  chave de memoria ou formato de relato foi tocada — a busca so le.
+  Corrigido junto, defeito de metadado: o subtitulo apontava o mestre de 30/08 (v4);
+  o vigente e o v5.
+
   v20 (30/08/2026) — conteudo do quarto fechamento sobre a base visual do v19, intacta.
   Duas mudanças, as duas de conteúdo derivado do mestre, nenhuma de desenho:
   (a) DEFEITO DE METADADO corrigido — o cabeçalho apontava o mestre de 28/08 (v4);
@@ -428,6 +440,30 @@
   /* dentro de tela cheia real, nada de margem desperdiçada */
   :fullscreen .wrap{padding-top:2px;}
 
+  /* v21: busca por termo em todo o painel. Bloco novo; nenhuma regra anterior alterada. */
+  .busca{display:flex;gap:6px;align-items:center;margin:0 0 8px;}
+  .busca input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;
+    background:#fff;color:var(--ink);font-size:14px;padding:9px 10px;min-height:40px;
+    font-family:inherit;-webkit-appearance:none;appearance:none;}
+  .busca input:focus{outline:none;border-color:var(--chip);box-shadow:inset 2px 0 0 var(--chip);}
+  .busca button{border:1px solid var(--line);background:#fff;border-radius:8px;
+    min-height:40px;padding:0 11px;font-size:14px;font-weight:800;color:var(--muted);cursor:pointer;}
+  .bres{border:1px solid var(--line);border-radius:10px;background:#fff;
+    max-height:62vh;overflow:auto;-webkit-overflow-scrolling:touch;margin:0 0 10px;}
+  .bres .bcab{font-size:11.5px;font-weight:800;color:var(--muted);
+    padding:8px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;}
+  .bres .br{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);
+    background:#fff;padding:9px 10px;cursor:pointer;font-family:inherit;color:var(--ink);}
+  .bres .br:last-child{border-bottom:0;}
+  .bres .br:hover{background:#f7f8fa;}
+  .bres .bonde{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;
+    letter-spacing:.03em;}
+  .bres .btit{font-size:13.5px;font-weight:700;line-height:1.3;margin-top:1px;}
+  .bres .bcampo{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35;}
+  .bres .bcampo b{color:var(--ink);font-weight:700;}
+  .bres mark{background:#fdf7e7;color:var(--amber);font-weight:800;padding:0 1px;border-radius:3px;}
+  .bres .bnada{padding:12px 10px;font-size:13px;color:var(--muted);}
+  .achado{box-shadow:0 0 0 2px var(--chip);border-radius:10px;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
@@ -438,11 +474,18 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v20</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v4 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v21</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v5 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
+
+  <div class="busca">
+    <input id="buscaCampo" type="search" inputmode="search" autocomplete="off"
+      placeholder="Buscar no painel — ex.: sicredi, IPTU, Elaine" aria-label="Buscar no painel">
+    <button id="buscaLimpar" title="Limpar a busca" hidden>✕</button>
+  </div>
+  <div class="bres" id="bres" hidden></div>
 
   <div class="gravaviso" id="gravAviso" onclick="this.style.display='none'"></div>
 
@@ -1466,6 +1509,162 @@ const mqDesk = window.matchMedia('(min-width:900px)');
 function ajustarIntegral(){ if(mqDesk.matches) document.querySelector('details.integral').open = true; }
 if(mqDesk.addEventListener) mqDesk.addEventListener('change', ajustarIntegral);
 ajustarIntegral();
+
+/* ===== v21: busca por termo em todo o painel =====
+   Varre item por item (titulo, detalhe, prazo, proximo passo, selo, vinculo,
+   por que/destrava e a NOTA do dia), a lista "Por resolver", as frentes do mapa,
+   a regua de datas e a nota livre. Acento e maiuscula nao contam. Clicar no
+   resultado abre a aba certa e rola ate o item. Nada aqui grava nada. */
+function bNorm(t){
+  t = (t==null) ? '' : String(t);
+  let o = '';
+  for(let i=0;i<t.length;i++){
+    const c = t[i];
+    let d = c.normalize('NFD')[0] || c;
+    d = d.toLowerCase();
+    o += (d.length===1) ? d : c.toLowerCase()[0] || c;
+  }
+  return o;
+}
+function bEsc(t){
+  return String(t==null?'':t).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+function bTrecho(txt, termos, max){
+  max = max || 160;
+  txt = String(txt==null?'':txt);
+  const n = bNorm(txt), faixas = [];
+  termos.forEach(t=>{
+    let i = n.indexOf(t);
+    while(i >= 0){ faixas.push([i, i+t.length]); i = n.indexOf(t, i+t.length); }
+  });
+  if(!faixas.length){
+    return bEsc(txt.slice(0,max)) + (txt.length>max ? '\u2026' : '');
+  }
+  faixas.sort((a,b)=>a[0]-b[0]);
+  const ini = Math.max(0, faixas[0][0]-55);
+  const fim = Math.min(txt.length, ini+max);
+  let out = ini>0 ? '\u2026' : '', p = ini;
+  faixas.forEach(f=>{
+    if(f[1] <= p || f[0] >= fim) return;
+    const a = Math.max(f[0], p), b = Math.min(f[1], fim);
+    if(a > p) out += bEsc(txt.slice(p, a));
+    out += '<mark>' + bEsc(txt.slice(a, b)) + '</mark>';
+    p = b;
+  });
+  if(p < fim) out += bEsc(txt.slice(p, fim));
+  if(fim < txt.length) out += '\u2026';
+  return out;
+}
+function bIndice(){
+  const ix = [];
+  ITENS.forEach((it,i)=>{
+    const m = metaDe(it), h = HERO_INFO[it.id] || {}, st = estado.itens[chave(i)] || {};
+    const f = FRENTES.find(x => x.ids.includes(it.id) || (x.aba && x.aba===it.aba));
+    const campos = [
+      ['Detalhe', it.desc], ['Prazo', it.prazo], ['Pr\u00f3ximo passo', m.a],
+      ['Selo', m.s], ['V\u00ednculo', m.v], ['Por qu\u00ea', h.p], ['Destrava', h.d],
+      ['Nota do dia', st.nota]
+    ].filter(c => c[1] && String(c[1]).trim());
+    ix.push({tipo:'item', i:i,
+      onde:(it.aba==='wam' ? 'WAM' : 'F\u00e1brica') + (f ? ' \u00b7 ' + f.n : ''),
+      titulo: it.id + ' \u00b7 ' + it.tit, campos:campos,
+      texto: it.id + ' ' + it.tit + ' ' + campos.map(c=>c[1]).join(' ')});
+  });
+  SEM_DATA.forEach((p,s)=>{
+    const t = estado.triagem['s'+s], extra = t ? [t.data,t.quem,t.nota].filter(Boolean).join(' ') : '';
+    ix.push({tipo:'semdata', s:'s'+s, onde:'Por resolver \u00b7 sem data',
+      titulo: p[0] + ' \u00b7 ' + p[1], campos: extra ? [['Triagem', extra]] : [],
+      texto: p[0] + ' ' + p[1] + ' ' + extra});
+  });
+  FRENTES.forEach(f=>{
+    ix.push({tipo:'frente', k:f.k, onde:'Mapa das frentes', titulo:f.n,
+      campos: f.extra ? [['Interface', f.extra]] : [],
+      texto: f.n + ' ' + (f.extra||'')});
+  });
+  REGUA.forEach(r=>{
+    ix.push({tipo:'regua', onde:'R\u00e9gua do tempo', titulo: r.d + (r.t ? ' \u2014 ' + r.t : ''),
+      campos:[['Marco', r.x]], texto: r.d + ' ' + r.t + ' ' + r.x});
+  });
+  if((estado.livre||'').trim()){
+    ix.push({tipo:'livre', onde:'Nota do dia', titulo:'Novo / observa\u00e7\u00f5es do dia',
+      campos:[['Escrito hoje', estado.livre]], texto: estado.livre});
+  }
+  return ix;
+}
+let bAtual = [];
+function bRender(){
+  const q = $('#buscaCampo').value.trim();
+  const cx = $('#bres');
+  $('#buscaLimpar').hidden = !q;
+  if(q.length < 2){ cx.hidden = true; cx.innerHTML = ''; bAtual = []; return; }
+  const termos = bNorm(q).split(/\s+/).filter(Boolean);
+  bAtual = bIndice().filter(r=>{
+    const n = bNorm(r.texto);
+    return termos.every(t => n.indexOf(t) >= 0);
+  });
+  cx.hidden = false;
+  if(!bAtual.length){
+    cx.innerHTML = '<div class="bnada">Nada com <b>' + bEsc(q) +
+      '</b> neste painel. O painel \u00e9 a foto do dia \u2014 o hist\u00f3rico est\u00e1 no mestre e no arquivo.</div>';
+    return;
+  }
+  const lim = bAtual.slice(0, 40);
+  let html = '<div class="bcab">' + bAtual.length + (bAtual.length===1 ? ' resultado' : ' resultados') +
+    (bAtual.length > 40 ? ' \u2014 mostrando os 40 primeiros' : '') + '</div>';
+  html += lim.map((r,k)=>{
+    const linhas = r.campos.filter(c => bNorm(c[1]).indexOf(termos[0]) >= 0);
+    const usar = (linhas.length ? linhas : r.campos).slice(0,2);
+    return '<button class="br" data-bk="' + k + '">' +
+      '<span class="bonde">' + bEsc(r.onde) + '</span>' +
+      '<div class="btit">' + bTrecho(r.titulo, termos, 120) + '</div>' +
+      usar.map(c => '<div class="bcampo"><b>' + bEsc(c[0]) + ':</b> ' + bTrecho(c[1], termos) + '</div>').join('') +
+      '</button>';
+  }).join('');
+  cx.innerHTML = html;
+}
+function bDestacar(el){
+  if(!el) return;
+  const g = el.closest('details.grupo'); if(g) g.open = true;
+  const d = el.querySelector('details.det'); if(d) d.open = true;
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  el.classList.add('achado');
+  setTimeout(()=>el.classList.remove('achado'), 2600);
+}
+function bIr(r){
+  $('#bres').hidden = true;
+  if(r.tipo === 'item'){
+    const it = ITENS[r.i];
+    if(estado.aba !== it.aba){ estado.aba = it.aba; salvar(); }
+    tela = 'exec'; telaAplicar(); render();
+    requestAnimationFrame(()=>bDestacar(document.querySelector('#conteudo [data-i="' + r.i + '"]')));
+  } else if(r.tipo === 'semdata'){
+    if(estado.aba !== 'porresolver'){ estado.aba = 'porresolver'; salvar(); }
+    tela = 'tri'; telaAplicar(); render();
+    requestAnimationFrame(()=>bDestacar(document.querySelector('#conteudo [data-s="' + r.s + '"]')));
+  } else if(r.tipo === 'frente'){
+    tela = 'visao'; telaAplicar();
+    const dt = document.querySelector('details.integral'); if(dt) dt.open = true;
+    frenteAberta = r.k; mapaRender();
+    requestAnimationFrame(()=>bDestacar(document.querySelector('[data-frente="' + r.k + '"]')));
+  } else if(r.tipo === 'livre'){
+    tela = 'exec'; telaAplicar(); render();
+    requestAnimationFrame(()=>{ const el = $('#livre'); if(el){ el.scrollIntoView({block:'center'}); el.focus(); } });
+  } else {
+    tela = 'visao'; telaAplicar(); window.scrollTo(0,0);
+    document.body.classList.add('largo'); $('#tnTela').textContent = '\u21e1';
+  }
+}
+let bT;
+$('#buscaCampo').addEventListener('input', ()=>{ clearTimeout(bT); bT = setTimeout(bRender, 120); });
+$('#buscaCampo').addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){ $('#buscaCampo').value = ''; bRender(); $('#buscaCampo').blur(); }
+  if(e.key === 'Enter' && bAtual.length){ e.preventDefault(); $('#buscaCampo').blur(); bIr(bAtual[0]); }
+});
+$('#buscaLimpar').addEventListener('click', ()=>{ $('#buscaCampo').value = ''; bRender(); $('#buscaCampo').focus(); });
+$('#bres').addEventListener('click', e=>{
+  const b = e.target.closest('[data-bk]');
+  if(b) bIr(bAtual[+b.dataset.bk]);
+});
 
 reguaRender();
 tempoRender();
