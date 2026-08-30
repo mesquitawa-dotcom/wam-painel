@@ -6,8 +6,16 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 31/08/2026 (v18)</title>
+<title>Painel do dia — 31/08/2026 (v19)</title>
 <!--
+  v19 (30/08/2026) — gerado NO FECHAMENTO, pela primeira vez desde o v2.
+  Duas mudanças, as duas de conteúdo derivado do mestre, nenhuma de desenho:
+  (a) DEFEITO DE METADADO corrigido — o cabeçalho apontava o mestre de 28/08 (v4);
+      o vigente é o de 30/08 (v1);
+  (b) a interface do Inventário de 30/08 entrou: CND estadual VENCIDA, ligação para
+      a Sicredi na manhã de 31/08, e o CONFLITO DE AGENDA das 17h30.
+  O congelamento segue contando do v18: isto é defeito + conteúdo, não escopo novo.
+
   v18 (29/08/2026) — CORREÇÃO DE DEFEITO da própria publicação, apurada com dois prints
   em que Wagner via o v16 depois do v17 já estar no ar. O navegador guardava a página
   em cache e servia a versão antiga: exatamente o risco que a decisão de 22/08 nomeou —
@@ -54,7 +62,7 @@
   memória continua a mesma, então o estado migra normalmente.
   Arquivo único: é este que roda no chat E no endereço fixo. Não existe cópia paralela.
 
-  PAINEL v10 FINAL — auditoria de 29/08/2026, derivado do WAM_MESTRE_28-08-2026_v4.
+  PAINEL v19 — derivado do WAM_MESTRE_30-08-2026_v1 (fechamento de domingo 30/08/2026).
   v10 = v9 + correções de fidelidade ao Mestre (#34, #62, #76 e #57), hero/estrela dinâmicos,
   progresso estável do Top 3, foco realmente 1 bloco = 1 tarefa com captura de nota,
   data local de São Paulo, storage próprio com migração, régua proporcional só no desktop,
@@ -427,8 +435,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v18</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_28-08-2026_v4 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v19</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v1 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -582,10 +590,17 @@ const ITENS = [
    prazo:'PRAZO PROCESSUAL HOJE — 31/08', cor:'vermelho'},
   {id:'#47', aba:'wam', ativa:true, tit:'Enviar a reiteração ao Dr. Luizmar',
    desc:'Minuta pronta desde 20/08, com a terceira pergunta (efeito da transação sobre a penhora). Falta o envio.',
-   prazo:'VENCIDA há 12 dias — prazo era 19/08', cor:'vermelho'},
+   prazo:'VENCIDA há 13 dias — prazo era 19/08', cor:'vermelho'},
   {id:'#36', aba:'wam', ativa:true, tit:'Manter ou substituir o patrocínio do Dr. Luizmar',
    desc:'Silêncio em três tentativas desde 06/08. Depende do que a #47 responder — ou do silêncio dela.',
    prazo:'VENCIDA — o portão de decisão era 24/08', cor:'vermelho'},
+
+  {id:'AGENDA', aba:'wam', tit:'CONFLITO DE AGENDA — bilateral Dra. Bruna às 17h30 bate com o FECHAMENTO WAM',
+   desc:'Bilateral por Teams, GRAVAR. Mesmo horário do evento recorrente de fechamento. Decidir de manhã: fechar antes das 17h30, ou mover o fechamento para depois da reunião. Hoje é o dia mais cheio da semana — perder o fechamento é como a lacuna de 17 a 28/08 começou.',
+   prazo:'DECIDIR HOJE, no primeiro bloco', cor:'vermelho'},
+  {id:'INV-SICREDI', aba:'wam', tit:'Ligar para a Sicredi — (65) 3221-0800',
+   desc:'Obter o e-mail do setor de contratos. Ação do Inventário, entra aqui porque é de hoje de manhã. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
+   prazo:'Hoje — 31/08, pela manhã', cor:'vermelho'},
 
   {id:'#39', aba:'wam', tit:'Contrato de locação da fábrica — ler as cláusulas',
    desc:'Data exata de vencimento, cláusula de renovação, prazo de aviso prévio, garantia vigente. Tarefa de concentração, bloco 05h–08h.',
@@ -767,8 +782,8 @@ const FRENTES = [
   {k:'mt', n:'Cáceres · MT', ids:['#16','#49','#55','#54','#8']},
   {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#71','#65','#73','#57']},
   {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38']},
-  {k:'inv', n:'Inventário (interface)', ids:['#84'],
-    extra:'CND estadual: 31/08, Juverlan · teto PGDAU 30/09'},
+  {k:'inv', n:'Inventário (interface)', ids:['#84','INV-SICREDI','AGENDA'],
+    extra:'CND estadual nº 0063507965 VENCIDA em 29/08, sem renovação · bilateral Dra. Bruna 31/08 17h30 (gravar) · teto PGDAU 30/09 · fim do 2º Termo Aditivo 12/12'},
   {k:'ct', n:'Contas & PIX', ids:['#79','#78']},
   {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
   {k:'mk', n:'Marca · INPI', ids:['#76']},
