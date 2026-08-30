@@ -1,400 +1,1477 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel — 31/08/2026 · v20</title>
+<title>Painel do dia — 31/08/2026 (v20)</title>
+<!--
+  v20 (30/08/2026) — conteudo do quarto fechamento sobre a base visual do v19, intacta.
+  Duas mudanças, as duas de conteúdo derivado do mestre, nenhuma de desenho:
+  (a) DEFEITO DE METADADO corrigido — o cabeçalho apontava o mestre de 28/08 (v4);
+      o vigente é o de 30/08 (v1);
+  (b) a interface do Inventário de 30/08 entrou: CND estadual VENCIDA, ligação para
+      a Sicredi na manhã de 31/08, e o CONFLITO DE AGENDA das 17h30.
+  O congelamento segue contando do v18: isto é defeito + conteúdo, não escopo novo.
+
+  v18 (29/08/2026) — CORREÇÃO DE DEFEITO da própria publicação, apurada com dois prints
+  em que Wagner via o v16 depois do v17 já estar no ar. O navegador guardava a página
+  em cache e servia a versão antiga: exatamente o risco que a decisão de 22/08 nomeou —
+  "tela fixa mostra dado velho com cara de atual". Dois consertos: cabeçalhos que
+  impedem o cache, e um carimbo de versão visível no alto, para dar para conferir de
+  olho se a tela é a do dia. Nada além disso mudou.
+
+  v17 (29/08/2026) — CORREÇÃO DE DEFEITO sobre o v16, apurada com print de Wagner.
+  O v16 condicionava a mecânica de telas a "largura < 900px". O navegador do celular
+  de Wagner opera com viewport largo, então caía no desenho de duas colunas do
+  desktop: coluna esquerda espremida, tudo junto, telanav invisível. A DETECÇÃO de
+  aparelho era o defeito. Conserto: a detecção foi removida. A mecânica de telas
+  (Visão como porta · Executar · Triagem, barra fixa embaixo) vale em qualquer
+  largura; o desenho de duas colunas do desktop foi removido; o enxuto é o padrão
+  universal, com ⤢ devolvendo régua e subtítulo. Em tela larga: coluna única centrada.
+  Mecânica, contagens, marcações e formato do relato: intocados.
+
+  v16 (29/08/2026) — MUDANÇA DE ESCOPO no celular, pedida expressamente por Wagner e
+  adotada por decisão datada. NÃO é correção de defeito: retifica, quanto a este ponto,
+  o congelamento decidido no fechamento de 29/08. Recomendação da IA era esperar a
+  evidência de uso da #86 (04/09); foi RECUSADA, com o motivo declarado por Wagner
+  (a semana seguinte estará tomada). Divergência registrada — recusada.
+  O que muda, e só isso: no celular, a tela "Visão" passa a ser a porta e carrega as três
+  opções (WAM · Fábrica · Por resolver) como botões grandes; tocar em uma abre a lista.
+  Antes, na Visão as abas ficavam escondidas junto com o resto. Desktop inalterado.
+  Nenhuma mecânica, contagem, marcação ou formato de relato foi tocado.
+
+  v15 (29/08/2026) — CORREÇÃO DE DEFEITO, apurada no primeiro uso do painel publicado.
+  "Copiar relato do dia" não fazia nada. Causa: sobra da migração do v11. O relato ainda
+  varria estado.itens supondo chaves por ÍNDICE (i0, i1); desde o v11 as chaves são IDs
+  estáveis (#61, OP:...). +k.slice(1) devolvia número errado ou NaN, ITENS[i] vinha
+  indefinido e o clique estourava em silêncio — a mesma família da "recusa silenciosa".
+  Corrigido: a varredura passa a percorrer ITENS e ler o estado pelo ID estável.
+  Formato do relato inalterado — o fechamento depende dele.
+  Não fura o congelamento: defeito, não refinamento (régua de 17/08).
+
+  v14 (29/08/2026) — VERSÃO DE PUBLICAÇÃO. Mudança de CONTEÚDO, não de especificação,
+  autorizada pela decisão datada de 29/08 de publicar o painel em endereço público.
+  NÃO fura o congelamento: entra pela porta da decisão, e está registrada como tal.
+  O que saiu do arquivo, e só isso: as duas senhas do e-SAJ (#61), o número da conta
+  bancária (#3) e a placa do veículo (#15). Trocados por referência ao caderno e ao
+  mestre. Endereço público é lido por qualquer pessoa que tenha o link — credencial
+  não vai junto. Nenhuma outra linha, mecânica ou marcação foi alterada; a chave de
+  memória continua a mesma, então o estado migra normalmente.
+  Arquivo único: é este que roda no chat E no endereço fixo. Não existe cópia paralela.
+
+  PAINEL v20 — derivado do WAM_MESTRE_30-08-2026_v4 (quarto fechamento de domingo 30/08/2026).
+  Mudança do v19 para o v20: SOMENTE CONTEUDO. Nenhuma alteracao visual, de layout ou de
+  mecanica. Acrescentado o item INV-JUVERLAN (cobranca das 09h00 com fallback em 02/09) e
+  atualizado o bloco de interface do Inventario. Base: v19 recuperado do repositorio.
+  v10 = v9 + correções de fidelidade ao Mestre (#34, #62, #76 e #57), hero/estrela dinâmicos,
+  progresso estável do Top 3, foco realmente 1 bloco = 1 tarefa com captura de nota,
+  data local de São Paulo, storage próprio com migração, régua proporcional só no desktop,
+  rodapé alinhado à execução no desktop e alvos de toque maiores no celular.
+  v9 = v8 + (a) hero "se eu fizer só uma coisa hoje", (b) ranking ①②③ nas ativas,
+  (c) selos de natureza + tempo·energia, (d) próxima ação visível em cada card,
+  (e) detalhes recolhidos, (f) grupos "Depois/Sem data" recolhidos, (g) fila em 2
+  colunas no desktop, (h) navegação inferior por telas no celular.
+  A chave de memória permanece a do v7 — o formato do estado não mudou.
+  v8 = v7 + correção de defeito de primeiro uso: o modo foco abria sozinho e cobria a página.
+  v7 = v6 + camada responsiva: um único arquivo serve celular e desktop.
+  Mudança de ESPECIFICAÇÃO (não de conteúdo): camada integral no topo
+  (placar · âncora com contagem · mapa de frentes · régua proporcional · modo foco 45min).
+  Toda a mecânica do v5 preservada: teto de 3, puxar/soltar, feito/conteúdo/não feito,
+  triagem da aba "Por resolver", relato do dia (formato idêntico), memória com migração v6/v5→v7.
+  A adoção deste formato é decisão a ratificar no fechamento (congelamento de 5 dias / #83).
+-->
 <style>
-:root{
-  --bg:#0f1117;--sur:#1a1d27;--card:#1e2235;--bdr:#2c3050;
-  --acc:#4f8ef7;--red:#e74c3c;--org:#f39c12;--grn:#27ae60;
-  --txt:#e8eaf0;--txt2:#8890a8;--r:8px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,sans-serif;font-size:15px;min-height:100vh}
-#vs{background:var(--card);border-bottom:1px solid var(--bdr);padding:5px 14px;font-size:11px;color:var(--txt2);display:flex;justify-content:space-between;align-items:center}
-#vs b{color:var(--acc);font-weight:700}
-#sa{display:none;background:#2a1010;color:var(--red);padding:8px 14px;font-size:12px;border-bottom:2px solid var(--red)}
-nav{display:flex;background:var(--sur);border-bottom:2px solid var(--bdr);position:sticky;top:0;z-index:50}
-nav button{flex:1;padding:11px 2px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--txt2);font-size:13px;font-weight:600;cursor:pointer}
-nav button.on{color:var(--acc);border-bottom-color:var(--acc)}
-.tab{display:none;padding:14px;max-width:680px;margin:0 auto}
-.tab.on{display:block}
-.c{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:13px;margin-bottom:11px}
-.c.red{border-left:4px solid var(--red)}
-.c.org{border-left:4px solid var(--org)}
-.c.acc{border-left:4px solid var(--acc)}
-.c.grn{border-left:4px solid var(--grn)}
-.lbl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt2);margin-bottom:7px}
-.lbl.r{color:var(--red)}.lbl.o{color:var(--org)}.lbl.a{color:var(--acc)}.lbl.g{color:var(--grn)}
-h3{font-size:14px;font-weight:700;margin-bottom:3px}
-.sub{font-size:12px;color:var(--txt2);line-height:1.5;margin-top:3px}
-.bdg{display:inline-block;border-radius:4px;padding:1px 7px;font-size:11px;font-weight:700;margin-right:5px;background:var(--red);color:#fff}
-.bdg.o{background:var(--org)}.bdg.a{background:var(--acc)}.bdg.g{background:var(--grn)}
-.row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--bdr)}
-.row:last-child{border-bottom:none;padding-bottom:0}
-.row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--acc);cursor:pointer}
-.row label{cursor:pointer;flex:1}
-.row label.done{opacity:.45;text-decoration:line-through}
-.itit{font-size:14px;font-weight:600}
-.idsc{font-size:12px;color:var(--txt2);margin-top:2px;line-height:1.4}
-/* Timer */
-#td{font-size:48px;font-weight:700;letter-spacing:3px;text-align:center;padding:14px 0 8px}
-.tbts{display:flex;gap:10px;justify-content:center}
-.btn{padding:10px 22px;border-radius:6px;border:none;font-weight:700;font-size:14px;cursor:pointer}
-.btn.p{background:var(--acc);color:#fff}
-.btn.g{background:var(--bdr);color:var(--txt)}
-.btn.ok{background:var(--grn);color:#fff;width:100%;margin-top:8px}
-.btn:active{opacity:.75}
-textarea{width:100%;background:var(--sur);border:1px solid var(--bdr);color:var(--txt);border-radius:6px;padding:10px;font-size:13px;font-family:monospace;resize:vertical;min-height:100px;margin-top:6px}
-/* Visão */
-.fr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--bdr)}
-.fr:last-child{border-bottom:none}
-.fr span:first-child{font-size:13px}
-.st{font-size:11px;padding:2px 8px;border-radius:4px}
-.st.r{background:#2d1010;color:var(--red)}.st.o{background:#2d2010;color:var(--org)}.st.g{background:#102d10;color:var(--grn)}.st.n{background:var(--bdr);color:var(--txt2)}
-/* Triagem */
-.ti{padding:10px 0;border-bottom:1px solid var(--bdr)}
-.ti:last-child{border-bottom:none}
-.tbts2{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-input[type=date]{background:var(--sur);color:var(--txt);border:1px solid var(--bdr);border-radius:4px;padding:4px 8px;font-size:12px}
-.sbtn{padding:4px 10px;border-radius:4px;border:none;background:var(--bdr);color:var(--txt);font-size:12px;cursor:pointer}
-.sbtn:active{opacity:.7}
-#cok{display:none;color:var(--grn);font-size:12px;text-align:center;margin-top:5px}
+  :root{
+    --bg:#ffffff; --ink:#16181d; --muted:#6b7280; --line:#e5e7eb;
+    --red:#b42318; --redbg:#fdf3f2;
+    --hoje:#c2410c; --hojebg:#fff3eb;
+    --amber:#8a5a00; --amberbg:#fdf7e7;
+    --cinza:#4b5563; --cinzabg:#f4f5f7;
+    --green:#186a3b; --greenbg:#eefaf2;
+    --chip:#1f2227;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%;}
+  .wrap{max-width:720px;margin:0 auto;padding:0 14px 96px;}
+
+  .regua{position:sticky;top:0;z-index:20;background:var(--chip);
+    display:flex;gap:8px;overflow-x:auto;padding:8px;margin:0 -14px 10px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .regua::-webkit-scrollbar{display:none;}
+  .rb{flex:0 0 auto;color:#fff;font-size:12.5px;padding:5px 9px;border-radius:5px;
+    background:#33373f;white-space:nowrap;}
+  .rb b{font-weight:700;}
+  .rb.hoje{background:var(--red);}
+  .rb .d{opacity:.72;}
+
+  header.top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:2px 0 8px;}
+  header.top h1{font-size:15px;margin:0;font-weight:700;letter-spacing:.01em;}
+  header.top .sub{font-size:12px;color:var(--muted);}
+  .reload{border:1px solid var(--line);background:#fff;border-radius:6px;
+    font-size:15px;padding:4px 10px;cursor:pointer;}
+
+  /* ===== camada integral ===== */
+  .placar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:2px 0 8px;}
+  .pz{border:1px solid var(--line);border-radius:10px;padding:8px 6px 7px;text-align:center;}
+  .pz .n{display:block;font-size:26px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;}
+  .pz .r{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin-top:3px;}
+  .pz.venc{background:var(--redbg);border-color:#f3d4d1;} .pz.venc .n{color:var(--red);}
+  .pz.hoje{background:var(--hojebg);border-color:#f6dcc8;} .pz.hoje .n{color:var(--hoje);}
+  .pz.sem7{background:var(--amberbg);border-color:#efe2b8;} .pz.sem7 .n{color:var(--amber);}
+  .pz.trat{background:var(--greenbg);border-color:#cdeeda;} .pz.trat .n{color:var(--green);}
+
+  .barra{height:7px;border-radius:6px;background:#eef0f3;overflow:hidden;margin:0 0 10px;}
+  .barra i{display:block;height:100%;width:0;background:var(--green);border-radius:6px;
+    transition:width .25s;}
+
+  .ancora{display:block;background:var(--redbg);
+    border:1px solid #f3d4d1;border-radius:10px;padding:10px 12px;margin-bottom:10px;}
+  .ancora .rotulo{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--red);font-weight:800;margin-bottom:5px;}
+  .ancora .linhaA{display:flex;align-items:center;gap:10px;}
+  .ancora .hx{font-size:12.5px;color:#4a4f57;margin-top:5px;line-height:1.45;}
+  .ancora .hx b{color:var(--ink);}
+  .ancora .estrela{font-size:18px;line-height:1;}
+  .ancora .tx{flex:1;min-width:0;font-size:13.5px;}
+  .ancora .tx b{display:block;font-size:14.5px;}
+  .ancora .cd{color:var(--red);font-weight:800;}
+  .ancora button{border:1px solid var(--red);color:var(--red);background:#fff;
+    border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;flex:0 0 auto;}
+
+  details.integral{margin-bottom:12px;}
+  details.integral>summary{list-style:none;cursor:pointer;font-size:11.5px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--muted);font-weight:700;padding:4px 0;}
+  details.integral>summary::-webkit-details-marker{display:none;}
+  details.integral>summary::after{content:" ▾";}
+  details.integral:not([open])>summary::after{content:" ▸ mostrar";}
+
+  .mapa{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:6px;}
+  .tile{appearance:none;border:1px solid var(--line);border-left-width:5px;border-radius:10px;
+    background:#fff;padding:9px 10px;text-align:left;cursor:pointer;font:inherit;color:var(--ink);}
+  .tile:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  .tile .tn{display:block;font-size:13px;font-weight:700;}
+  .tile .td{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;}
+  .tile .tx{display:block;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.35;}
+  .tile.venc{border-left-color:var(--red);background:var(--redbg);}
+  .tile.hoje{border-left-color:var(--hoje);background:var(--hojebg);}
+  .tile.sem7{border-left-color:var(--amber);background:var(--amberbg);}
+  .tile.ok{border-left-color:#c9ccd2;}
+  .tile.aberta{outline:2px solid var(--ink);outline-offset:1px;}
+  .dot{display:inline-block;min-width:20px;text-align:center;font-size:11.5px;font-weight:800;
+    border-radius:6px;padding:1px 5px;color:#fff;}
+  .dot.venc{background:var(--red);} .dot.hoje{background:var(--hoje);}
+  .dot.sem7{background:var(--amber);} .dot.resto{background:#9aa1ab;}
+  .dot.ok{background:var(--green);}
+
+  #drawer{margin-top:8px;}
+  #drawer .dhead{font-size:12px;color:var(--muted);font-weight:700;margin:2px 0 6px;}
+  .mini{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    border:1px solid var(--line);border-left-width:4px;border-radius:8px;
+    padding:8px 10px;margin-bottom:6px;}
+  .mini .txt{font-size:13px;min-width:0;}
+  .mini .mp{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .mini .acoes{margin:0;flex:0 0 auto;}
+  .u-venc{border-left-color:var(--red);}
+  .u-hoje{border-left-color:var(--hoje);}
+  .u-sem7{border-left-color:var(--amber);}
+  .u-dep,.u-aberto{border-left-color:#c9ccd2;}
+
+  .tempo{position:relative;height:78px;margin:12px 2px 2px;}
+  .tempo .linha{position:absolute;left:0;right:0;top:50%;height:2px;background:#d7dade;border-radius:2px;}
+  .tempo .mk{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;
+    border-radius:50%;background:#9aa1ab;border:2px solid #fff;box-shadow:0 0 0 1px #d7dade;}
+  .tempo .mk.venc{background:var(--red);} .tempo .mk.hoje{background:var(--hoje);}
+  .tempo .mk.sem7{background:var(--amber);}
+  .tempo .lb{position:absolute;transform:translateX(-50%);font-size:10.5px;color:var(--muted);
+    white-space:nowrap;text-align:center;line-height:1.25;}
+  .tempo .lb b{display:block;color:var(--ink);font-size:11px;}
+  .tempo .lb.cima{bottom:calc(50% + 12px);} .tempo .lb.baixo{top:calc(50% + 12px);}
+  .tempo .agulha{position:absolute;top:12px;bottom:12px;width:2px;background:var(--ink);}
+  .tempo .agulha i{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    font-style:normal;font-size:9.5px;font-weight:800;letter-spacing:.05em;color:var(--ink);}
+  .tempo-depois{font-size:11px;color:var(--muted);text-align:right;margin:0 2px 4px;}
+
+  nav.abas{display:flex;gap:18px;border-bottom:1px solid var(--line);margin-bottom:12px;}
+  nav.abas button{background:none;border:none;border-bottom:2px solid transparent;
+    padding:8px 0;font-size:14px;color:var(--muted);cursor:pointer;font-weight:600;}
+  nav.abas button.on{color:var(--ink);border-bottom-color:var(--ink);}
+
+  .aviso{background:var(--redbg);border:1px solid #f3d4d1;color:var(--red);
+    border-radius:8px;padding:10px 12px;font-size:13.5px;margin-bottom:12px;}
+  .aviso.neutro{background:#f6f7f8;border-color:var(--line);color:#3f434a;}
+  .aviso.hide{display:none;}
+
+  h2.sec{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin:18px 0 8px;}
+  .gsec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;
+    border-radius:6px;padding:5px 9px;margin:12px 0 7px;}
+  .gsec.venc{background:var(--redbg);color:var(--red);}
+  .gsec.hoje{background:var(--hojebg);color:var(--hoje);}
+  .gsec.sem7{background:var(--amberbg);color:var(--amber);}
+  .gsec.dep,.gsec.aberto{background:var(--cinzabg);color:var(--cinza);}
+
+  .card{border:1px solid var(--line);border-left-width:5px;border-radius:10px;
+    padding:12px;margin-bottom:10px;}
+  .card.ativa{border-color:#c9ccd2;}
+  .card.ativa.u-venc{border-left-color:var(--red);}
+  .card.ativa.u-hoje{border-left-color:var(--hoje);}
+  .card.resolvido{background:#fafafa;border-left-color:#c9ccd2;}
+  .id{display:inline-block;background:#eef0f3;border-radius:5px;padding:1px 7px;
+    font-size:12.5px;font-weight:700;margin-right:8px;}
+  .tit{font-weight:700;font-size:15px;}
+  .desc{color:var(--muted);font-size:13.5px;margin-top:4px;}
+  .prazo{font-size:13px;font-weight:700;margin-top:6px;}
+  .prazo.vermelho{color:var(--red);}
+  .prazo.ambar{color:var(--amber);}
+
+  .acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  button.b{border:1px solid var(--line);background:#fff;border-radius:6px;
+    padding:6px 11px;font-size:13px;cursor:pointer;color:var(--ink);}
+  button.b:hover{background:#f6f7f8;}
+  button.b:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  button.b.on{background:var(--chip);color:#fff;border-color:var(--chip);}
+  button.b.ghost{color:var(--muted);}
+
+  textarea.nota,input.campo{width:100%;border:1px solid var(--line);border-radius:6px;
+    padding:8px;font:inherit;font-size:13.5px;background:#fff;}
+  textarea.nota{margin-top:9px;min-height:58px;resize:vertical;}
+  .linha2{display:flex;gap:6px;margin-top:9px;}
+  .linha2 input{flex:1;min-width:0;}
+
+  /* v9: selos, próxima ação, ranking, detalhes */
+  .selos{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+  .selo{font-size:10.5px;font-weight:800;letter-spacing:.04em;border-radius:5px;
+    padding:2px 7px;border:1px solid transparent;white-space:nowrap;}
+  .selo.prazo{color:var(--red);background:var(--redbg);border-color:#f3d4d1;}
+  .selo.destrava{color:#fff;background:var(--chip);}
+  .selo.fin{color:var(--amber);background:var(--amberbg);border-color:#efe2b8;}
+  .selo.dep{color:#1e5a8a;background:#eef4fb;border-color:#d3e2f2;}
+  .selo.mon{color:var(--cinza);background:var(--cinzabg);border-color:#e2e4e8;}
+  .selo.te{color:var(--muted);background:#fff;border-color:var(--line);
+    font-weight:700;letter-spacing:0;}
+  .pax{font-size:14px;font-weight:700;margin-top:6px;line-height:1.4;}
+  .pax::before{content:"→ ";color:var(--muted);}
+  .rank{display:inline-block;font-size:16px;font-weight:800;margin-right:6px;line-height:1;}
+  .card details.det{margin-top:8px;}
+  .card details.det>summary{cursor:pointer;font-size:12px;color:var(--muted);
+    font-weight:700;list-style:none;}
+  .card details.det>summary::-webkit-details-marker{display:none;}
+  .card details.det>summary::after{content:" ▸";}
+  .card details.det[open]>summary::after{content:" ▾";}
+  .card details.det .desc{margin-top:4px;}
+  details.grupo>summary{list-style:none;cursor:pointer;}
+  details.grupo>summary::-webkit-details-marker{display:none;}
+  details.grupo:not([open])>summary .gsec::after{content:"  ▸ ver";}
+  details.grupo[open]>summary .gsec::after{content:"  ▾";}
+
+  .estado{font-size:12px;font-weight:700;margin-top:2px;}
+  .estado.f{color:var(--green);} .estado.c{color:var(--amber);} .estado.n{color:var(--red);}
+  .estado.t{color:#3f434a;}
+
+  .fila .card{padding:10px 12px;}
+  .leitura{font-size:13.5px;padding:9px 12px;border:1px solid var(--line);
+    border-radius:8px;margin-bottom:7px;color:#33373f;}
+  .leitura .id{background:#f2f3f5;}
+  .pr{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+  .pr.marcado{background:#fafafa;border-color:#d6d9de;}
+  .pr .txt{font-size:13.5px;color:#33373f;}
+
+  .rodape{position:fixed;left:0;right:0;bottom:0;background:#fff;
+    border-top:1px solid var(--line);padding:10px 14px;}
+  .rodape .inner{max-width:720px;margin:0 auto;display:flex;gap:8px;}
+  .focobtn{flex:0 0 auto;background:#fff;color:var(--ink);border:1px solid var(--ink);
+    border-radius:8px;padding:13px 14px;font-size:14px;font-weight:800;cursor:pointer;}
+  .copiar{flex:1;background:var(--chip);color:#fff;border:none;border-radius:8px;
+    padding:13px;font-size:15px;font-weight:700;cursor:pointer;}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:74px;
+    background:var(--chip);color:#fff;padding:9px 14px;border-radius:8px;font-size:13.5px;
+    opacity:0;pointer-events:none;transition:opacity .18s;z-index:40;max-width:90%;}
+  .toast.on{opacity:1;}
+  .nota-livre{margin-top:14px;}
+  .nota-livre label{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;}
+
+
+  /* v10: progresso estável, vínculos e finalização do foco */
+  .barlab{font-size:10.5px;color:var(--muted);font-weight:700;text-align:right;margin:-5px 1px 9px;}
+  .vinculo{font-size:11.5px;color:#4b5563;background:#f6f7f8;border:1px solid var(--line);
+    border-radius:6px;padding:5px 7px;margin-top:7px;line-height:1.35;}
+  .fnota{width:100%;min-height:88px;border:1px solid var(--line);border-radius:8px;padding:10px;
+    font:inherit;font-size:14px;resize:vertical;margin-top:8px;}
+  .fnotalab{width:100%;font-size:12px;font-weight:800;color:var(--muted);margin-top:4px;}
+  .footOps{display:flex;gap:8px;width:100%;}
+
+  /* ===== modo foco ===== */
+  #foco[hidden]{display:none!important;}
+  #foco{position:fixed;inset:0;background:#fff;z-index:60;display:flex;flex-direction:column;
+    padding:18px 16px calc(18px + env(safe-area-inset-bottom));overflow:auto;}
+  #foco.fim{animation:pisca 1s ease 3;}
+  @keyframes pisca{50%{background:var(--amberbg);}}
+  #foco .topo{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  #foco .topo .rot{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;}
+  #foco .fechar{border:1px solid var(--line);background:#fff;border-radius:8px;
+    font-size:14px;padding:7px 12px;cursor:pointer;}
+  #focoTempo{font-size:56px;font-weight:800;text-align:center;margin:16px 0 4px;
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+  #foco .tctrl{display:flex;justify-content:center;gap:8px;margin-bottom:18px;}
+  #focoCorpo{flex:1;}
+  #focoCorpo .fid{margin-bottom:6px;}
+  #focoCorpo .ftit{font-size:21px;font-weight:800;line-height:1.25;}
+  #focoCorpo .fprox{font-size:16.5px;font-weight:800;margin-top:12px;line-height:1.45;}
+  #focoCorpo .fprox::before{content:"→ ";color:var(--muted);}
+  #focoCorpo .fdesc{font-size:15px;color:#3f434a;margin-top:10px;line-height:1.5;}
+  #focoCorpo .fprazo{font-size:14px;font-weight:800;margin-top:12px;}
+  #focoCorpo .fprazo.vermelho{color:var(--red);} #focoCorpo .fprazo.ambar{color:var(--amber);}
+  #foco .facoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  #foco .facoes button{flex:1 1 30%;}
+  #foco .fnada{font-size:15px;color:var(--muted);text-align:center;margin-top:30px;}
+
+  /* v17: navegação por telas em QUALQUER largura. O painel deixou de detectar
+     "celular × desktop" — a detecção falhava em navegador de celular operando com
+     viewport largo, e era essa a causa da tela espremida de 29/08. Uma tela por vez,
+     sempre: Visão é a porta; WAM/Fábrica/Por resolver abrem ao toque. */
+  .telanav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;
+      background:#fff;border-top:1px solid var(--line);gap:6px;
+      padding:7px 8px calc(7px + env(safe-area-inset-bottom));}
+    .telanav button{flex:1;border:1px solid var(--line);background:#fff;border-radius:8px;
+      padding:10px 2px;font-size:11.5px;font-weight:800;color:var(--muted);cursor:pointer;}
+    .telanav button.on{background:var(--chip);color:#fff;border-color:var(--chip);}
+    .telanav button.acao{flex:0 0 auto;padding:10px 10px;color:var(--ink);}
+    .rodape{display:none!important;}
+    .wrap{padding-bottom:110px;}
+    .tempo{display:none;}
+    .tempo-depois{text-align:left;margin-top:8px;}
+    button.b,.reload,.ancora button,.fechar{min-height:40px;}
+    /* v16: a Visão passa a ser a porta. colOps some, MENOS as abas, que viram
+       botões grandes e abrem a lista correspondente. Uma tela por vez. */
+    body.tela-visao .colOps > *:not(nav.abas){display:none;}
+    body.tela-visao .colOps{margin-top:12px;}
+    body.tela-visao nav.abas{display:flex;flex-direction:column;gap:8px;
+      border-bottom:none;margin-bottom:0;}
+    body.tela-visao nav.abas button{border:1px solid var(--line);border-radius:10px;
+      background:#fff;padding:14px 12px;font-size:15px;font-weight:800;
+      color:var(--ink);text-align:left;border-bottom:1px solid var(--line);}
+    body.tela-visao nav.abas button.on{border-color:var(--chip);
+      box-shadow:inset 3px 0 0 var(--chip);}
+    body.tela-visao nav.abas button::after{content:" ›";float:right;color:var(--muted);}
+    body.tela-exec .colInt{display:none;}
+    body.tela-tri .colInt{display:none;}
+    body.tela-tri nav.abas{display:none;}
+    nav.abas [data-aba="porresolver"]{display:none;}
+
+  @media (min-width:560px){ .mapa{grid-template-columns:1fr 1fr 1fr;} }
+
+  /* v17: o desenho de duas colunas foi removido — era ele que aparecia espremido
+     quando o navegador do celular se declarava largo. Em tela larga: coluna única,
+     centrada, letra maior. A mecânica de telas acima vale para todo mundo. */
+  @media (min-width:900px){
+    body{font-size:15.5px;}
+    .wrap{max-width:760px;}
+    .placar .pz .n{font-size:32px;}
+    .tile:hover{filter:brightness(.97);}
+    #foco .topo,#focoTempo,#foco .tctrl,#focoCorpo,#foco .facoes{
+      width:min(680px,100%);margin-left:auto;margin-right:auto;}
+    #focoTempo{font-size:76px;}
+  }
+  /* v12: economia de altura no celular + aviso de gravação */
+  .gravaviso{display:none;font-size:12px;font-weight:700;border-radius:8px;
+    padding:7px 10px;margin:0 0 8px;background:var(--amberbg);color:var(--amber);
+    border:1px solid #efe2b8;}
+  .gravaviso.on{display:block;}
+  .gravaviso.ruim{background:var(--redbg);color:var(--red);border-color:#f3d4d1;}
+  .gravhora{font-size:11px;color:var(--muted);text-align:right;margin:-2px 0 8px;}
+  /* v18: carimbo de versão sempre visível — sem ele não dá para saber, olhando a
+     tela, se o endereço publicado serviu a versão do dia ou uma guardada em cache. */
+  .vcarimbo{font-size:11px;font-weight:800;color:var(--muted);border:1px solid var(--line);
+    border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:middle;}
+
+  /* v13 → v17: o enxuto é o padrão em qualquer largura.
+     Régua, subtítulo e folgas só aparecem ao tocar em ⤢. */
+    .regua{display:none;}
+    header.top .sub{display:none;}
+    header.top h1{font-size:13.5px;}
+    header.top{padding:2px 0 4px;}
+    .wrap{padding-top:2px;}
+    .placar{gap:4px;margin:0 0 6px;}
+    .pz{padding:5px 4px 4px;}
+    .pz .n{font-size:22px;}
+    .pz .r{font-size:9.5px;}
+    .barra{margin-bottom:4px;}
+    .gravaviso{font-size:11px;font-weight:600;padding:5px 8px;margin-bottom:6px;}
+    .ancora{padding:8px 10px;margin-bottom:8px;}
+    .card{padding:9px 10px;margin-bottom:7px;}
+    h2.sec{margin:10px 0 6px;}
+    details.integral{margin-bottom:8px;}
+    .telanav{padding:5px 7px calc(5px + env(safe-area-inset-bottom));gap:5px;}
+    .telanav button{padding:8px 2px;}
+    .wrap{padding-bottom:92px;}
+    /* .largo = o inverso: mostra de novo o contexto que o padrão recolheu */
+    body.largo .regua{display:flex;}
+    body.largo header.top .sub{display:block;}
+    body.compacto .placar{gap:4px;}
+    body.compacto .pz{padding:5px 4px 4px;}
+    body.compacto .pz .n{font-size:21px;}
+    body.compacto .pz .r{font-size:9.5px;}
+    body.compacto .ancora{padding:8px 10px;}
+    body.compacto .ancora .hx{font-size:12px;}
+    body.compacto .card{padding:9px 10px;margin-bottom:7px;}
+    body.compacto h2.sec{margin:11px 0 6px;}
+    body.compacto .gravhora{display:none;}
+    .telanav button.acao.mini{padding:10px 8px;font-size:13px;}
+  /* dentro de tela cheia real, nada de margem desperdiçada */
+  :fullscreen .wrap{padding-top:2px;}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div id="vs">
-  <span><b>v20</b> · seg 31/08/2026 · WAM_MESTRE_30-08-2026_v4</span>
-  <span id="hh">--:--</span>
+  <div class="regua" id="regua"></div>
+
+  <header class="top">
+    <div>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v20</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v4 · marcar aqui alimenta o relato, nunca o mestre</div>
+    </div>
+    <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
+  </header>
+
+  <div class="gravaviso" id="gravAviso" onclick="this.style.display='none'"></div>
+
+  <div class="colInt">
+
+  <div class="placar" id="placar" aria-label="Placar do dia"></div>
+  <div class="barra" aria-hidden="true"><i id="barraFill"></i></div>
+  <div class="barlab" id="barraLabel"></div>
+
+  <div class="ancora" id="ancora"></div>
+
+  <details class="integral" open>
+    <summary>Visão integral — mapa das frentes e régua do tempo</summary>
+    <div class="mapa" id="mapa"></div>
+    <div id="drawer" hidden></div>
+    <div class="tempo" id="tempo" aria-label="Régua do tempo até 30/09"></div>
+    <div class="tempo-depois">→ e no horizonte: <b>31/12</b> certidões limpas (frente do aluguel)</div>
+  </details>
+
+  </div><!-- /colInt -->
+
+  <div class="colOps">
+
+  <nav class="abas" id="abas"></nav>
+
+  <div class="aviso hide" id="aviso"></div>
+
+  <div id="conteudo"></div>
+
+  <div class="gravhora" id="gravHora"></div>
+
+  <div class="nota-livre" id="blocoLivre">
+    <label for="livre">Novo / observações do dia</label>
+    <textarea class="nota" id="livre" placeholder="Fato novo, número que apareceu, coisa a levar para o fechamento."></textarea>
+  </div>
+
+  </div><!-- /colOps -->
+
 </div>
-<div id="sa">⚠ Armazenamento indisponível — marcações não serão salvas. Use Relato para copiar manualmente.</div>
 
-<nav>
-  <button id="bn-e" class="on" onclick="ir('e')">Executar</button>
-  <button id="bn-v" onclick="ir('v')">Visão</button>
-  <button id="bn-t" onclick="ir('t')">Triagem</button>
-  <button id="bn-r" onclick="ir('r')">Relato</button>
+<div class="rodape"><div class="inner"><div class="footOps">
+  <button class="focobtn" id="abrirFoco" title="Um bloco de 45 minutos, uma ativa">▶ 45′</button>
+  <button class="copiar" id="copiar">Copiar relato do dia</button>
+</div></div></div>
+<div class="toast" id="toast"></div>
+
+<nav class="telanav" aria-label="Telas do painel">
+  <button data-tela="visao" class="on">Visão</button>
+  <button data-tela="exec">Executar</button>
+  <button data-tela="tri">Triagem</button>
+  <button class="acao mini" id="tnFoco" title="Bloco de 45 minutos">▶45′</button>
+  <button class="acao mini" id="tnRelato" title="Copiar relato do dia">Relato</button>
+  <button class="acao mini" id="tnTela" title="Ganhar altura de tela">⤢</button>
 </nav>
 
-<!-- ────────────────── EXECUTAR ────────────────── -->
-<div id="tab-e" class="tab on">
-
-  <div class="c red">
-    <div class="lbl r">⚡ Conflito de agenda — 17h30</div>
-    <h3>Bilateral Dra. Bruna × Fechamento WAM</h3>
-    <div class="sub">Mesmo horário. Decidir no <strong>primeiro bloco</strong>: mover o fechamento para depois da bilateral, ou fechar antes das 17h30. Não deixar o dia mais cheio da semana sem fechamento.</div>
+<div id="foco" hidden>
+  <div class="topo">
+    <span class="rot">Modo foco — um bloco, uma tarefa</span>
+    <button class="fechar" id="focoFechar">Sair ✕</button>
   </div>
-
-  <div class="c acc">
-    <div class="lbl a">Interface — Inventário</div>
-    <div class="row">
-      <input type="checkbox" id="c-ij" onchange="m('ij')">
-      <label for="c-ij" id="l-ij">
-        <span class="bdg a">09h00</span><span class="itit">Cobrar Juverlan — WhatsApp + e-mail</span>
-        <div class="idsc">Renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio — venceu 29/08. Número no caderno.<br>Sem retorno → emitir pelo portal SEFAZ-MT em <strong>02/09 às 09h00</strong>.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-is" onchange="m('is')">
-      <label for="c-is" id="l-is">
-        <span class="bdg a">Manhã</span><span class="itit">Sicredi — e-mail setor de contratos</span>
-        <div class="idsc">Telefone no caderno.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-ib" onchange="m('ib')">
-      <label for="c-ib" id="l-ib">
-        <span class="bdg o">17h30</span><span class="itit">Bilateral Dra. Bruna — Teams</span>
-        <div class="idsc">⚠ Gravar. Conflito com fechamento WAM — ver alerta acima.</div>
-      </label>
-    </div>
+  <div id="focoTempo">45:00</div>
+  <div class="tctrl">
+    <button class="b" id="focoIniciar">Iniciar</button>
+    <button class="b ghost" id="focoZerar">Zerar</button>
   </div>
-
-  <div class="c red">
-    <div class="lbl r">Ativas do dia</div>
-    <div class="row">
-      <input type="checkbox" id="c-61" onchange="m('61')">
-      <label for="c-61" id="l-61">
-        <span class="bdg">#61 HOJE</span><span class="itit">Ler CDA — Campo Grande/MS</span>
-        <div class="idsc">Portal e-SAJ · processo nº no caderno · senha no caderno. Prazo: 31/08/2026.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-47" onchange="m('47')">
-      <label for="c-47" id="l-47">
-        <span class="bdg o">#47 +13d</span><span class="itit">Enviar reiteração ao Dr. Luizmar</span>
-        <div class="idsc">Minuta pronta. Trava a #36. Não depende de horário comercial.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-36" onchange="m('36')">
-      <label for="c-36" id="l-36">
-        <span class="bdg o">#36</span><span class="itit">Rondônia — destravar pela #47</span>
-        <div class="idsc">Enviar #47 primeiro.</div>
-      </label>
-    </div>
-  </div>
-
-  <div class="c org">
-    <div class="lbl o">Também vencem hoje — 31/08</div>
-    <div class="row">
-      <input type="checkbox" id="c-66" onchange="m('66')">
-      <label for="c-66" id="l-66">
-        <span class="bdg o">#66</span><span class="itit">Simples Simplificado cancelado — data e saldo</span>
-        <div class="idsc">e-CAC / Matheus. Candidato a CDA na janela de dez/2026.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-67" onchange="m('67')">
-      <label for="c-67" id="l-67">
-        <span class="bdg o">#67</span><span class="itit">SISPAR — parcelas 31/07 e atrasos</span>
-        <div class="idsc">3 em atraso = rescisão. Matheus.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-68" onchange="m('68')">
-      <label for="c-68" id="l-68">
-        <span class="bdg o">#68</span><span class="itit">DTE-SN — responsável + gatilho recorrente</span>
-        <div class="idsc">Sem isso o prazo do Termo de Exclusão corre sozinho.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-69" onchange="m('69')">
-      <label for="c-69" id="l-69">
-        <span class="bdg o">#69</span><span class="itit">SISPAR CPF — R$ 276,40 · vence hoje</span>
-        <div class="idsc">Dívida ativa da União no CPF. Qual conta? É mensal? Matheus.</div>
-      </label>
-    </div>
-    <div class="row">
-      <input type="checkbox" id="c-71" onchange="m('71')">
-      <label for="c-71" id="l-71">
-        <span class="bdg o">#71</span><span class="itit">Análise tributária Prímor — só contratar com escopo escrito</span>
-        <div class="idsc">Beatriz. Condição: escopo por escrito + entrega até 10/09. Insumo gratuito do Matheus antes (regime dos 5 maiores clientes PJ).</div>
-      </label>
-    </div>
-  </div>
-
-  <div class="c">
-    <div class="lbl a">Bloco de 45 minutos</div>
-    <div id="td">45:00</div>
-    <div class="tbts">
-      <button class="btn p" id="bti" onclick="tg()">▶ Iniciar</button>
-      <button class="btn g" onclick="zt()">Zerar</button>
-    </div>
-  </div>
-
-  <div class="c">
-    <div class="lbl">Novo / observações do dia</div>
-    <textarea id="obs" rows="3" placeholder="Fatos, números, decisões..."></textarea>
-  </div>
-
-</div><!-- /executar -->
-
-<!-- ────────────────── VISÃO ────────────────── -->
-<div id="tab-v" class="tab">
-
-  <div class="c">
-    <div class="lbl a">Mapa de frentes</div>
-    <div class="fr"><span>🏭 Dívida cafeteria (âncora)</span><span class="st o">~R$ 3.931/mês</span></div>
-    <div class="fr"><span>⚖ Rondônia — exec. federal</span><span class="st r">Dr. Luizmar ≥13d sem resposta</span></div>
-    <div class="fr"><span>🏛 Campo Grande/MS — municipal</span><span class="st r">Prazo HOJE 31/08</span></div>
-    <div class="fr"><span>📂 Inventário (externo)</span><span class="st o">CND vencida 29/08</span></div>
-    <div class="fr"><span>🏠 Aluguel da fábrica</span><span class="st o">Prazo dez/2026</span></div>
-    <div class="fr"><span>📋 Tributário — regime LC 214</span><span class="st o">Análise até 10/09</span></div>
-    <div class="fr"><span>🏡 Casa 60/61</span><span class="st n">Parqueado</span></div>
-    <div class="fr"><span>🚗 Veículos (3)</span><span class="st n">Kia: baixar Detran</span></div>
-    <div class="fr"><span>🌎 Paraguai</span><span class="st n">CIN bloqueada</span></div>
-  </div>
-
-  <div class="c">
-    <div class="lbl">Horizonte</div>
-    <div class="fr"><span>02/09/2026</span><span class="st o">Inventário: emitir CND se Juverlan silenciar</span></div>
-    <div class="fr"><span>04/09/2026</span><span class="st g">#86 veredito painel · #90 conferir URL</span></div>
-    <div class="fr"><span>05/09/2026</span><span class="st g">#83 · #84 · #87 · #88</span></div>
-    <div class="fr"><span>12/09/2026</span><span class="st g">Sessão estratégica #91 — Posição Patrimonial + metas</span></div>
-    <div class="fr"><span>31/12/2026</span><span class="st o">Certidões limpas (aluguel fev/27)</span></div>
-    <div class="fr"><span>fev/2027</span><span class="st r">Locação nova — maior necessidade de caixa</span></div>
-  </div>
-
-  <div class="c">
-    <div class="lbl">Critério B+C — despertar parqueados</div>
-    <div class="sub" style="margin-top:4px">Parcelas em dia 3 meses + retiradas no teto 3 meses + reserva 3 meses de custo fixo. <strong>Endereço da reserva: fev/2027.</strong></div>
-  </div>
-
-  <div class="c">
-    <div class="lbl">Propósito</div>
-    <div class="sub" style="margin-top:4px">Aos 60, viver com tranquilidade e dignidade · construir renda recorrente · ajudar os filhos — <strong>e não depender deles na terceira idade</strong> · dormir em paz.</div>
-  </div>
-
-</div><!-- /visao -->
-
-<!-- ────────────────── TRIAGEM ────────────────── -->
-<div id="tab-t" class="tab">
-  <div class="c">
-    <div class="lbl">Por resolver — caixa de triagem</div>
-    <div class="sub" style="margin-bottom:10px">Dar data ou declarar resolvido — ambos escrevem no Relato.</div>
-
-    <div class="ti" id="ti-8">
-      <div><span class="bdg o">#8</span> <strong>IPTU Cáceres — valor da parcela</strong></div>
-      <div class="idsc">Vencida &gt;30 dias. Trava o corrente semanal (~R$ 732/sem. antes do IPTU).</div>
-      <div class="tbts2">
-        <input type="date" id="d-8">
-        <button class="sbtn" onclick="dd('8','#8 IPTU Cáceres')">Dar data</button>
-        <button class="sbtn" onclick="ok('8','#8 IPTU Cáceres')">Resolvido</button>
-      </div>
-    </div>
-
-    <div class="ti" id="ti-22">
-      <div><span class="bdg o">#22</span> <strong>Paraguai — decisão de financiamento</strong></div>
-      <div class="idsc">Vencida. Espera sem data.</div>
-      <div class="tbts2">
-        <input type="date" id="d-22">
-        <button class="sbtn" onclick="dd('22','#22 Paraguai financiamento')">Dar data</button>
-        <button class="sbtn" onclick="ok('22','#22 Paraguai financiamento')">Resolvido</button>
-      </div>
-    </div>
-
-    <div class="ti" id="ti-91">
-      <div><span class="bdg a">#91</span> <strong>Sessão estratégica 12/09 — Self Authoring</strong></div>
-      <div class="idsc">Exportar / copiar Self Authoring preenchido antes de 12/09. Gatilho: alarme de sábado 9h.</div>
-      <div class="tbts2">
-        <button class="sbtn" onclick="ok('91','#91 Self Authoring exportado')">Preparo feito</button>
-      </div>
-    </div>
-
-  </div>
-</div><!-- /triagem -->
-
-<!-- ────────────────── RELATO ────────────────── -->
-<div id="tab-r" class="tab">
-  <div class="c">
-    <div class="lbl">Relato do dia — 31/08/2026</div>
-    <div class="sub">Marcar nos outros painéis alimenta este relato, nunca o mestre.</div>
-    <textarea id="rel" rows="15"></textarea>
-    <button class="btn ok" onclick="cp()">Copiar relato do dia</button>
-    <div id="cok">✓ Copiado</div>
-  </div>
-  <div class="c">
-    <button class="btn g" style="width:100%;font-size:13px" onclick="lr()">Limpar relato</button>
-  </div>
-</div><!-- /relato -->
+  <div id="focoCorpo"></div>
+  <div class="facoes" id="focoAcoes"></div>
+</div>
 
 <script>
-// ── HORA ──
-function tick(){const n=new Date();document.getElementById('hh').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')}
-setInterval(tick,15000);tick();
+const CHAVE = 'painel_31_08_2026_v11';
+const CHAVES_ANTERIORES = ['painel_31_08_2026_v10','painel_31_08_2026_v7','painel_31_08_2026_v6','painel_31_08_2026_v5'];
+const TETO = 3;
 
-// ── STORAGE ──
-const K='wam20_31082026';
-let E={};
-function sv(){const j=JSON.stringify(E);try{localStorage.setItem(K,j);return}catch(x){}try{sessionStorage.setItem(K,j);return}catch(x){}document.getElementById('sa').style.display='block'}
-function ld(){try{const s=localStorage.getItem(K);if(s){E=JSON.parse(s);return}}catch(x){}try{const s=sessionStorage.getItem(K);if(s){E=JSON.parse(s);return}}catch(x){}}
+/* ===== v9: meta por item — próxima ação, natureza, tempo, energia =====
+   n: prazo=Prazo fatal · destrava=Destravador · fin=Financeiro ·
+      dep=Aguarda terceiro · mon=Monitorar. s: texto do selo (opcional). */
+const NAT = {prazo:'Prazo fatal', destrava:'Destravador', fin:'Financeiro',
+  dep:'Aguarda terceiro', mon:'Monitorar'};
+const META = {
+ '#61':{a:'Entrar no e-SAJ e testar as duas senhas; se falhar, WhatsApp da Vara (67) 99888-9623. Anotar valor, anos, natureza.', n:'prazo', t:"25′", e:'clique'},
+ '#47':{a:'Colar a minuta pronta e enviar ao Dr. Luizmar agora.', n:'destrava', s:'Destrava #36', t:"5′", e:'WhatsApp', v:'Também atende #32 (cópia integral dos autos), que permanece aberta até a cópia chegar.'},
+ '#36':{a:'Decidir: manter ou substituir — com a resposta (ou o silêncio) da #47.', n:'dep', s:'Depende da #47', t:"15′", e:'leitura'},
+ '#39':{a:'Ler o contrato e anotar: vencimento, renovação, aviso prévio, garantia.', n:'fin', t:"45′", e:'concentração'},
+ '#40':{a:'Juntar as três certidões que faltam e fechar o número total.', n:'destrava', s:'Destrava aluguel/crédito', t:"25′", e:'clique'},
+ '#72':{a:'Emitir a certidão do Cenprot-SP pelo CPF.', n:'destrava', s:'Destrava #40', t:"15′", e:'clique'},
+ '#75':{a:'Abrir o app com a Eliziany e puxar o CPF dela; confirmar o custo do Serasa Empresas.', n:'destrava', s:'Destrava #40', t:"15′", e:'clique'},
+ '#66':{a:'Mandar ao Matheus: data do cancelamento, saldo, já foi para Dívida Ativa?', n:'fin', t:"5′", e:'WhatsApp'},
+ '#68':{a:'Nomear quem olha o DTE-SN e criar o evento recorrente no mesmo ato.', n:'prazo', t:"15′", e:'clique'},
+ '#69':{a:'Confirmar se é mensal, se está em dia e de qual conta sai; havendo prestação vencendo hoje, pagar.', n:'fin', t:"15′", e:'clique'},
+ '#71':{a:'Mandar à Beatriz por escrito: escopo, entrega 10/09 como condição, valor fechado.', n:'dep', s:'Aguarda Prímor', t:"15′", e:'WhatsApp'},
+ '#67':{a:'Abrir o SISPAR e conferir se as duas parcelas de 31/07 caíram.', n:'fin', t:"5′", e:'clique'},
+ '#16':{a:'Consultar os três números no TJMT pelo cadastro da Eliziany — custo zero.', n:'destrava', s:'Destrava Cáceres', t:"25′", e:'clique'},
+ '#49':{a:'Perguntar à Dra. Elaine por escrito: a parcela é 1.000 ou 1.500? desde quando?', n:'fin', t:"5′", e:'WhatsApp'},
+ '#55':{a:'Cobrar as duas promessas por escrito, com prazo de resposta.', n:'dep', s:'Aguarda Dra. Elaine', t:"5′", e:'WhatsApp'},
+ '#54':{a:'Confirmar no extrato a entrada de ~R$ 65 mil e a posição do saldo de R$ 159 mil.', n:'fin', t:"25′", e:'concentração'},
+ '#22':{a:'Decidir o financiamento da viagem e registrar a classificação no caixa.', n:'fin', t:"15′", e:'decisão'},
+ '#8':{a:'Levantar o valor atual da parcela do IPTU; se não sair, fixar provisório com data de revisão.', n:'fin', t:"15′", e:'clique'},
+ '#34':{a:'Chamar o Balcão Virtual (08h30–15h) com as 5 perguntas prontas.', n:'dep', s:'Aguarda 3ª Vara', t:"25′", e:'ligação'},
+ '#37':{a:'Perguntar à Eliziany se alguém assinou como depositário; guardar a resposta.', n:'mon', t:"5′", e:'conversa'},
+ '#38':{a:'Localizar o contrato social e ler o quadro de sócios.', n:'mon', t:"15′", e:'leitura'},
+ '#62':{a:'Marcar um item no celular, abrir no desktop e conferir se apareceu.', n:'mon', t:"5′", e:'clique'},
+ '#59':{a:'Terça 05h30: criar o projeto, rodar uma sessão real e um fechamento completo.', n:'prazo', t:"45′", e:'concentração'},
+ '#76':{a:'Rodar a Busca Web do INPI e anotar titular, nº do processo, classe e data de concessão.', n:'prazo', t:"15′", e:'clique', v:'Depois desta busca, #77 (registro da marca Folhados d’Ouro) continua como etapa seguinte.'},
+ '#84':{a:'Obter por escrito se a cláusula dos 30% será revogada, ressalvada ou mantida no aditivo.', n:'dep', s:'Aguardando definição escrita', t:"5′", e:'WhatsApp'},
+ '#83':{a:'Em 05/09: a triagem foi usada ou virou botão morto?', n:'mon', t:"5′", e:'clique'},
+ '#65':{a:'Pegar com o Matheus o valor da primeira guia da PA 02/2026.', n:'fin', t:"5′", e:'WhatsApp'},
+ '#73':{a:'Nomear responsável e canal, repassar o acordo à Prímor e dar acesso ao CNPJ da PJ antiga antes da 2ª prestação.', n:'prazo', t:"15′", e:'clique'},
+ '#79':{a:'Eliziany entra no Serasa Minhas Contas, identifica conta e banco e cancela se não reconhecer.', n:'fin', t:"15′", e:'clique'},
+ '#78':{a:'No ciclo de 12/09: conferir os dois apps; se os dois ativaram, cancelar um.', n:'mon', t:"15′", e:'clique'},
+ '#57':{a:'Obter com a Prímor o comparativo numérico da empresa: Simples cheio × híbrido IBS/CBS, com produtos, insumos e clientes reais.', n:'destrava', s:'Data-limite 15/09', t:"25′", e:'análise'},
+ '#26':{a:'Pedir a 2ª via da certidão de casamento no cartório.', n:'dep', s:'Cartório', t:"25′", e:'presencial'},
+ '#7':{a:'Reagendar a 2ª via da CIN.', n:'destrava', s:'Destrava Paraguai', t:"15′", e:'clique'},
+ 'Vale-alimentação da equipe':{a:'Definir valor, dia e canal — e criar o evento recorrente no ato.', n:'fin', t:"15′", e:'clique'},
+ 'Embalagens — fabricante × revenda Hilfran':{a:'Levantar o preço do fabricante × Hilfran antes de qualquer negociação.', n:'fin', t:"25′", e:'clique'},
+ 'Consumo real de farinha e manteiga pelas notas':{a:'Somar o consumo real pelas notas do mês.', n:'fin', t:"45′", e:'concentração'},
+ 'Cobertura da função do Jack — laminação e batida':{a:'Sustentar a rotina 05h30 e proteger o bloco mental da manhã.', n:'mon', e:'presencial'},
+ 'Captura do conhecimento do Jack':{a:'Confirmar se o piloto de vídeo aconteceu; se não, gravar um ciclo.', n:'mon', t:"15′", e:'presencial'},
+ 'Ritual de RH semanal — semáforo do time':{a:'Escolher dia e hora fixos do semáforo e criar o evento.', n:'mon', t:"5′", e:'clique'},
+ 'Higrômetro e amostra ao Anay':{a:'Confirmar o próximo passo operacional do higrômetro e separar a amostra ao Anay.', n:'mon', t:"15′", e:'presencial'}
+};
+const metaDe = it => META[it.id!=='OP' ? it.id : it.tit] || {};
+function selosHtml(m){
+  let h='';
+  if(m.n) h += `<span class="selo ${m.n}">${m.s||NAT[m.n]}</span>`;
+  if(m.t||m.e) h += `<span class="selo te">${[m.t,m.e].filter(Boolean).join(' · ')}</span>`;
+  return h ? `<div class="selos">${h}</div>` : '';
+}
+const RANK = ['①','②','③'];
+const vinculoHtml = m => m.v ? `<div class="vinculo">${m.v}</div>` : '';
+const PRIORIDADE_BASE = ['#61','#47','#36'];
 
-// ── ABAS ──
-function ir(n){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));document.getElementById('tab-'+n).classList.add('on');document.getElementById('bn-'+n).classList.add('on')}
+const TITULO = document.title;
 
-// ── DESCRIÇÕES ──
-const D={
-  'ij':'Inventário · cobrou Juverlan (WhatsApp + e-mail) — renovação CND estadual SEFAZ/PGE-MT',
-  'is':'Inventário · ligou para Sicredi — e-mail setor de contratos',
-  'ib':'Inventário · bilateral com Dra. Bruna realizada 17h30 (Teams — gravar)',
-  '61':'#61 CDA Campo Grande/MS lida no e-SAJ',
-  '47':'#47 reiteração enviada ao Dr. Luizmar',
-  '36':'#36 Rondônia — ação avançada',
-  '66':'#66 Simples Simplificado cancelado — data e saldo confirmados',
-  '67':'#67 SISPAR parcelas 31/07 conferidas com Matheus',
-  '68':'#68 DTE-SN responsável nomeado e gatilho criado',
-  '69':'#69 SISPAR CPF R$276,40 confirmado / pago',
-  '71':'#71 escopo análise Prímor escrito e enviado à Beatriz',
+const REGUA = [
+  {d:'31/08', t:'HOJE', x:'#61 prazo processual + 8 itens', hoje:true},
+  {d:'01/09', t:'', x:'#59 criar Folhados 00, 05h30 · revisão mensal R24'},
+  {d:'05/09', t:'', x:'#76 marca · #84 trava dos 30%'},
+  {d:'12/09', t:'', x:'#78 PIX automático SABESP'},
+  {d:'15/09', t:'', x:'#57 rota tributária — data-limite'},
+  {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026)'},
+  {d:'31/12', t:'', x:'certidões limpas — frente aluguel'}
+];
+
+const ITENS = [
+  {id:'#61', aba:'wam', ativa:true, tit:'CDA de Campo Grande no e-SAJ',
+   desc:'Testar as duas senhas do e-SAJ — estão no caderno e no mestre (#61), fora deste arquivo. Alternativa: WhatsApp da Vara (67) 99888-9623. Anotar VALOR, ANOS e NATUREZA do débito.',
+   prazo:'PRAZO PROCESSUAL HOJE — 31/08', cor:'vermelho'},
+  {id:'#47', aba:'wam', ativa:true, tit:'Enviar a reiteração ao Dr. Luizmar',
+   desc:'Minuta pronta desde 20/08, com a terceira pergunta (efeito da transação sobre a penhora). Falta o envio.',
+   prazo:'VENCIDA há 13 dias — prazo era 19/08', cor:'vermelho'},
+  {id:'#36', aba:'wam', ativa:true, tit:'Manter ou substituir o patrocínio do Dr. Luizmar',
+   desc:'Silêncio em três tentativas desde 06/08. Depende do que a #47 responder — ou do silêncio dela.',
+   prazo:'VENCIDA — o portão de decisão era 24/08', cor:'vermelho'},
+
+  {id:'AGENDA', aba:'wam', tit:'CONFLITO DE AGENDA — bilateral Dra. Bruna às 17h30 bate com o FECHAMENTO WAM',
+   desc:'Bilateral por Teams, GRAVAR. Mesmo horário do evento recorrente de fechamento. Decidir de manhã: fechar antes das 17h30, ou mover o fechamento para depois da reunião. Hoje é o dia mais cheio da semana — perder o fechamento é como a lacuna de 17 a 28/08 começou.',
+   prazo:'DECIDIR HOJE, no primeiro bloco', cor:'vermelho'},
+  {id:'INV-JUVERLAN', aba:'wam', tit:'Cobrar o Juverlan (ACS Tecnologia) — WhatsApp E e-mail',
+   desc:'Renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio, que venceu em 29/08 e é pré-requisito da escritura. Sem retorno, emitir pelo portal da SEFAZ-MT em 02/09 às 09h00 — o fallback está declarado, a espera tem data. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
+   prazo:'Hoje — 31/08, às 09h00', cor:'vermelho'},
+  {id:'INV-SICREDI', aba:'wam', tit:'Ligar para a Sicredi — (65) 3221-0800',
+   desc:'Obter o e-mail do setor de contratos. Ação do Inventário, entra aqui porque é de hoje de manhã. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
+   prazo:'Hoje — 31/08, pela manhã', cor:'vermelho'},
+
+  {id:'#39', aba:'wam', tit:'Contrato de locação da fábrica — ler as cláusulas',
+   desc:'Data exata de vencimento, cláusula de renovação, prazo de aviso prévio, garantia vigente. Tarefa de concentração, bloco 05h–08h.',
+   prazo:'Hoje — 31/08, evento 08h10', cor:'vermelho'},
+  {id:'#40', aba:'wam', tit:'Fechar a posição de negativação',
+   desc:'Falta o Serasa do CNPJ, o CPF da Eliziany e a certidão Cenprot-SP. O CPF de Wagner já saiu: 13 protestos + 1 PEFIN.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#72', aba:'wam', tit:'Certidão do Cenprot-SP por CPF',
+   desc:'Diz qual título corresponde a qual protesto, de qual veículo, e qual já está pago. Sem ela não se sabe o desembolso real.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#75', aba:'wam', tit:'Serasa Empresas (CNPJ) + CPF da Eliziany pelo app dela',
+   desc:'Dado de terceiro não abre pela assinatura de Wagner. Confirmar o custo do Serasa Empresas antes de contratar.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#66', aba:'wam', tit:'Simplificado cancelado pela Receita — levantar com o Matheus',
+   desc:'Data do cancelamento, saldo remanescente e se já foi inscrito em Dívida Ativa da União.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#68', aba:'wam', tit:'Quem monitora o DTE-SN / caixa postal do e-CAC',
+   desc:'Nomear responsável e criar gatilho recorrente. Sem isso o prazo do Termo de Exclusão corre sozinho até o 45º dia.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#69', aba:'wam', tit:'SISPAR previdenciário no CPF de Wagner (R$ 276,40)',
+   desc:'Vence hoje. É mensal? está em dia? sai de qual conta? Obrigação pessoal fora do teto de R$ 6.900.',
+   prazo:'Vence hoje — 31/08', cor:'vermelho'},
+  {id:'#71', aba:'wam', tit:'Análise tributária da Prímor — condições por escrito',
+   desc:'Escopo escrito, entrega até 10/09 como condição contratual, valor fechado. Duas correções exigidas: regime dos clientes e alíquota reduzida dos produtos de panificação.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
+  {id:'#67', aba:'wam', tit:'Parcelas de 31/07 dos dois SISPAR constam "A vencer"',
+   desc:'Confirmar com o Matheus se foram pagas e quantas estão em atraso. Três em atraso rescindem — um parcelamento já caiu assim.',
+   prazo:'VENCIDA — era "esta semana" em 21/08', cor:'vermelho'},
+  {id:'#16', aba:'wam', tit:'Consulta no TJMT com os três números de Cáceres',
+   desc:'Caminho gratuito: gov.br ouro da Eliziany por reconhecimento facial. Diz qual processo penhora o lote 16.',
+   prazo:'VENCIDA — era 11/08', cor:'vermelho'},
+  {id:'#49', aba:'wam', tit:'Valor da parcela da Dra. Elaine — R$ 1.000 × R$ 1.500',
+   desc:'Divergência declarada, não resolvida. A data da âncora também está sob dúvida: 20/08 (P.312 do Inventário) × 14/08.',
+   prazo:'VENCIDA — 14/08 passou sem registro', cor:'vermelho'},
+  {id:'#55', aba:'wam', tit:'Cobrar as duas promessas da Dra. Elaine',
+   desc:'Decisão da EPE do Sandro + consulta à PGE sobre baixa do débito antigo. A PGE nunca foi consultada.',
+   prazo:'VENCIDA — 14/08 passou sem registro', cor:'vermelho'},
+  {id:'#54', aba:'wam', tit:'Negócio Jaime — conferir no extrato',
+   desc:'Entrada de ~R$ 65.000 (Pix 10/09/2025) e a posição do saldo de R$ 159.000. Prazo contratual de 45–90 dias vencido desde ~nov/2025.',
+   prazo:'VENCIDO no contrato há ~9 meses', cor:'vermelho'},
+  {id:'#22', aba:'wam', tit:'Decidir o financiamento da viagem ao Paraguai',
+   desc:'R$ 4.000–9.500, estimado e não de extrato. Decisão de classificação no caixa.',
+   prazo:'VENCIDA — era antes de 01/08', cor:'vermelho'},
+  {id:'#8',  aba:'wam', tit:'Parcela mensal do IPTU de Cáceres',
+   desc:'Simulações de 29/11/2024: 47× R$ 539,24 ou 47× R$ 364,21, a atualizar. R8 manda levantar OU fixar provisório com data de revisão.',
+   prazo:'VENCIDO desde 19/07 — R8 estourada 3×', cor:'vermelho'},
+  {id:'#34', aba:'wam', tit:'Balcão Virtual da 3ª Vara de Cacoal — 5 perguntas',
+   desc:'Sem credencial digital. Atende 08h–15h no horário de Franca. Roteiro completo na descrição do evento recorrente.',
+   prazo:'Recorrente seg–sex, 08h30 — sem registro desde 20/08', cor:'ambar'},
+  {id:'#37', aba:'wam', tit:'Visita do oficial de justiça — alguém assinou como depositário?',
+   desc:'O endereço do veículo nos autos é a casa 60, então a diligência tende a ocorrer lá. Depositário tem obrigação de apresentar o bem.',
+   prazo:'O quanto antes — risco datado', cor:'ambar'},
+  {id:'#38', aba:'wam', tit:'A Eliziany é sócia no CNPJ da fábrica?',
+   desc:'RESPONDIDA POR RELATO em 28/08: não é sócia do Canto da Vó Ltda (hoje com nome de fantasia Folhados d\'Ouro). Falta a prova: contrato social ou cartão CNPJ.',
+   prazo:'Fechar por documento, não por relato', cor:'ambar'},
+  {id:'#62', aba:'wam', tit:'Testar a sincronização do painel entre aparelhos',
+   desc:'Marcar no celular, abrir no desktop, tocar ↻. Vale para ativas, resolvidos e triagem.',
+   prazo:'Ancorada no primeiro uso deste painel', cor:'ambar'},
+  {id:'#59', aba:'wam', tit:'Criar o projeto "Folhados 00 — Painel"',
+   desc:'Instruções de 16/08. Estrela só nele e no WAM. O bloco de interface não entra nesta etapa.',
+   prazo:'Terça 01/09, 05h30 — bloco de concentração', cor:'ambar'},
+  {id:'#76', aba:'wam', tit:'Marca "Canto da Vó" — Busca Web do INPI',
+   desc:'Gratuita. Titular, nº do processo, classe e DATA DE CONCESSÃO. Da concessão sai a janela de prorrogação — o INPI não avisa.',
+   prazo:'Até 05/09', cor:'ambar'},
+  {id:'#84', aba:'wam', tit:'Trava dos 30% do salário — obter por escrito',
+   desc:'Contrato de honorários de 2022, § único da Cl. 3ª. O aditivo de 15/07 mantém o contrato originário incólume. Revogada, ressalvada ou mantida?',
+   prazo:'Até 05/09', cor:'ambar'},
+  {id:'#83', aba:'wam', tit:'Aba "Por resolver" como caixa de triagem — em uso',
+   desc:'Decidida em 28/08 pela opção (c). Os dois botões escrevem no relato; o fechamento decide com data e fonte. Conferir em 05/09 se a triagem está sendo usada ou virou botão morto.',
+   prazo:'Revisão de uso em 05/09', cor:'ambar'},
+  {id:'#65', aba:'wam', tit:'Valor da primeira guia da PA 02/2026',
+   desc:'Pergunta feita 2× ao Matheus em 21/08 sem resposta. Sem o valor não sai a mensagem nem o pagamento.',
+   prazo:'Primeira guia em setembro', cor:'ambar'},
+  {id:'#73', aba:'wam', tit:'Emissão mensal da guia da transação PGFN',
+   desc:'Nomear responsável e canal, e dar à Prímor acesso ao CNPJ da PJ antiga. Guia não emitida = rescisão + 2 anos sem nova transação.',
+   prazo:'Antes do vencimento da 2ª prestação', cor:'ambar'},
+  {id:'#79', aba:'wam', tit:'PIX automático em nome da Eliziany, não reconhecido',
+   desc:'Ela entra no Serasa Minhas Contas, identifica conta e banco vinculados, e cancela se não reconhecer.',
+   prazo:'O quanto antes', cor:'ambar'},
+  {id:'#78', aba:'wam', tit:'PIX automático da SABESP — dois mandatos possíveis',
+   desc:'Confirmar se ativou no Inter, no Mercado Pago, nos dois ou em nenhum. Dois ativos = dois débitos, sem compensação.',
+   prazo:'Ciclo de 12/09', cor:'ambar'},
+  {id:'#57', aba:'wam', tit:'Rota tributária — fechar o número da empresa',
+   desc:'Resta a comparação numérica: Simples cheio × híbrido IBS/CBS por fora, usando produtos, insumos e perfil real dos clientes. Nada se decide sem esse número.',
+   prazo:'Data-limite 15/09', cor:'ambar'},
+  {id:'#26', aba:'wam', tit:'Certidão de casamento original',
+   desc:'Primeiro elo: certidão → agendamento da 2ª via da CIN → CIN → certidão de nascimento → apostilamento → viagem.',
+   prazo:'O quanto antes', cor:'ambar'},
+  {id:'#7',  aba:'wam', tit:'Reagendar o atendimento da 2ª via da CIN',
+   desc:'Varrer vagas em outras unidades e registrar se a falta era de agosto, de setembro ou de ambos (#27).',
+   prazo:'O quanto antes', cor:'ambar'},
+
+  {id:'OP', aba:'fabrica', tit:'Vale-alimentação da equipe',
+   desc:'Obrigação recorrente que nunca entrou em sistema nenhum. Falta responsável, data, canal de pagamento e valor confirmado no extrato.',
+   prazo:'Sem gatilho — não existe como compromisso', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Embalagens — fabricante × revenda Hilfran',
+   desc:'Comparação de preço por escrito, com lote mínimo. Nenhum contato antes do número escrito (régua nº 2).',
+   prazo:'Antes de qualquer negociação', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Consumo real de farinha e manteiga pelas notas',
+   desc:'Um dos três dados exigidos antes de conversar sobre crédito com fornecedor. Os outros: preço com lote mínimo e prazo médio de pagamento dos clientes pelo extrato.',
+   prazo:'Antes de procurar o fabricante', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Cobertura da função do Jack — laminação e batida',
+   desc:'Rotina fixa 05h30–18h00, bloco mental antes da equipe chegar, ciclos com janelas administrativas de 25 min.',
+   prazo:'Em curso, ~1 mês', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Captura do conhecimento do Jack',
+   desc:'Piloto de vídeo da laminação. Critério de aceite: pelo menos um evento marcado no tempo que passou despercebido.',
+   prazo:'Confirmar se o piloto aconteceu', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Ritual de RH semanal — semáforo do time',
+   desc:'Maycon, Jack e Luana. Dois amarelos seguidos = conversa obrigatória. Default: 20 min do sábado 9h se a sexta não for confirmada (#58).',
+   prazo:'Sem gatilho confirmado', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Higrômetro e amostra ao Anay',
+   desc:'Itens capturados no período e triados como Operação. Ficam aqui até o Folhados 00 existir.',
+   prazo:'Sem data', cor:'ambar'}
+];
+
+const SEM_DATA = [
+  ['#1-bis','Conferir no extrato o débito automático de R$ 1.464,73 de 07/08'],
+  ['#2','Enviar o comprovante do pagamento de 28/07 à Concilig'],
+  ['#3','Evento recorrente dia 05 — garantir saldo na conta da PJ (nº no mestre)'],
+  ['#4','Confirmar a fonte do valor pago (mútuo × PJ) e classificar no Conta Azul'],
+  ['#6','Cadência de acompanhamento judicial: semanal + quinzenal com a Dra. Elaine'],
+  ['#9','Momento fixo semanal de revisão do fluxo de caixa'],
+  ['#10','Reunião da imobiliária de 20/07 — qual frente? (R10)'],
+  ['#11','Dra. Bruna — escopo de contrato: qual frente e qual papel? (R10)'],
+  ['#12','Dra. Elaine — escopo formal por escrito e data de fim'],
+  ['#13','Orçamento do conserto do Sentra'],
+  ['#15','Gravame do Kia → baixa no Detran'],
+  ['#17','Parecer sobre o risco de transferir a escritura da casa 60/61'],
+  ['#18','BPO — dois estudos: sair sem perder o Conta Azul, e escopo da Eliziany'],
+  ['#19','ETH US$ 71,95 no Mercado Livre — rastrear hash e rede'],
+  ['#20','Lançamento das dívidas no Conta Azul'],
+  ['#21','Lista completa de exigências do Poupatempo, por escrito, antes de ir (R11)'],
+  ['#23','Verificar o sistema de turnos do MigraMóvil'],
+  ['#24','Validar ou ajustar a ficha "Paraguai"'],
+  ['#25','Decidir sobre a consultoria de trâmite (R$ 210)'],
+  ['#27','Varrer vagas da CIN em outras unidades e fechar a lacuna do mês'],
+  ['#28','Decidir formalmente a remarcação da viagem (setembro → out ou nov)'],
+  ['#29','Médico prescritor: horário da última dose e rastreio de apneia'],
+  ['#30','Academia perto do trabalho — dois dias fixos, lembrete recorrente'],
+  ['#33','Proposta de honorários por escrito do Dr. Luizmar'],
+  ['#35','Redirecionamento aos sócios (Súmula 435) — CPF de Wagner e da Eliziany no Regularize'],
+  ['#41','A saída do imóvel é certa? A ruptura é com a imobiliária ou com o proprietário?'],
+  ['#42','Modalidades de garantia aceitas e custo de cada uma'],
+  ['#44','Bradesco/gerente 07/08 — qual parcela foi tratada e qual o resultado, por escrito'],
+  ['#46','Responsável e gatilho para o preenchimento diário do registro de calibragem'],
+  ['#48','Competência da diligência do Citroën: comarca de Franca × Justiça Federal'],
+  ['#50','Certidões de matrícula M.7.346 e M.7.347 no CRI de Cáceres'],
+  ['#51','Ler a decisão da exceção de pré-executividade — colar antes de responder mérito'],
+  ['#52','Papel do Sandro no processo e o instrumento formal da compensação'],
+  ['#53','Parcelamento citado ao Jaime — qual débito é esse e qual o status'],
+  ['#56','Tratamento do crédito remanescente do espólio na PGE'],
+  ['#58','Confirmar o gatilho do ritual de RH semanal'],
+  ['#60','Conferir a agenda antiga contra a tabela de pendências'],
+  ['#63','Dar ou negar aval à régua candidata R21 — "volume não é memória"'],
+  ['#74','Classificar no Conta Azul o pagamento da transação de outra PJ'],
+  ['#80','Registrar o PIX automático da internet Algar pessoal no Mercado Pago'],
+  ['#81','Três dados exigidos antes de negociar crédito com fornecedor'],
+  ['#85','Retificação candidata da R19 — três destinos (parqueada, com critério)']
+];
+
+/* ===== camada integral (v6): urgência e frentes — derivadas do mestre v4 ===== */
+const URG = {
+  '#47':'venc','#36':'venc','#67':'venc','#16':'venc','#49':'venc','#55':'venc',
+  '#54':'venc','#22':'venc','#8':'venc',
+  '#61':'hoje','#39':'hoje','#40':'hoje','#72':'hoje','#75':'hoje','#66':'hoje',
+  '#68':'hoje','#69':'hoje','#71':'hoje',
+  '#59':'sem7','#76':'sem7','#84':'sem7','#83':'sem7',
+  '#34':'dep','#78':'dep','#57':'dep','#65':'dep','#73':'dep',
+  '#37':'aberto','#38':'aberto','#62':'aberto','#79':'aberto','#26':'aberto','#7':'aberto'
+};
+const urgDe = it => URG[it.id] || 'aberto';
+const URG_ORDEM = ['venc','hoje','sem7','dep','aberto'];
+const URG_ROTULO = {venc:'Vencidas', hoje:'Vencem hoje — 31/08',
+  sem7:'Próximos 7 dias', dep:'Acompanhamento / depois com data', aberto:'Sem data fixa'};
+
+const FRENTES = [
+  {k:'cg', n:'Campo Grande', ids:['#61']},
+  {k:'ro', n:'Rondônia · Citroën', ids:['#47','#36','#34','#37']},
+  {k:'mt', n:'Cáceres · MT', ids:['#16','#49','#55','#54','#8']},
+  {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#71','#65','#73','#57']},
+  {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38']},
+  {k:'inv', n:'Inventário (interface)', ids:['#84','INV-JUVERLAN','INV-SICREDI','AGENDA'],
+    extra:'CND estadual nº 0063507965 VENCIDA em 29/08 — cobrança ao Juverlan hoje 09h00, emissão própria em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · teto PGDAU 30/09 · fim do 2º Termo Aditivo 12/12 · lacuna: não se sabe se a ação de 28/08 (acionar o Juverlan) chegou a ser executada'},
+  {k:'ct', n:'Contas & PIX', ids:['#79','#78']},
+  {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
+  {k:'mk', n:'Marca · INPI', ids:['#76']},
+  {k:'fb', n:'Fábrica', aba:'fabrica', ids:[]},
+  {k:'sy', n:'Sistema & método', ids:['#62','#59','#83']}
+];
+let frenteAberta = null;
+
+let estado = {aba:'wam', itens:{}, triagem:{}, livre:''};
+/* v11: o estado passa a ser gravado por ID estável, não por índice.
+   Inserir ou remover um item deixa de deslocar as marcações dos vizinhos. */
+const idEstavel = it => it.id !== 'OP' ? it.id : 'OP:'+it.tit;
+ITENS.forEach(it=>{ estado.itens[idEstavel(it)] = {status: it.ativa ? 'ativa' : 'fila', nota:''}; });
+
+/* ordem dos painéis v5–v9, usada só para traduzir estado antigo gravado por índice */
+const ORDEM_LEGADA = ['#61', '#47', '#36', '#39', '#40', '#72', '#75', '#66', '#68', '#69', '#71', '#67', '#16', '#49', '#55', '#54', '#22', '#8', '#34', '#37', '#38', '#62', '#59', '#76', '#84', '#83', '#65', '#73', '#79', '#78', '#26', '#7', 'OP:Vale-alimentação da equipe', 'OP:Embalagens — fabricante × revenda Hilfran', 'OP:Consumo real de farinha e manteiga pelas notas', 'OP:Cobertura da função do Jack — laminação e batida', 'OP:Captura do conhecimento do Jack', 'OP:Ritual de RH semanal — semáforo do time', 'OP:Higrômetro e amostra ao Anay'];
+
+const $ = s => document.querySelector(s);
+const chave = i => idEstavel(ITENS[i]);
+const abasDef = [{k:'wam',n:'WAM'},{k:'fabrica',n:'Fábrica'},{k:'porresolver',n:'Por resolver'}];
+const ROTULO = {feito:'Feito', conteudo:'Feito — tem conteúdo para o mestre', naofeito:'Não feito'};
+const RESOLVIDO = ['feito','conteudo','naofeito'];
+
+const ativasDe = a => ITENS.map((it,i)=>({it,i})).filter(o=>o.it.aba===a && estado.itens[chave(o.i)].status==='ativa');
+const resolvidosDe = a => ITENS.map((it,i)=>({it,i})).filter(o=>o.it.aba===a && RESOLVIDO.includes(estado.itens[chave(o.i)].status));
+const filaDe = a => ITENS.map((it,i)=>({it,i})).filter(o=>o.it.aba===a && estado.itens[chave(o.i)].status==='fila');
+const nTriados = () => Object.keys(estado.triagem).length;
+
+function reguaRender(){
+  $('#regua').innerHTML = REGUA.map(r=>
+    `<span class="rb ${r.hoje?'hoje':''}"><b>${r.d}</b>${r.t?' - '+r.t:''} <span class="d">${r.x}</span></span>`).join('');
+}
+
+/* ===== placar ===== */
+function contagens(){
+  const c = {venc:0,hoje:0,sem7:0,trat:0,ativas:0};
+  ITENS.forEach((it,i)=>{
+    const s = estado.itens[chave(i)].status;
+    if(RESOLVIDO.includes(s)){ c.trat++; return; }
+    if(s==='ativa') c.ativas++;
+    const u = urgDe(it);
+    if(u==='venc'||u==='hoje'||u==='sem7') c[u]++;
+  });
+  return c;
+}
+function placarRender(){
+  const c = contagens();
+  $('#placar').innerHTML =
+    `<div class="pz venc"><span class="n">${c.venc}</span><span class="r">vencidas</span></div>`+
+    `<div class="pz hoje"><span class="n">${c.hoje}</span><span class="r">hoje 31/08</span></div>`+
+    `<div class="pz sem7"><span class="n">${c.sem7}</span><span class="r">em 7 dias</span></div>`+
+    `<div class="pz trat"><span class="n">${c.trat}</span><span class="r">tratadas</span></div>`;
+  const feitasTop = PRIORIDADE_BASE.filter(id=>{
+    const i=ITENS.findIndex(it=>it.id===id);
+    return i>=0 && RESOLVIDO.includes(estado.itens[chave(i)].status);
+  }).length;
+  $('#barraFill').style.width = Math.round(feitasTop/PRIORIDADE_BASE.length*100)+'%';
+  $('#barraLabel').textContent = `Prioridades-base do dia: ${feitasTop}/${PRIORIDADE_BASE.length} tratadas`;
+}
+
+/* ===== prioridade/âncora dinâmica ===== */
+const HERO_INFO = {
+  '#61':{p:'é o único prazo processual do dia; deixar passar altera a posição jurídica.', d:'valor, anos e natureza da CDA — sem isso não existe estratégia de saída em Campo Grande.'},
+  '#47':{p:'a minuta está pronta e a frente de Rondônia segue parada por falta do envio.', d:'#36 (decisão sobre manter ou substituir o patrocínio) e a cobrança da #32 (cópia integral dos autos).'},
+  '#36':{p:'o portão de decisão já venceu; a frente não pode ficar indefinidamente sem definição de patrocínio.', d:'a rota jurídica seguinte de Rondônia.'},
+  '#39':{p:'o contrato define o calendário real da possível mudança da fábrica.', d:'vencimento, renovação, aviso prévio e garantia vigente.'},
+  '#40':{p:'nome limpo é condição da garantia locatícia e do crédito com fornecedor.', d:'o custo real da limpeza e a frente do aluguel.'}
+};
+function heroIdxAtual(){
+  return ITENS.findIndex((it,i)=>it.aba==='wam' && !RESOLVIDO.includes(estado.itens[chave(i)].status));
+}
+function heroRender(){
+  const i=heroIdxAtual(), el=$('#ancora');
+  if(i<0){ el.innerHTML='<div class="rotulo">Se eu fizer só uma coisa hoje</div><div class="hx"><b>Nenhuma pendência WAM aberta neste painel.</b></div>'; return; }
+  const it=ITENS[i], m=metaDe(it), h=HERO_INFO[it.id]||{p:it.desc,d:'o próximo passo desta frente.'};
+  el.innerHTML = `<div class="rotulo">Se eu fizer só uma coisa hoje</div>
+    <div class="linhaA"><span class="estrela" aria-hidden="true">★</span>
+      <span class="tx"><b>${it.id} · ${it.tit}</b><span class="cd" id="cd"></span></span>
+      <button data-hero-focus="${i}">Focar 45′</button></div>
+    <div class="hx"><b>Por quê:</b> ${h.p}</div>
+    <div class="hx"><b>Destrava:</b> ${h.d}</div>
+    <div class="hx"><b>Ação exata:</b> ${m.a||it.desc}</div>`;
+  cdRender();
+}
+function cdRender(){
+  const i=heroIdxAtual(); if(i<0 || !$('#cd')) return;
+  const it=ITENS[i], el=$('#cd');
+  if(it.id!=='#61'){ el.textContent=it.prazo; return; }
+  const alvo = new Date('2026-08-31T23:59:59-03:00');
+  const ms = alvo - new Date();
+  if(ms < 0){ el.textContent = 'PRAZO ESTOURADO — tratar já'; return; }
+  const d = Math.floor(ms/86400000);
+  if(d < 1){
+    const h = Math.floor(ms/3600000), m = Math.floor(ms%3600000/60000);
+    el.textContent = 'vence HOJE — restam '+h+'h'+String(m).padStart(2,'0');
+  } else el.textContent = 'faltam '+d+(d===1?' dia':' dias')+' — vence 31/08';
+}
+
+/* ===== mapa das frentes ===== */
+const itensDaFrente = f => ITENS.map((it,i)=>({it,i}))
+  .filter(o => f.ids.includes(o.it.id) || (f.aba && o.it.aba===f.aba))
+  .map(o=>o.i);
+
+function mapaRender(){
+  $('#mapa').innerHTML = FRENTES.map(f=>{
+    const c = {venc:0,hoje:0,sem7:0,resto:0};
+    itensDaFrente(f).forEach(i=>{
+      if(RESOLVIDO.includes(estado.itens[chave(i)].status)) return;
+      const u = urgDe(ITENS[i]);
+      c[(u==='dep'||u==='aberto')?'resto':u]++;
+    });
+    const pior = c.venc?'venc':(c.hoje?'hoje':(c.sem7?'sem7':'ok'));
+    const dots = [['venc',c.venc],['hoje',c.hoje],['sem7',c.sem7],['resto',c.resto]]
+      .filter(p=>p[1]).map(p=>`<span class="dot ${p[0]}">${p[1]}</span>`).join('')
+      || '<span class="dot ok">✓</span>';
+    return `<button class="tile ${pior} ${frenteAberta===f.k?'aberta':''}" data-frente="${f.k}">
+      <span class="tn">${f.n}</span><span class="td">${dots}</span>
+      ${f.extra?`<span class="tx">${f.extra}</span>`:''}</button>`;
+  }).join('');
+  drawerRender();
+}
+function drawerRender(){
+  const el = $('#drawer');
+  const f = FRENTES.find(x=>x.k===frenteAberta);
+  if(!f){ el.hidden = true; el.innerHTML=''; return; }
+  el.hidden = false;
+  el.innerHTML = `<div class="dhead">${f.n} — itens da frente (toque de novo no bloco para fechar)</div>` +
+    itensDaFrente(f).map(i=>{
+      const it = ITENS[i], s = estado.itens[chave(i)].status;
+      let acao;
+      if(s==='fila') acao = `<button class="b" data-ac="puxar">Puxar</button>`;
+      else if(s==='ativa') acao = `<span class="estado t">Ativa agora</span>`;
+      else acao = `<span class="estado ${s==='feito'?'f':(s==='conteudo'?'c':'n')}">${ROTULO[s]}</span>`;
+      return `<div class="mini u-${urgDe(it)}" data-i="${i}">
+        <div class="txt"><span class="id">${it.id}</span><b>${it.tit}</b>
+        <span class="mp">${it.prazo}</span></div>
+        <div class="acoes">${acao}</div></div>`;
+    }).join('');
+}
+
+/* ===== régua do tempo proporcional (29/08 → 30/09) ===== */
+function tempoRender(){
+  const ini = new Date('2026-08-29T00:00:00-03:00');
+  const fim = new Date('2026-10-01T00:00:00-03:00');
+  const pct = d => Math.min(99, Math.max(1,
+    Math.round((new Date(d+'T12:00:00-03:00') - ini) / (fim - ini) * 100)));
+  const marcos = [
+    {d:'2026-08-31', lb:'31/08', tx:'#61 + 8 itens', u:'hoje', pos:'cima'},
+    {d:'2026-09-01', lb:'01/09', tx:'#59 05h30 · R24', u:'sem7', pos:'baixo'},
+    {d:'2026-09-05', lb:'05/09', tx:'#76 · #84 · #83', u:'sem7', pos:'cima'},
+    {d:'2026-09-12', lb:'12/09', tx:'#78 SABESP', u:'sem7', pos:'baixo'},
+    {d:'2026-09-15', lb:'15/09', tx:'#57 tributos', u:'sem7', pos:'cima'},
+    {d:'2026-09-30', lb:'30/09', tx:'regime · PGDAU', u:'sem7', pos:'baixo'}
+  ];
+  let html = '<div class="linha"></div>';
+  marcos.forEach(m=>{
+    const p = pct(m.d);
+    html += `<span class="mk ${m.u}" style="left:${p}%"></span>
+      <span class="lb ${m.pos}" style="left:${p}%"><b>${m.lb}</b>${m.tx}</span>`;
+  });
+  const agora = new Date();
+  if(agora >= ini && agora <= fim){
+    const pa = Math.min(99, Math.max(1, Math.round((agora - ini)/(fim - ini)*100)));
+    html += `<span class="agulha" style="left:${pa}%"><i>VOCÊ</i></span>`;
+  }
+  $('#tempo').innerHTML = html;
+}
+
+function abasRender(){
+  $('#abas').innerHTML = abasDef.map(a=>{
+    let c = a.k==='porresolver'
+      ? SEM_DATA.length + (nTriados() ? ' · '+nTriados()+' triados' : '')
+      : ativasDe(a.k).length+'/'+TETO;
+    return `<button data-aba="${a.k}" class="${estado.aba===a.k?'on':''}">${a.n} (${c})</button>`;
+  }).join('');
+}
+
+function cardAtiva(o, r){
+  const st = estado.itens[chave(o.i)], m = metaDe(o.it);
+  return `<div class="card ativa u-${urgDe(o.it)}" data-i="${o.i}">
+    <div><span class="rank">${o.i===heroIdxAtual()?'★ ':''}${RANK[r]||''}</span><span class="id">${o.it.id}</span><span class="tit">${o.it.tit}</span></div>
+    ${m.a?`<div class="pax">${m.a}</div>`:''}
+    ${selosHtml(m)}
+    ${vinculoHtml(m)}
+    <div class="prazo ${o.it.cor}">${o.it.prazo}</div>
+    <details class="det"><summary>Detalhes</summary><div class="desc">${o.it.desc}</div></details>
+    <div class="acoes"><button class="b ghost" data-ac="soltar">Soltar</button>
+      <button class="b ghost" data-ac="focar">Focar 45′</button></div>
+    <div class="acoes">
+      <button class="b" data-ac="feito">Feito</button>
+      <button class="b" data-ac="conteudo">Feito — tem conteúdo para o mestre</button>
+      <button class="b" data-ac="naofeito">Não feito</button>
+    </div>
+    <textarea class="nota" data-nota placeholder="Nota opcional. O que o fechamento precisa saber.">${st.nota}</textarea>
+  </div>`;
+}
+function cardResolvido(o){
+  const st = estado.itens[chave(o.i)];
+  const cls = st.status==='feito'?'f':(st.status==='conteudo'?'c':'n');
+  const ph = st.status==='naofeito' ? 'Motivo. Esbarrou em terceiro? não foi feito?' : 'Conteúdo para o mestre.';
+  return `<div class="card resolvido" data-i="${o.i}">
+    <div><span class="id">${o.it.id}</span><span class="tit">${o.it.tit}</span></div>
+    <div class="estado ${cls}">${ROTULO[st.status]}</div>
+    <textarea class="nota" data-nota placeholder="${ph}">${st.nota}</textarea>
+    <div class="acoes">
+      <button class="b ghost" data-ac="reabrir">Reabrir</button>
+      <button class="b ghost" data-ac="trocar">Trocar o estado</button>
+    </div>
+  </div>`;
+}
+function cardFila(o){
+  const m = metaDe(o.it);
+  return `<div class="card u-${urgDe(o.it)}" data-i="${o.i}">
+    <div>${o.i===heroIdxAtual()?'<span class="rank">★</span>':''}<span class="id">${o.it.id}</span><span class="tit">${o.it.tit}</span></div>
+    ${m.a?`<div class="pax">${m.a}</div>`:''}
+    ${selosHtml(m)}
+    ${vinculoHtml(m)}
+    <div class="prazo ${o.it.cor}">${o.it.prazo}</div>
+    <details class="det"><summary>Detalhes</summary><div class="desc">${o.it.desc}</div></details>
+    <div class="acoes"><button class="b" data-ac="puxar">Puxar para hoje</button></div>
+  </div>`;
+}
+
+/* ---- caixa de triagem (opção c, decidida em 28/08) ---- */
+function blocoTriagem(s, t){
+  if(!t) return '';
+  if(t.tipo==='data'){
+    return `<div class="estado t">Proposta de data — vai ao relato, não ao mestre</div>
+      <div class="linha2">
+        <input class="campo" type="date" data-tri="data" value="${t.data||''}" aria-label="Data proposta">
+        <input class="campo" type="text" data-tri="quem" value="${t.quem||''}" placeholder="Quem">
+      </div>
+      <textarea class="nota" data-tri="nota" placeholder="O que destrava. Opcional.">${t.nota||''}</textarea>
+      <div class="acoes"><button class="b ghost" data-ac="tri-limpar">Desfazer</button></div>`;
+  }
+  return `<div class="estado t">Proposta de encerramento — o fechamento decide</div>
+    <div class="linha2">
+      <input class="campo" type="date" data-tri="data" value="${t.data||''}" aria-label="Quando foi resolvido">
+    </div>
+    <textarea class="nota" data-tri="nota" placeholder="Fonte: o que aconteceu e onde está a prova. Sem isso não encerra.">${t.nota||''}</textarea>
+    <div class="acoes"><button class="b ghost" data-ac="tri-limpar">Desfazer</button></div>`;
+}
+function cardPorResolver(p, s){
+  const t = estado.triagem[s];
+  return `<div class="pr ${t?'marcado':''}" data-s="${s}">
+    <div class="txt"><span class="id">${p[0]}</span>${p[1]}</div>
+    <div class="acoes">
+      <button class="b ${t&&t.tipo==='data'?'on':''}" data-ac="tri-data">Dar data</button>
+      <button class="b ${t&&t.tipo==='resolvido'?'on':''}" data-ac="tri-resolvido">Já está resolvido</button>
+    </div>
+    ${blocoTriagem(s,t)}
+  </div>`;
+}
+
+function conteudoRender(){
+  abasRender();
+  const aba = estado.aba, cont = $('#conteudo'), av = $('#aviso');
+  $('#blocoLivre').style.display = aba==='porresolver' ? 'none' : 'block';
+
+  if(aba==='porresolver'){
+    av.className = 'aviso neutro';
+    av.textContent = 'Caixa de triagem. Os dois botões escrevem no relato do dia e não tocam no mestre — nada aqui vira ativa e nada sai da tabela sem decisão datada no fechamento.';
+    cont.innerHTML = '<h2 class="sec">Sem data — '+SEM_DATA.length+' itens</h2>' +
+      SEM_DATA.map((p,s)=>cardPorResolver(p,'s'+s)).join('');
+    return;
+  }
+
+  const ativas = ativasDe(aba), resolvidos = resolvidosDe(aba), fila = filaDe(aba);
+  if(ativas.length >= TETO){
+    av.className='aviso';
+    av.textContent = 'Teto de '+TETO+' atingido. Resolva uma e a vaga abre sozinha — a nota fica guardada em Resolvidos hoje até você copiar o relato.';
+  } else { av.className='aviso hide'; }
+
+  let html = `<h2 class="sec">Ativas de hoje — ${ativas.length} de ${TETO}</h2>`;
+  html += ativas.length ? ativas.map((o,r)=>cardAtiva(o,r)).join('')
+    : `<div class="leitura">Nenhuma ativa. Puxe da fila abaixo — no máximo ${TETO}.</div>`;
+  if(resolvidos.length){
+    html += `<h2 class="sec">Resolvidos hoje — ${resolvidos.length}</h2>` + resolvidos.map(cardResolvido).join('');
+  }
+  html += `<h2 class="sec">Fila — ${fila.length}, da mais urgente para a menos</h2><div class="fila">`;
+  if(fila.length){
+    URG_ORDEM.forEach(u=>{
+      const g = fila.filter(o=>urgDe(o.it)===u);
+      if(!g.length) return;
+      const cab = `<div class="gsec ${u}">${URG_ROTULO[u]} — ${g.length}</div>`;
+      const corpo = g.map(cardFila).join('');
+      if(u==='dep' || u==='aberto'){
+        html += `<details class="grupo"><summary>${cab}</summary><div class="gcards">${corpo}</div></details>`;
+      } else { html += cab + corpo; }
+    });
+  } else { html += '<div class="leitura">Fila vazia nesta aba.</div>'; }
+  html += `</div>`;
+  cont.innerHTML = html;
+}
+
+function render(){
+  placarRender();
+  heroRender();
+  mapaRender();
+  conteudoRender();
+  if(!$('#foco').hidden) focoRender();
+}
+
+let toastT;
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2600);
+}
+const hoje = () => {
+  const parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const v = Object.fromEntries(parts.filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+  return `${v.year}-${v.month}-${v.day}`;
 };
 
-// ── CHECKBOX ──
-function m(id){
-  const cb=document.getElementById('c-'+id);
-  const lb=document.getElementById('l-'+id);
-  if(cb.checked){E['c_'+id]=1;if(lb)lb.classList.add('done')}
-  else{delete E['c_'+id];if(lb)lb.classList.remove('done')}
-  sv();ar();
-}
-
-// ── TRIAGEM ──
-function dd(n,desc){
-  const d=document.getElementById('d-'+n);
-  if(!d||!d.value){d&&d.focus();return}
-  ao(desc+' → data: '+d.value);
-  E['td_'+n]=d.value;sv();
-}
-function ok(n,desc){
-  ao(desc+' — declarado resolvido em 31/08/2026');
-  const el=document.getElementById('ti-'+n);if(el)el.style.opacity='.4';
-  E['tok_'+n]=1;sv();
-}
-
-// ── RELATO ──
-function ao(linha){if(!E.ex)E.ex=[];E.ex.push(linha);sv();ar()}
-function ar(){
-  const ta=document.getElementById('rel');if(!ta)return;
-  const itens=Object.keys(E).filter(k=>k.startsWith('c_')&&E[k]).map(k=>D[k.slice(2)]||k.slice(2)).filter(Boolean).map(x=>'✓ '+x);
-  const extras=(E.ex||[]);
-  const obs=(document.getElementById('obs').value||'').trim();
-  const p=[];
-  if(itens.length)p.push(itens.join('\n'));
-  if(extras.length)p.push(extras.join('\n'));
-  if(obs)p.push('Obs: '+obs);
-  ta.value='RELATO · 31/08/2026 (v20)\n'+'─'.repeat(32)+(p.length?'\n\n'+p.join('\n\n'):'\n\n(sem marcações)');
-}
-function cp(){
-  const ta=document.getElementById('rel');
-  if(!ta)return;
-  const fn=()=>{const ok=document.getElementById('cok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2000)};
-  if(navigator.clipboard){navigator.clipboard.writeText(ta.value).then(fn).catch(()=>{ta.select();document.execCommand('copy');fn()})}
-  else{ta.select();document.execCommand('copy');fn()}
-}
-function lr(){if(!confirm('Limpar o relato?'))return;E.ex=[];sv();ar()}
-
-// ── TIMER ──
-let TR=2700,TR_run=false,TR_id=null;
-function td_show(){const m=Math.floor(TR/60),s=TR%60;document.getElementById('td').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
-function tg(){
-  if(TR_run){clearInterval(TR_id);TR_run=false;document.getElementById('bti').textContent='▶ Continuar'}
-  else{
-    if(TR<=0)return;
-    TR_run=true;document.getElementById('bti').textContent='⏸ Pausar';
-    TR_id=setInterval(()=>{
-      TR--;td_show();
-      if(TR<=0){
-        clearInterval(TR_id);TR_run=false;
-        document.getElementById('td').textContent='00:00';
-        document.getElementById('bti').textContent='▶ Iniciar';
-        ao('⏱ Bloco de 45min concluído');
-        try{new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAA').play()}catch(e){}
-      }
-    },1000);
+document.addEventListener('click', e=>{
+  const abaBtn = e.target.closest('[data-aba]');
+  if(abaBtn){
+    estado.aba = abaBtn.dataset.aba; salvar(); render();
+    /* v16: a partir da Visão, escolher uma aba abre a lista dela. */
+    if(tela==='visao'){
+      tela = (estado.aba==='porresolver') ? 'tri' : 'exec';
+      telaAplicar(); window.scrollTo(0,0);
+    }
+    return;
   }
-}
-function zt(){clearInterval(TR_id);TR_run=false;TR=2700;td_show();document.getElementById('bti').textContent='▶ Iniciar'}
 
-// ── INIT ──
-ld();
-Object.keys(E).forEach(k=>{
-  if(k.startsWith('c_')&&E[k]){
-    const id=k.slice(2);
-    const cb=document.getElementById('c-'+id),lb=document.getElementById('l-'+id);
-    if(cb)cb.checked=true;if(lb)lb.classList.add('done');
+  const tile = e.target.closest('[data-frente]');
+  if(tile){
+    frenteAberta = (frenteAberta===tile.dataset.frente) ? null : tile.dataset.frente;
+    mapaRender(); return;
   }
-  if(k.startsWith('tok_')&&E[k]){
-    const el=document.getElementById('ti-'+k.slice(4));if(el)el.style.opacity='.4';
+
+  const heroBtn = e.target.closest('[data-hero-focus]');
+  if(heroBtn){
+    const i=+heroBtn.dataset.heroFocus, st=estado.itens[chave(i)];
+    if(st.status==='fila'){
+      if(ativasDe(ITENS[i].aba).length>=TETO){ toast('A prioridade está fora das 3 ativas. Solte ou resolva uma ativa antes de focá-la.'); return; }
+      st.status='ativa'; salvar(); render();
+    }
+    focoAbrir(i); return;
+  }
+
+  const b = e.target.closest('[data-ac]');
+  if(!b) return;
+  const ac = b.dataset.ac;
+
+  const pr = b.closest('[data-s]');
+  if(pr){
+    const s = pr.dataset.s;
+    if(ac==='tri-data'){
+      estado.triagem[s] = {tipo:'data', data:'', quem:'Wagner', nota:''};
+      toast('Vai ao relato como proposta de data. O fechamento escreve no mestre.');
+    } else if(ac==='tri-resolvido'){
+      estado.triagem[s] = {tipo:'resolvido', data:hoje(), nota:''};
+      toast('Proposta de encerramento. Escreva a fonte — sem fonte não encerra.');
+    } else if(ac==='tri-limpar'){
+      delete estado.triagem[s];
+    }
+    salvar(); render(); return;
+  }
+
+  const card = b.closest('[data-i]');
+  if(!card) return;
+  const i = +card.dataset.i, st = estado.itens[chave(i)];
+  if(ac==='puxar'){
+    if(ativasDe(ITENS[i].aba).length >= TETO){ toast('Teto de '+TETO+'. Resolva uma antes de puxar esta.'); return; }
+    st.status='ativa';
+  } else if(ac==='soltar'){
+    if(st.nota.trim() && !confirm('Soltar apaga a nota que você digitou. Se ela tem conteúdo, use "Feito — tem conteúdo para o mestre". Soltar mesmo assim?')) return;
+    st.status='fila'; st.nota='';
+  } else if(ac==='focar'){
+    focoAbrir(i); return;
+  } else if(RESOLVIDO.includes(ac)){
+    st.status=ac; toast('Resolvido. Vaga livre — a nota fica guardada.');
+  } else if(ac==='reabrir'){
+    if(ativasDe(ITENS[i].aba).length >= TETO){ toast('Teto de '+TETO+'. Resolva uma ativa antes de reabrir esta.'); return; }
+    st.status='ativa';
+  } else if(ac==='trocar'){
+    const ordem=['feito','conteudo','naofeito'];
+    st.status = ordem[(ordem.indexOf(st.status)+1)%3];
+  }
+  salvar(); render();
+});
+
+document.addEventListener('input', e=>{
+  if(e.target.id==='livre'){ estado.livre=e.target.value; salvar(); return; }
+  const tri = e.target.closest('[data-tri]');
+  if(tri){
+    const s = tri.closest('[data-s]').dataset.s;
+    if(estado.triagem[s]){ estado.triagem[s][tri.dataset.tri] = tri.value; salvar(); }
+    return;
+  }
+  if(e.target.matches('[data-nota]')){
+    const i=+e.target.closest('[data-i]').dataset.i;
+    estado.itens[chave(i)].nota = e.target.value; salvar();
   }
 });
-const obsEl=document.getElementById('obs');
-if(obsEl&&E.obs)obsEl.value=E.obs;
-obsEl&&obsEl.addEventListener('input',function(){E.obs=this.value;sv();ar()});
-ar();
+
+/* ===== modo foco — 45 minutos, uma ativa ===== */
+let focoIdx = null, focoRestam = 45*60, focoInt = null;
+const focoFmt = s => Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+
+function focoAbrir(idx){
+  if(idx==null){
+    const ativas = ativasDe(estado.aba==='porresolver' ? 'wam' : estado.aba);
+    if(!ativas.length){ toast('Nenhuma ativa. Puxe uma da fila antes do bloco.'); return; }
+    idx = ativas[0].i;
+  }
+  focoParar();
+  focoRestam = 45*60;
+  focoIdx = idx;
+  $('#foco').classList.remove('fim');
+  $('#foco').hidden = false;
+  document.body.style.overflow = 'hidden';
+  focoRender();
+}
+function focoFechar(){
+  focoParar();
+  $('#foco').hidden = true;
+  document.body.style.overflow = '';
+  document.title = TITULO;
+}
+function focoParar(){ clearInterval(focoInt); focoInt = null; $('#focoIniciar').textContent='Iniciar'; }
+function focoTic(){
+  focoRestam = Math.max(0, focoRestam-1);
+  $('#focoTempo').textContent = focoFmt(focoRestam);
+  document.title = '⏱ '+focoFmt(focoRestam);
+  if(focoRestam===0){
+    focoParar();
+    $('#foco').classList.add('fim');
+    if(navigator.vibrate) navigator.vibrate([220,120,220]);
+    document.title = '⏰ Bloco encerrado';
+    toast('Bloco de 45 encerrado. Pausa — interrupção entra ENTRE blocos.');
+  }
+}
+function focoRender(){
+  $('#focoTempo').textContent = focoFmt(focoRestam);
+  const corpo = $('#focoCorpo'), acoes = $('#focoAcoes');
+  if(focoIdx==null || estado.itens[chave(focoIdx)].status!=='ativa'){
+    const ativas = ativasDe(estado.aba==='porresolver' ? 'wam' : estado.aba);
+    if(ativas.length){ focoIdx = ativas[0].i; }
+    else {
+      corpo.innerHTML = '<div class="fnada">Nenhuma ativa nesta aba. Saia, puxe uma da fila e volte — ou encerre o bloco aqui.</div>';
+      acoes.innerHTML = '';
+      return;
+    }
+  }
+  const it = ITENS[focoIdx];
+  const m = metaDe(it);
+  corpo.innerHTML = `<div class="fid"><span class="id">${it.id}</span></div>
+    <div class="ftit">${it.tit}</div>
+    ${m.a?`<div class="fprox">${m.a}</div>`:''}
+    <div class="fdesc">${it.desc}</div>
+    <div class="fprazo ${it.cor}">${it.prazo}</div>`;
+  acoes.innerHTML = `
+    <button class="b" data-focoac="feito">Feito</button>
+    <button class="b" data-focoac="conteudo">Feito — tem conteúdo</button>
+    <button class="b" data-focoac="naofeito">Não feito</button>`;
+}
+$('#abrirFoco').addEventListener('click', ()=>focoAbrir(null));
+
+/* ===== v9: telas no celular (Visão · Executar · Triagem) ===== */
+let tela = 'visao';
+function telaAplicar(){
+  document.body.classList.remove('tela-visao','tela-exec','tela-tri');
+  document.body.classList.add('tela-'+tela);
+  document.querySelectorAll('.telanav [data-tela]').forEach(b=>
+    b.classList.toggle('on', b.dataset.tela===tela));
+}
+document.querySelectorAll('.telanav [data-tela]').forEach(b=>
+  b.addEventListener('click', ()=>{
+    tela = b.dataset.tela;
+    if(tela==='tri' && estado.aba!=='porresolver'){ estado.aba='porresolver'; salvar(); render(); }
+    if(tela!=='tri' && estado.aba==='porresolver'){ estado.aba='wam'; salvar(); render(); }
+    telaAplicar(); window.scrollTo(0,0);
+  }));
+$('#tnFoco').addEventListener('click', ()=>focoAbrir(null));
+
+/* ===== v12: altura de tela no celular =====
+   ⤢ tenta a tela cheia real do aparelho; onde o app não permite, liga o modo
+   compacto, que recolhe régua, subtítulo e folgas — sobra tela para a tarefa. */
+function compactoLigar(on){                     /* on = enxuto (padrão no celular) */
+  document.body.classList.toggle('largo', !on);
+  $('#tnTela').textContent = on ? '⤢' : '⤡';
+}
+$('#tnTela').addEventListener('click', async ()=>{
+  const el = document.documentElement;
+  if(document.fullscreenElement){
+    try{ await document.exitFullscreen(); }catch(err){}
+    compactoLigar(false); return;
+  }
+  let cheia = false;
+  try{
+    if(el.requestFullscreen){ await el.requestFullscreen(); cheia = true; }
+    else if(el.webkitRequestFullscreen){ el.webkitRequestFullscreen(); cheia = true; }
+  }catch(err){}
+  compactoLigar(true);
+  toast(cheia ? 'Tela cheia. Toque de novo para sair.'
+              : 'O app do Claude não solta a tela cheia. Para a tela inteira: ⋮ → baixar, e abrir o arquivo no Chrome.');
+});
+document.addEventListener('fullscreenchange', ()=>{ if(!document.fullscreenElement) compactoLigar(false); });
+$('#tnRelato').addEventListener('click', ()=>$('#copiar').click());
+telaAplicar();
+
+$('#focoFechar').addEventListener('click', focoFechar);
+$('#focoZerar').addEventListener('click', ()=>{ focoParar(); focoRestam=45*60; $('#focoTempo').textContent=focoFmt(focoRestam); $('#foco').classList.remove('fim'); });
+$('#focoIniciar').addEventListener('click', ()=>{
+  if(focoInt){ focoParar(); }
+  else { focoInt = setInterval(focoTic, 1000); $('#focoIniciar').textContent='Pausar'; }
+});
+let focoStatusPendente = null;
+function focoConcluir(status, nota=''){
+  if(focoIdx==null) return;
+  const st=estado.itens[chave(focoIdx)];
+  st.status=status;
+  if(nota.trim()) st.nota=nota.trim();
+  focoParar(); focoRestam=45*60; focoStatusPendente=null;
+  $('#foco').hidden=true; document.body.style.overflow=''; document.title=TITULO;
+  focoIdx=null; salvar(); render();
+  toast('Bloco encerrado. A tarefa foi registrada e o próximo bloco começa em 45:00.');
+}
+function focoPedirNota(status){
+  focoStatusPendente=status;
+  const rot=status==='conteudo'?'O que o fechamento precisa saber?':'Qual foi o motivo / o que travou?';
+  const atual=estado.itens[chave(focoIdx)].nota||'';
+  $('#focoAcoes').innerHTML=`<div class="fnotalab">${rot}</div>
+    <textarea class="fnota" id="focoNota" placeholder="Registre agora para não depender da memória.">${atual}</textarea>
+    <button class="b on" data-focosave="1">Salvar e encerrar o bloco</button>
+    <button class="b ghost" data-fococancel="1">Voltar</button>`;
+  setTimeout(()=>$('#focoNota')?.focus(),0);
+}
+$('#focoAcoes').addEventListener('click', e=>{
+  const ac=e.target.closest('[data-focoac]');
+  if(ac && focoIdx!=null){
+    const status=ac.dataset.focoac;
+    if(status==='feito') focoConcluir('feito');
+    else focoPedirNota(status);
+    return;
+  }
+  if(e.target.closest('[data-focosave]')){
+    const nota=$('#focoNota')?.value.trim()||'';
+    if(!nota){ toast('Escreva a nota antes de encerrar — este estado depende dela.'); return; }
+    focoConcluir(focoStatusPendente,nota); return;
+  }
+  if(e.target.closest('[data-fococancel]')){ focoStatusPendente=null; focoRender(); }
+});
+
+/* ---- relato do dia (formato idêntico ao v5 — o fechamento depende dele) ---- */
+const br = d => d ? d.split('-').reverse().join('/') : 'sem data';
+$('#copiar').addEventListener('click', ()=>{
+  const L=[], nome = i => ITENS[i].id + ' ' + ITENS[i].tit;
+  const grupo = (titulo, filtro, comNota) => {
+    const arr = ITENS.map((it,i)=>i).filter(i=>{ const st=estado.itens[chave(i)]; return st && filtro(st); });
+    if(!arr.length) return;
+    L.push(titulo);
+    arr.forEach(i=>{ const n=estado.itens[chave(i)].nota.trim();
+      L.push('- '+nome(i)+(comNota&&n?'\n  '+n:'')); });
+    L.push('');
+  };
+  L.push('RELATO DO DIA — 31/08/2026'); L.push('');
+  grupo('FEITO', s=>s.status==='feito', false);
+  grupo('FEITO — TEM CONTEÚDO PARA O MESTRE', s=>s.status==='conteudo', true);
+  grupo('NÃO FEITO — COM MOTIVO', s=>s.status==='naofeito', true);
+
+  const abertas = ITENS.map((it,i)=>i).filter(i=>{ const st=estado.itens[chave(i)]; return st && st.status==='ativa'; });
+  if(abertas.length){ L.push('AINDA ABERTAS AO FIM DO DIA'); abertas.forEach(i=>L.push('- '+nome(i))); L.push(''); }
+
+  const tData = Object.keys(estado.triagem).filter(s=>estado.triagem[s].tipo==='data');
+  if(tData.length){
+    L.push('TRIAGEM — PROPOSTA DE DATA (o fechamento decide)');
+    tData.forEach(s=>{ const t=estado.triagem[s], p=SEM_DATA[+s.slice(1)];
+      L.push('- '+p[0]+' '+p[1]+'\n  data proposta '+br(t.data)+' · '+(t.quem||'sem responsável')+(t.nota?' · '+t.nota:'')); });
+    L.push('');
+  }
+  const tRes = Object.keys(estado.triagem).filter(s=>estado.triagem[s].tipo==='resolvido');
+  if(tRes.length){
+    L.push('TRIAGEM — PROPOSTA DE ENCERRAMENTO (já resolvido)');
+    tRes.forEach(s=>{ const t=estado.triagem[s], p=SEM_DATA[+s.slice(1)];
+      L.push('- '+p[0]+' '+p[1]+'\n  resolvido em '+br(t.data)+' · fonte: '+(t.nota.trim()||'A INFORMAR — sem fonte não encerra')); });
+    L.push('');
+  }
+  L.push('NOVO / OBSERVAÇÕES');
+  L.push(estado.livre.trim() || '- nada');
+
+  const txt = L.join('\n');
+  const ta=document.createElement('textarea');
+  ta.value=txt; document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); toast('Relato copiado. Cole no chat de fechamento.'); }
+  catch(err){ toast('Não copiou — tente de novo ou use o ↻.'); }
+  document.body.removeChild(ta);
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt).catch(()=>{}); }
+});
+
+/* ---- persistência v10, com migração das chaves anteriores ---- */
+/* v12: duas vias de gravação. window.storage existe dentro do app do Claude;
+   quando o arquivo é aberto direto no navegador (ou quando o storage falha, como
+   falhou no celular em 29/08), cai para o armazenamento do próprio navegador.
+   Se as duas falharem, o painel avisa em vez de fingir que gravou. */
+let VIA = null;               /* 'app' · 'navegador' · 'nenhuma' */
+let ultimaGrav = null;
+
+async function viaSet(k,v){
+  if(window.storage && window.storage.set){
+    try{ await window.storage.set(k,v); VIA='app'; return true; }catch(err){}
+  }
+  try{ localStorage.setItem(k,v); VIA='navegador'; return true; }catch(err){}
+  VIA='nenhuma'; return false;
+}
+async function viaGet(k){
+  if(window.storage && window.storage.get){
+    try{ const r = await window.storage.get(k); if(r&&r.value) return r.value; }catch(err){}
+  }
+  try{ const v = localStorage.getItem(k); if(v) return v; }catch(err){}
+  return null;
+}
+function gravStatus(){
+  const el = $('#gravAviso');
+  if(VIA==='nenhuma'){
+    el.className='gravaviso on ruim';
+    el.textContent='Não está sendo possível gravar neste aparelho. As marcações somem se você fechar — copie o relato do dia antes de sair.';
+  } else if(VIA==='navegador'){
+    el.className='gravaviso on';
+    el.textContent='Gravando no navegador deste aparelho — não sincroniza com o desktop. (toque para ocultar)';
+  } else { el.className='gravaviso'; el.textContent=''; }
+  const h = $('#gravHora');
+  if(h) h.textContent = ultimaGrav ? 'gravado às '+ultimaGrav : '';
+}
+
+let salvarT;
+function salvar(){
+  clearTimeout(salvarT);
+  salvarT = setTimeout(async ()=>{
+    const ok = await viaSet(CHAVE, JSON.stringify(estado));
+    if(ok) ultimaGrav = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    gravStatus();
+  }, 700);
+}
+function aplicar(g){
+  if(!g || !g.itens) return false;
+  let itens = g.itens;
+  if(Object.keys(itens).some(k=>/^i\d+$/.test(k))){          /* estado antigo, por índice */
+    const conv = {};
+    Object.keys(itens).forEach(k=>{
+      const n = +k.slice(1), alvo = ORDEM_LEGADA[n];
+      if(alvo) conv[alvo] = itens[k];
+    });
+    itens = conv;
+  }
+  Object.keys(estado.itens).forEach(k=>{ if(itens[k]) estado.itens[k]=itens[k]; });
+  estado.triagem = g.triagem || {};
+  estado.livre = g.livre || '';
+  estado.aba = g.aba || 'wam';
+  return true;
+}
+async function carregar(){
+  let ok=false;
+  try{ const v = await viaGet(CHAVE); if(v) ok = aplicar(JSON.parse(v)); }catch(err){}
+  if(!ok){
+    for(const ch of CHAVES_ANTERIORES){
+      try{ const v2 = await viaGet(ch);
+        if(v2 && aplicar(JSON.parse(v2))){ toast('Marcações anteriores recuperadas.'); salvar(); break; }
+      }catch(err){}
+    }
+  }
+  if(!ok && VIA===null){ await viaSet(CHAVE, JSON.stringify(estado)); }
+  gravStatus();
+  $('#livre').value = estado.livre;
+  render();
+}
+$('#reload').addEventListener('click', async ()=>{ await carregar(); toast('Estado recarregado.'); });
+
+/* desktop: a visão integral fica sempre aberta */
+const mqDesk = window.matchMedia('(min-width:900px)');
+function ajustarIntegral(){ if(mqDesk.matches) document.querySelector('details.integral').open = true; }
+if(mqDesk.addEventListener) mqDesk.addEventListener('change', ajustarIntegral);
+ajustarIntegral();
+
+reguaRender();
+tempoRender();
+cdRender();
+setInterval(cdRender, 30000);
+carregar();
 </script>
 </body>
 </html>
