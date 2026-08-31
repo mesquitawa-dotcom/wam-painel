@@ -6,8 +6,18 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 31/08/2026 (v22)</title>
+<title>Painel do dia — 31/08/2026 (v23)</title>
 <!--
+  v23 (30/08/2026) — bloco de interface do Inventario atualizado (versao mais completa
+  do mesmo dia). SOMENTE CONTEUDO: nenhuma linha de CSS, layout, mecanica, chave de
+  memoria ou formato de relato foi tocada (R29 itens 2 e 4; bloco de estilo conferido
+  identico byte a byte contra a base). Base: v22 recuperado do repositorio por
+  raw.githubusercontent.com, hash conferido contra o arquivo publicado (R29 item 3).
+  Entram tres fatos novos: a Prefeitura condiciona o pagamento a certidao do locador —
+  a CND vencida deixou de ser so papel e passou a BLOQUEAR RECEITA do espolio; a
+  quitacao federal de R$ 45.861,18 e pre-requisito da rota do precatorio; e a
+  elegibilidade do ITCD ao Refis III nao esta confirmada.
+
   v22 (30/08/2026) — SEXTO fechamento do domingo. SOMENTE CONTEUDO: nenhuma linha de
   CSS, layout, mecanica, chave de memoria ou formato de relato foi tocada (R29 itens 2 e 4;
   bloco de estilo conferido identico byte a byte contra a base). Base: v21 recuperado do
@@ -484,8 +494,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v22</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v6 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v23</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v7 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -640,7 +650,7 @@ const REGUA = [
   {d:'05/09', t:'', x:'#76 marca · #84 trava dos 30%'},
   {d:'12/09', t:'', x:'#78 PIX automático SABESP'},
   {d:'15/09', t:'', x:'#57 rota tributária — data-limite'},
-  {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026)'},
+  {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026) · teto PGDAU: quitação federal de R$ 45.861,18 do espólio'},
   {d:'29/12', t:'', x:'Refis III/MT — teto de adesão (ITCD do espólio)'},
   {d:'31/12', t:'', x:'certidões limpas — frente aluguel'}
 ];
@@ -660,8 +670,8 @@ const ITENS = [
    desc:'Bilateral por Teams, GRAVAR. Mesmo horário do evento recorrente de fechamento. Decidir de manhã: fechar antes das 17h30, ou mover o fechamento para depois da reunião. Hoje é o dia mais cheio da semana — perder o fechamento é como a lacuna de 17 a 28/08 começou.',
    prazo:'DECIDIR HOJE, no primeiro bloco', cor:'vermelho'},
   {id:'INV-JUVERLAN', aba:'wam', tit:'Cobrar o Juverlan (ACS Tecnologia) — WhatsApp E e-mail',
-   desc:'TRÊS pedidos na MESMA mensagem: (1) renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio, vencida em 29/08 e pré-requisito da escritura; (2) a via da declaração do ITCD do espólio; (3) a elegibilidade ao Refis III/MT. Sem retorno, emitir a certidão pelo portal da SEFAZ-MT em 02/09 às 09h00 — o fallback está declarado, a espera tem data. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
-   prazo:'Hoje — 31/08, às 09h00', cor:'vermelho'},
+   desc:'A CND vencida deixou de ser só papel: a Prefeitura condiciona o PAGAMENTO à certidão do locador — sem certidão, receita do espólio parada. TRÊS pedidos na MESMA mensagem: (1) renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio; (2) a via da declaração do ITCD do espólio; (3) a elegibilidade ao Refis III/MT. Sem retorno, emitir a certidão pelo portal da SEFAZ-MT em 02/09 às 09h00 — o fallback está declarado, a espera tem data. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
+   prazo:'Hoje — 31/08, às 09h00 · certidão vencida bloqueando pagamento', cor:'vermelho'},
   {id:'INV-SICREDI', aba:'wam', tit:'Ligar para a Sicredi — (65) 3221-0800',
    desc:'Obter o e-mail do setor de contratos. Ação do Inventário, entra aqui porque é de hoje de manhã. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
    prazo:'Hoje — 31/08, pela manhã', cor:'vermelho'},
@@ -861,7 +871,7 @@ const FRENTES = [
   {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#71','#65','#73','#57']},
   {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38','#93']},
   {k:'inv', n:'Inventário (interface)', ids:['#84','INV-JUVERLAN','INV-SICREDI','AGENDA'],
-    extra:'CND estadual nº 0063507965 VENCIDA em 29/08 — cobrança ao Juverlan hoje 09h00, na MESMA mensagem pedir a via da declaração do ITCD e a elegibilidade ao Refis III; emissão própria da certidão em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · REFIS III/MT: adesão até 29/12/2026, alcança ITCD e débitos vencidos até 31/03/2025, data dura e não cumulável com outro parcelamento estadual · precatório do espólio: a rota é CESSÃO ONEROSA com deliberação de TODOS os herdeiros, não liberação — e a quitação federal segue como pré-requisito aberto · teto PGDAU 30/09 · fim do 2º Termo Aditivo 12/12 · lacunas: a ação de 28/08 (acionar o Juverlan) sem registro de execução; sem lastro documental do objeto dos três pagamentos de R$ 2.000 à advogada local; sem resposta sobre a situação da carta no processo do precatório'},
+    extra:'CND estadual nº 0063507965 VENCIDA em 29/08 e a PREFEITURA CONDICIONA O PAGAMENTO À CERTIDÃO DO LOCADOR — certidão vencida agora trava RECEITA, não só papel · cobrança ao Juverlan hoje 09h00, na MESMA mensagem pedir a via da declaração do ITCD e a elegibilidade ao Refis III; emissão própria da certidão em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · REFIS III/MT: adesão até 29/12/2026, alcança ITCD e débitos vencidos até 31/03/2025, data dura e não cumulável com outro parcelamento estadual · PRECATÓRIO: rota é CESSÃO ONEROSA com deliberação de TODOS os herdeiros, não liberação — e a QUITAÇÃO FEDERAL DE R$ 45.861,18 é PRÉ-REQUISITO, não etapa paralela (teto PGDAU 30/09) · fim do 2º Termo Aditivo 12/12 · lacunas: elegibilidade do ITCD ao Refis III NÃO confirmada; ação de 28/08 (acionar o Juverlan) sem registro de execução; sem lastro documental do objeto dos três pagamentos de R$ 2.000 à advogada local; sem resposta sobre a situação da carta no processo do precatório'},
   {k:'ct', n:'Contas & PIX', ids:['#79','#78','#95']},
   {k:'av', n:'Ativo parado · caixa', ids:['#94']},
   {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
