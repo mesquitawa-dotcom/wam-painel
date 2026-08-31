@@ -6,8 +6,18 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 31/08/2026 (v21)</title>
+<title>Painel do dia — 31/08/2026 (v22)</title>
 <!--
+  v22 (30/08/2026) — SEXTO fechamento do domingo. SOMENTE CONTEUDO: nenhuma linha de
+  CSS, layout, mecanica, chave de memoria ou formato de relato foi tocada (R29 itens 2 e 4;
+  bloco de estilo conferido identico byte a byte contra a base). Base: v21 recuperado do
+  repositorio por raw.githubusercontent.com — nao de leitura de tela (R29 item 3).
+  Entram: tres pendencias novas (#93 escritorio do Dr. Luiz/imobiliaria, #94 venda da
+  maquina de cafe, #95 rotina diaria de contas a pagar), a terceira pergunta da #55
+  (Refis III/MT), o marco de 29/12 na regua, a atualizacao da interface do Inventario
+  (ITCD e Refis III na mesma cobranca ao Juverlan) e o marco de 15/09 da massa congelada
+  na aba Fabrica, declarado SEM GATILHO.
+
   v21 (30/08/2026) — BUSCA POR TERMO, pedida expressamente por Wagner (aval da R29,
   que exige aval para mudanca visual). Base: v20 recuperado do repositorio por SHA,
   nao reconstruido de leitura de tela. Um campo abaixo do cabecalho procura o termo
@@ -474,8 +484,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v21</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v5 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — segunda, 31/08/2026 <span class="vcarimbo">v22</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_30-08-2026_v6 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -580,7 +590,7 @@ const META = {
  '#67':{a:'Abrir o SISPAR e conferir se as duas parcelas de 31/07 caíram.', n:'fin', t:"5′", e:'clique'},
  '#16':{a:'Consultar os três números no TJMT pelo cadastro da Eliziany — custo zero.', n:'destrava', s:'Destrava Cáceres', t:"25′", e:'clique'},
  '#49':{a:'Perguntar à Dra. Elaine por escrito: a parcela é 1.000 ou 1.500? desde quando?', n:'fin', t:"5′", e:'WhatsApp'},
- '#55':{a:'Cobrar as duas promessas por escrito, com prazo de resposta.', n:'dep', s:'Aguarda Dra. Elaine', t:"5′", e:'WhatsApp'},
+ '#55':{a:'Cobrar as duas promessas por escrito, com prazo de resposta — e acrescentar a TERCEIRA pergunta: o Refis III/MT alcança os débitos estaduais de MT em nome da Eliziany (Cáceres)?', n:'dep', s:'Aguarda Dra. Elaine', t:"5′", e:'WhatsApp', v:'A terceira pergunta nasceu da interface do Inventário de 30/08: Refis III/MT, adesão até 29/12/2026, alcança débitos vencidos até 31/03/2025. Se alcançar Cáceres, muda o nó de MT inteiro.'},
  '#54':{a:'Confirmar no extrato a entrada de ~R$ 65 mil e a posição do saldo de R$ 159 mil.', n:'fin', t:"25′", e:'concentração'},
  '#22':{a:'Decidir o financiamento da viagem e registrar a classificação no caixa.', n:'fin', t:"15′", e:'decisão'},
  '#8':{a:'Levantar o valor atual da parcela do IPTU; se não sair, fixar provisório com data de revisão.', n:'fin', t:"15′", e:'clique'},
@@ -589,6 +599,10 @@ const META = {
  '#38':{a:'Localizar o contrato social e ler o quadro de sócios.', n:'mon', t:"15′", e:'leitura'},
  '#62':{a:'Marcar um item no celular, abrir no desktop e conferir se apareceu.', n:'mon', t:"5′", e:'clique'},
  '#59':{a:'Terça 05h30: criar o projeto, rodar uma sessão real e um fechamento completo.', n:'prazo', t:"45′", e:'concentração'},
+ '#93':{a:'Abrir a mensagem e confirmar de qual escritório é ANTES de responder.', n:'prazo', s:'Lacuna primeiro', t:"15′", e:'leitura', v:'Se for o Dr. Luizmar, encosta em #47 e #36. Se for a imobiliária, encosta em #10 e na frente do aluguel (#41).'},
+ '#94':{a:'01/09: receber o orçamento da bomba por escrito. 02/09: escrever o preço mínimo antes de anunciar.', n:'fin', s:'Caixa de setembro', t:"25′", e:'clique', v:'Insumo da #91 (posição patrimonial, 12/09): é ativo parado virando número.'},
+ '#95':{a:'02/09 às 05h30: escrever responsável, gatilho recorrente e canal — os três no mesmo ato.', n:'destrava', s:'Régua nº 1', t:"45′", e:'concentração', v:'Conversa com #18 (saída do BPO) e #20 (lançamento das dívidas no Conta Azul).'},
+ 'Massa congelada / dobra — marco de 15/09 SEM GATILHO':{a:'Criar o evento no Calendar e nomear o destinatário — sem os dois, o marco não existe.', n:'prazo', t:"5′", e:'clique'},
  '#76':{a:'Rodar a Busca Web do INPI e anotar titular, nº do processo, classe e data de concessão.', n:'prazo', t:"15′", e:'clique', v:'Depois desta busca, #77 (registro da marca Folhados d’Ouro) continua como etapa seguinte.'},
  '#84':{a:'Obter por escrito se a cláusula dos 30% será revogada, ressalvada ou mantida no aditivo.', n:'dep', s:'Aguardando definição escrita', t:"5′", e:'WhatsApp'},
  '#83':{a:'Em 05/09: a triagem foi usada ou virou botão morto?', n:'mon', t:"5′", e:'clique'},
@@ -627,6 +641,7 @@ const REGUA = [
   {d:'12/09', t:'', x:'#78 PIX automático SABESP'},
   {d:'15/09', t:'', x:'#57 rota tributária — data-limite'},
   {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026)'},
+  {d:'29/12', t:'', x:'Refis III/MT — teto de adesão (ITCD do espólio)'},
   {d:'31/12', t:'', x:'certidões limpas — frente aluguel'}
 ];
 
@@ -645,11 +660,15 @@ const ITENS = [
    desc:'Bilateral por Teams, GRAVAR. Mesmo horário do evento recorrente de fechamento. Decidir de manhã: fechar antes das 17h30, ou mover o fechamento para depois da reunião. Hoje é o dia mais cheio da semana — perder o fechamento é como a lacuna de 17 a 28/08 começou.',
    prazo:'DECIDIR HOJE, no primeiro bloco', cor:'vermelho'},
   {id:'INV-JUVERLAN', aba:'wam', tit:'Cobrar o Juverlan (ACS Tecnologia) — WhatsApp E e-mail',
-   desc:'Renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio, que venceu em 29/08 e é pré-requisito da escritura. Sem retorno, emitir pelo portal da SEFAZ-MT em 02/09 às 09h00 — o fallback está declarado, a espera tem data. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
+   desc:'TRÊS pedidos na MESMA mensagem: (1) renovação da Certidão Conjunta SEFAZ/PGE-MT do espólio, vencida em 29/08 e pré-requisito da escritura; (2) a via da declaração do ITCD do espólio; (3) a elegibilidade ao Refis III/MT. Sem retorno, emitir a certidão pelo portal da SEFAZ-MT em 02/09 às 09h00 — o fallback está declarado, a espera tem data. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
    prazo:'Hoje — 31/08, às 09h00', cor:'vermelho'},
   {id:'INV-SICREDI', aba:'wam', tit:'Ligar para a Sicredi — (65) 3221-0800',
    desc:'Obter o e-mail do setor de contratos. Ação do Inventário, entra aqui porque é de hoje de manhã. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
    prazo:'Hoje — 31/08, pela manhã', cor:'vermelho'},
+
+  {id:'#93', aba:'wam', tit:'Responder ao escritório do Dr. Luiz (imobiliária)',
+   desc:'PRIMEIRO PASSO É A LACUNA: abrir a mensagem e confirmar de QUEM ela é — o escritório do Dr. Luizmar (frente de Rondônia, #47/#36) ou o escritório ligado à imobiliária (frente do aluguel, #10). A resposta muda a frente inteira. Só depois de saber é que se responde.',
+   prazo:'Hoje — 31/08', cor:'vermelho'},
 
   {id:'#39', aba:'wam', tit:'Contrato de locação da fábrica — ler as cláusulas',
    desc:'Data exata de vencimento, cláusula de renovação, prazo de aviso prévio, garantia vigente. Tarefa de concentração, bloco 05h–08h.',
@@ -708,6 +727,13 @@ const ITENS = [
   {id:'#62', aba:'wam', tit:'Testar a sincronização do painel entre aparelhos',
    desc:'Marcar no celular, abrir no desktop, tocar ↻. Vale para ativas, resolvidos e triagem.',
    prazo:'Ancorada no primeiro uso deste painel', cor:'ambar'},
+  {id:'#94', aba:'wam', tit:'Venda da máquina de café — técnico amanhã (bomba)',
+   desc:'01/09: técnico vê a bomba e entrega o ORÇAMENTO POR ESCRITO. Nenhum real de conserto antes desse número (régua nº 2). Até 02/09, fixar o PREÇO MÍNIMO por escrito antes de anunciar (régua nº 3) — preço que sai da cabeça na hora da proposta vira desconto. Vendida, o papel da venda sai no mesmo ato (régua nº 5).',
+   prazo:'Técnico 01/09 · preço mínimo escrito até 02/09', cor:'ambar'},
+  {id:'#95', aba:'wam', tit:'Rotina diária de contas a pagar fora do que o BPO sobe',
+   desc:'Definir RESPONSÁVEL, GATILHO recorrente e CANAL no mesmo ato — faltando um dos três, a rotina não existe (régua nº 1). Tarefa de concentração: bloco 05h30, ambiente sem demanda de presença. Tirada de 31/08 neste fechamento porque a segunda já carrega prazo processual e nove itens.',
+   prazo:'Quarta 02/09, 05h30', cor:'ambar'},
+
   {id:'#59', aba:'wam', tit:'Criar o projeto "Folhados 00 — Painel"',
    desc:'Instruções de 16/08. Estrela só nele e no WAM. O bloco de interface não entra nesta etapa.',
    prazo:'Terça 01/09, 05h30 — bloco de concentração', cor:'ambar'},
@@ -760,6 +786,9 @@ const ITENS = [
   {id:'OP', aba:'fabrica', tit:'Ritual de RH semanal — semáforo do time',
    desc:'Maycon, Jack e Luana. Dois amarelos seguidos = conversa obrigatória. Default: 20 min do sábado 9h se a sexta não for confirmada (#58).',
    prazo:'Sem gatilho confirmado', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Massa congelada / dobra — marco de 15/09 SEM GATILHO',
+   desc:'O marco de 15/09 não tem evento no Calendar e o destinatário não está definido. Sem gatilho não existe como compromisso (régua nº 1). Operação pela R19 — não abre pendência no WAM; entra no Folhados 00 quando o projeto existir (01/09).',
+   prazo:'Criar o evento no ato — hoje ou em 01/09', cor:'ambar'},
   {id:'OP', aba:'fabrica', tit:'Higrômetro e amostra ao Anay',
    desc:'Itens capturados no período e triados como Operação. Ficam aqui até o Folhados 00 existir.',
    prazo:'Sem data', cor:'ambar'}
@@ -815,8 +844,8 @@ const URG = {
   '#47':'venc','#36':'venc','#67':'venc','#16':'venc','#49':'venc','#55':'venc',
   '#54':'venc','#22':'venc','#8':'venc',
   '#61':'hoje','#39':'hoje','#40':'hoje','#72':'hoje','#75':'hoje','#66':'hoje',
-  '#68':'hoje','#69':'hoje','#71':'hoje',
-  '#59':'sem7','#76':'sem7','#84':'sem7','#83':'sem7',
+  '#68':'hoje','#69':'hoje','#71':'hoje','#93':'hoje',
+  '#59':'sem7','#76':'sem7','#84':'sem7','#83':'sem7','#94':'sem7','#95':'sem7',
   '#34':'dep','#78':'dep','#57':'dep','#65':'dep','#73':'dep',
   '#37':'aberto','#38':'aberto','#62':'aberto','#79':'aberto','#26':'aberto','#7':'aberto'
 };
@@ -830,10 +859,11 @@ const FRENTES = [
   {k:'ro', n:'Rondônia · Citroën', ids:['#47','#36','#34','#37']},
   {k:'mt', n:'Cáceres · MT', ids:['#16','#49','#55','#54','#8']},
   {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#71','#65','#73','#57']},
-  {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38']},
+  {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38','#93']},
   {k:'inv', n:'Inventário (interface)', ids:['#84','INV-JUVERLAN','INV-SICREDI','AGENDA'],
-    extra:'CND estadual nº 0063507965 VENCIDA em 29/08 — cobrança ao Juverlan hoje 09h00, emissão própria em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · teto PGDAU 30/09 · fim do 2º Termo Aditivo 12/12 · lacuna: não se sabe se a ação de 28/08 (acionar o Juverlan) chegou a ser executada'},
-  {k:'ct', n:'Contas & PIX', ids:['#79','#78']},
+    extra:'CND estadual nº 0063507965 VENCIDA em 29/08 — cobrança ao Juverlan hoje 09h00, na MESMA mensagem pedir a via da declaração do ITCD e a elegibilidade ao Refis III; emissão própria da certidão em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · REFIS III/MT: adesão até 29/12/2026, alcança ITCD e débitos vencidos até 31/03/2025, data dura e não cumulável com outro parcelamento estadual · precatório do espólio: a rota é CESSÃO ONEROSA com deliberação de TODOS os herdeiros, não liberação — e a quitação federal segue como pré-requisito aberto · teto PGDAU 30/09 · fim do 2º Termo Aditivo 12/12 · lacunas: a ação de 28/08 (acionar o Juverlan) sem registro de execução; sem lastro documental do objeto dos três pagamentos de R$ 2.000 à advogada local; sem resposta sobre a situação da carta no processo do precatório'},
+  {k:'ct', n:'Contas & PIX', ids:['#79','#78','#95']},
+  {k:'av', n:'Ativo parado · caixa', ids:['#94']},
   {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
   {k:'mk', n:'Marca · INPI', ids:['#76']},
   {k:'fb', n:'Fábrica', aba:'fabrica', ids:[]},
