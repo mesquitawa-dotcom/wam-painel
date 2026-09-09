@@ -6,8 +6,17 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 02/09/2026 (v24)</title>
+<title>Painel do dia — 10/09/2026 (v25)</title>
 <!--
+  v25 (09/09/2026) — fechamento apos LACUNA de 02 a 08/09 (R22). SOMENTE CONTEUDO:
+  datas da regua e do tempo, prazos estourados dos 16 itens da janela, itens novos
+  #100 (sessao de consolidacao) e #101 (evento da parcela da Dra. Elaine), interfaces
+  do Inventario e da Fabrica, prioridades-base do dia. Tres rotulos de data que estavam
+  presos em 31/08 foram corrigidos (placar, relato do dia, rotulo do balde "vencem hoje")
+  — defeito de conteudo declarado, nao mudanca visual. Nenhuma linha de CSS alterada:
+  bloco de estilo conferido identico byte a byte (MD5) contra a base. Base: v24 recuperado
+  do repositorio por raw.githubusercontent.com (R29 item 3).
+
   v24 (01/09/2026) — fechamento DUPLO (31/08 nao realizado + 01/09). SOMENTE CONTEUDO:
   nenhuma linha de CSS, layout, mecanica, chave de memoria ou formato de relato foi tocada
   (R29 itens 2 e 4; bloco de estilo conferido identico byte a byte contra a base). Base:
@@ -505,8 +514,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — quarta, 02/09/2026 <span class="vcarimbo">v24</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_01-09-2026_v1 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — quinta, 10/09/2026 <span class="vcarimbo">v25</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_09-09-2026_v1 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -597,6 +606,8 @@ const TETO = 3;
 const NAT = {prazo:'Prazo fatal', destrava:'Destravador', fin:'Financeiro',
   dep:'Aguarda terceiro', mon:'Monitorar'};
 const META = {
+ '#100':{a:'Às 05h30, abrir o chat do WAM e escrever a frase: "sessão de consolidação — corte: chats de 02 a 08/09". Sem essa frase a IA não pode buscar chats antigos.', n:'prazo', s:'R22 — primeira do ciclo', t:"45′", e:'concentração', v:'Destrava a execução de #61, #96 e #99 sem risco de repetir contratação ou pagamento.'},
+ '#101':{a:'Abrir o Calendar e criar o evento recorrente mensal do dia 10: "Dra. Elaine — R$ 1.500 — conta da fábrica".', n:'fin', s:'Régua nº 1', t:"5′", e:'clique', v:'O dia 10 é hoje. Sem o evento, essa parcela continua sendo paga de memória — e a #49 tem três datas candidatas, nenhuma com fonte.'},
  '#61':{a:'Entrar no e-SAJ e testar as duas senhas; se falhar, WhatsApp da Vara (67) 99888-9623. Anotar valor, anos, natureza.', n:'prazo', t:"25′", e:'clique'},
  '#47':{a:'Colar a minuta pronta e enviar ao Dr. Luizmar agora.', n:'destrava', s:'Destrava #36', t:"5′", e:'WhatsApp', v:'Também atende #32 (cópia integral dos autos), que permanece aberta até a cópia chegar.'},
  '#36':{a:'Decidir: manter ou substituir — com a resposta (ou o silêncio) da #47.', n:'dep', s:'Depende da #47', t:"15′", e:'leitura'},
@@ -610,8 +621,8 @@ const META = {
  '#71':{a:'Mandar à Beatriz por escrito: escopo, entrega 10/09 como condição, valor fechado.', n:'dep', s:'Aguarda Prímor', t:"15′", e:'WhatsApp'},
  '#67':{a:'Abrir o SISPAR e conferir se as duas parcelas de 31/07 caíram.', n:'fin', t:"5′", e:'clique'},
  '#16':{a:'Consultar os três números no TJMT pelo cadastro da Eliziany — custo zero.', n:'destrava', s:'Destrava Cáceres', t:"25′", e:'clique'},
- '#49':{a:'Perguntar à Dra. Elaine por escrito: a parcela é 1.000 ou 1.500? desde quando?', n:'fin', t:"5′", e:'WhatsApp'},
- '#55':{a:'Cobrar as duas promessas por escrito, com prazo de resposta — e acrescentar a TERCEIRA pergunta: o Refis III/MT alcança os débitos estaduais de MT em nome da Eliziany (Cáceres)?', n:'dep', s:'Aguarda Dra. Elaine', t:"5′", e:'WhatsApp', v:'A terceira pergunta nasceu da interface do Inventário de 30/08: Refis III/MT, adesão até 29/12/2026, alcança débitos vencidos até 31/03/2025. Se alcançar Cáceres, muda o nó de MT inteiro.'},
+ '#49':{a:'Abrir o extrato da conta da fábrica e ler data e valor dos TRÊS últimos pagamentos à Dra. Elaine. Só isso fecha.', n:'fin', t:"25′", e:'concentração', v:'Três datas candidatas, nenhuma com fonte: 14/08 · 20/08 · dia 10. Três relatos não somam um extrato.'},
+ '#55':{a:'Mandar UMA mensagem curta: confirmo o pagamento no dia 10 · quais são os dois meses de R$ 1.500 e o que vale depois deles · manda a decisão da EPE e a resposta dos embargos · o Refis III/MT alcança os débitos de MT da Eliziany? · a que espólio e a que execução você se refere? · qual é o trabalho junto à prefeitura?', n:'dep', s:'Aguarda Dra. Elaine', t:"15′", e:'WhatsApp', v:'Mérito e honorários de fase nova FICAM FORA desta mensagem, por decisão de 09/09. Ler a decisão vem antes. A Dra. Elaine não consta como advogada do espólio — quem consta é a Dra. Bruna (#11).'},
  '#54':{a:'Confirmar no extrato a entrada de ~R$ 65 mil e a posição do saldo de R$ 159 mil.', n:'fin', t:"25′", e:'concentração'},
  '#22':{a:'Decidir o financiamento da viagem e registrar a classificação no caixa.', n:'fin', t:"15′", e:'decisão'},
  '#8':{a:'Levantar o valor atual da parcela do IPTU; se não sair, fixar provisório com data de revisão.', n:'fin', t:"15′", e:'clique'},
@@ -656,52 +667,72 @@ function selosHtml(m){
 }
 const RANK = ['①','②','③'];
 const vinculoHtml = m => m.v ? `<div class="vinculo">${m.v}</div>` : '';
-const PRIORIDADE_BASE = ['#47','#61','#96'];
+const PRIORIDADE_BASE = ['#100','#101','#55'];
 
 const TITULO = document.title;
 
 const REGUA = [
-  {d:'02/09', t:'HOJE', x:'#47 confirmar envio · #96 Dra. Elaine · #99 parcela · CND 09h00 · #95', hoje:true},
-  {d:'03/09', t:'', x:'#61 parecer sobre a exceção · #97 SIAT · cobrar a Dra. Bruna'},
-  {d:'04/09', t:'', x:'#86 veredito de uso do painel · #90 endereço aberto'},
-  {d:'05/09', t:'', x:'#76 marca · #84 trava dos 30% · #83 triagem · #87 · #88'},
-  {d:'12/09', t:'', x:'#78 PIX automático SABESP'},
-  {d:'15/09', t:'', x:'#57 rota tributária — data-limite'},
+  {d:'02–08/09', t:'LACUNA', x:'sete dias sem fechamento · 16 itens com prazo passaram sem registro (R22) → #100'},
+  {d:'10/09', t:'HOJE', x:'#100 consolidação 05h30 · #101 evento da parcela · Inventário e-mail 12h · #71 entrega da Prímor', hoje:true},
+  {d:'11/09', t:'', x:'canal de sugestões 17h15 — só se o evento existir (#58)'},
+  {d:'12/09', t:'', x:'#91 sessão estratégica 9h · #78 PIX automático SABESP'},
+  {d:'15/09', t:'', x:'#57 rota tributária — data-limite · reavaliação do patrocínio (#98, sem gatilho)'},
   {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026) · teto PGDAU: quitação federal de R$ 45.861,18 do espólio'},
   {d:'29/12', t:'', x:'Refis III/MT — teto de adesão (ITCD do espólio)'},
   {d:'31/12', t:'', x:'certidões limpas — frente aluguel'}
 ];
 
 const ITENS = [
+  {id:'#100', aba:'wam', ativa:true, tit:'SESSÃO DE CONSOLIDAÇÃO — corte: chats de 02 a 08/09/2026',
+   desc:'PRIMEIRA PENDÊNCIA DO CICLO pela R22: sete dias sem fechamento, cinco de dia útil, mais a auditoria de sábado 05/09. Dezesseis itens com prazo dentro da janela chegaram sem registro de resultado. Só roda com a declaração expressa de Wagner no início do chat — a IA não inicia sozinha (§9). Limite que já vale: chat registra o que foi DITO, não o que foi FEITO.',
+   prazo:'HOJE — 10/09, 05h30 · bloco de concentração, antes das 10h do Inventário', cor:'vermelho'},
+  {id:'#101', aba:'wam', ativa:true, tit:'Criar o evento recorrente do dia 10 — Dra. Elaine, R$ 1.500, conta da fábrica',
+   desc:'Régua nº 1: sem evento no Calendar + responsável + canal no mesmo ato, a obrigação NÃO está feita — e esta roda há anos sem nenhum dos três. Criar com o que se sabe hoje e revisar quando a #49 fechar pelo extrato: o valor pode cair para R$ 1.000 e os "dois meses" podem ter data de fim.',
+   prazo:'HOJE — 10/09, e o dia 10 é justamente hoje', cor:'vermelho'},
   {id:'#61', aba:'wam', ativa:true, tit:'Campo Grande — parecer sobre a exceção de pré-executividade',
    desc:'A LEITURA ENCERROU: autos obtidos em 31/08. A execução cobra IPTU de 2020 e 2021, APENAS — R$ 8.366,94 atualizados. Matrícula do CRI EM BRANCO na CDA. Prazo de citação decorrido, PGM intimada por 30 dias desde 27/08. Novo objeto: obter parecer sobre ilegitimidade passiva (art. 34 CTN) — sem escritura, sem matrícula, sem posse. Advogado NÃO precisa ser de MS. Objetivo da frente: sair do cadastro municipal, não quitar — pagar encerra 2020–2021 e deixa 2022–2025 abertos.',
-   prazo:'Parecer até 03/09 · RISCO: próximo ato natural é SISBAJUD', cor:'vermelho'},
+   prazo:'VENCIDA — era 03/09, seis dias de risco datado sem ato registrado · próximo ato natural é SISBAJUD', cor:'vermelho'},
   {id:'#47', aba:'wam', ativa:true, tit:'Confirmar o envio da mensagem complementar ao Dr. Luizmar',
    desc:'O núcleo saiu em 31/08, com 12 dias de atraso — mas foi mensagem curta, só com a 3ª pergunta e a cláusula de proposta escrita. FICARAM DE FORA: cópia integral dos autos (#32), precatória reexpedida e data de leilão. Isso foi redigido em 01/09 numa mensagem de quatro pedidos cujo ENVIO NÃO ESTÁ CONFIRMADO. Abrir a conversa, conferir se saiu, reenviar se não saiu.',
-   prazo:'Hoje — 02/09, 05h30', cor:'vermelho'},
+   prazo:'VENCIDA — era 02/09, 05h30, sem registro de resultado', cor:'vermelho'},
   {id:'#96', aba:'wam', ativa:true, tit:'Dra. Elaine — atua ou indica advogado para a exceção em MS?',
    desc:'Pedido único, com a régua de honorários no mesmo ato: escopo escrito, valor fechado, data de fim. Wagner NÃO propõe valor. Cabe na mesma mensagem da #55 (as duas promessas + Refis III/MT), mas é pendência separada: a frente, o prazo e o risco são outros. Sem parecer não há decisão entre defender e pagar.',
-   prazo:'Hoje — 02/09, 05h30 (era 01/09, passou sem registro)', cor:'vermelho'},
+   prazo:'VENCIDA — era 02/09, 05h30 (já reancorada uma vez). NÃO se reancora de novo · divergência da IA sem decisão: sair em mensagem própria, com prioridade', cor:'vermelho'},
   {id:'#99', aba:'wam', ativa:true, tit:'"Pagar parcela Dr. Luiz" — levantar cinco dados',
    desc:'Apareceu no relato de 31/08 sem valor, sem origem e sem dizer de qual profissional. Levantar: (1) qual profissional; (2) qual acordo a origina; (3) valor; (4) nº de parcelas e data de fim; (5) canal. Colide com a #33 (nenhum pagamento ao Dr. Luizmar antes de proposta por escrito) e com a régua nº 2. Se existe parcela sendo paga, existe acordo que o mestre não registra.',
-   prazo:'Hoje — 02/09', cor:'vermelho'},
+   prazo:'VENCIDA — era 02/09, sem registro de resultado', cor:'vermelho'},
   {id:'#98', aba:'wam', tit:'Criar no Calendar o evento de 15/09 — ligar ao Dr. Luizmar',
    desc:'É o gatilho da reavaliação do patrocínio (#36 encerrada em 31/08 por decisão: MANTER) e da proposta escrita na mensagem de 01/09. O combinado dele é "assim que despacharem a gente marca": sem data, e pela régua nº 1 não está feito.',
-   prazo:'No mesmo ato da #47 — até 02/09', cor:'vermelho'},
+   prazo:'VENCIDA — era até 02/09. A reavaliação de 15/09 é em SEIS DIAS e continua sem gatilho', cor:'vermelho'},
   {id:'#97', aba:'wam', tit:'Portal SIAT/Campo Grande — dimensionar a frente inteira',
    desc:'(a) IPTU de 2022 a 2025 do mesmo imóvel: valor e status; (b) existem outras execuções fiscais do município contra Wagner? (c) situação registral do lote — há matrícula, e em nome de quem? Sem isso não se sabe se os R$ 8.366,94 são o problema ou só a primeira parcela dele.',
-   prazo:'Até 03/09', cor:'vermelho'},
+   prazo:'VENCIDA — era 03/09, sem registro de resultado', cor:'vermelho'},
 
-  {id:'INV-BRUNA', aba:'wam', tit:'Cobrar a Dra. Bruna — nova versão do aditivo + orçamento das usucapiões',
-   desc:'Em 31/08 ficou combinada nova versão do aditivo com CLÁUSULA DE QUITAÇÃO RECÍPROCA do período suspenso — isenta os honorários do tempo em que a advogada não atuou. O texto escrito ainda NÃO chegou. Uma mensagem por e-mail, sem questionamento de valor no mesmo dia. Ação do Inventário; entra aqui porque tem data.',
-   prazo:'03/09', cor:'ambar'},
-  {id:'INV-JUVERLAN', aba:'wam', tit:'Cobrar o Juverlan (ACS Tecnologia) — WhatsApp E e-mail',
+  {id:'INV-BRUNA', aba:'wam', ativa:true, tit:'Inventário — e-mail à Dra. Bruna: resposta ao aditivo + proposta de pagamento',
+   desc:'PRAZO AUTOIMPOSTO, remarcado por escrito em 09/09: e-mail hoje até as 12h, para o e-mail do escritório registrado no mestre. Antes dele, até as 10h, decidir a ORIGEM DO RECURSO DA FAIXA A — conta do espólio × adiantamento pessoal. ALERTA QUE É DO WAM: se for adiantamento pessoal, não é despesa da fábrica nem do espólio, é RETIRADA — entra no teto de R$ 6.900 ou na válvula Extraordinário, com classificação no Conta Azul no mesmo ato (família da #74). A cobrança de 03/09 (nova versão do aditivo com quitação recíproca + orçamento das usucapiões) passou SEM REGISTRO DE RESULTADO e a linha nova não a carrega.',
+   prazo:'HOJE — decisão até 10h, e-mail até 12h', cor:'vermelho'},
+  {id:'INV-JUVERLAN', aba:'wam', tit:'CND do espólio — o fallback de 02/09 passou sem registro',
    desc:'CHEGOU NO FALLBACK: a cobrança de 31/08 às 09h00 não teve registro de resultado, então hoje é EMITIR a Certidão Conjunta SEFAZ/PGE-MT pelo portal, sem depender do escritório. A CND vencida não é só papel: a Prefeitura condiciona o PAGAMENTO à certidão do locador — sem certidão, receita do espólio parada. Continuam pendentes na mesma frente: a via da declaração do ITCD e a elegibilidade ao Refis III/MT. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
-   prazo:'HOJE — 02/09, 09h00: é o fallback. A cobrança de 31/08 não teve registro de resultado', cor:'vermelho'},
+   prazo:'SEM REGISTRO desde 31/08 — e o fallback de 02/09 também passou. Receita do espólio segue travada até a certidão sair', cor:'vermelho'},
   {id:'INV-SICREDI', aba:'wam', tit:'Ligar para a Sicredi — (65) 3221-0800',
    desc:'Obter o e-mail do setor de contratos. Ação do Inventário. Tarefa que sobrevive a interrupção: pode ser feita na fábrica.',
-   prazo:'Sem registro de resultado desde 31/08', cor:'vermelho'},
+   prazo:'SEM REGISTRO desde 31/08 — nove dias', cor:'vermelho'},
 
+  {id:'#86', aba:'wam', tit:'Veredito de uso do painel — funcionou, atrapalhou ou virou botão morto?',
+   desc:'Sem evidência de uso, nenhuma mudança de escopo é aceita. É também o gatilho de despertar da rota Cloudflare (#88).',
+   prazo:'VENCIDA — era 04/09, sem registro de resultado', cor:'vermelho'},
+  {id:'#90', aba:'wam', tit:'O endereço fixo foi realmente ABERTO — e o que um estranho vê?',
+   desc:'Distingue "está no ar" de "é usado". Conferir também em janela anônima: fecha a conferência de sigilo do endereço público.',
+   prazo:'VENCIDA — era 04/09, sem registro de resultado', cor:'vermelho'},
+  {id:'#87', aba:'wam', tit:'Módulo Foco — trocar a cópia v2 pela canônica v2.1 no projeto Inventário',
+   desc:'Duas versões da mesma fonte convivendo é o defeito dos dois mestres na pasta (#64) em outro lugar. Cópia colada nunca se edita no lugar.',
+   prazo:'VENCIDA — era 05/09, sem registro de resultado', cor:'vermelho'},
+  {id:'#88', aba:'wam', tit:'Cloudflare Access protege o `.pages.dev` sem domínio próprio?',
+   desc:'Confirmar NA FONTE e, se não protege, obter o custo do domínio como número escrito, não estimativa (régua nº 2). Depende da #86, que também venceu sem veredito.',
+   prazo:'VENCIDA — era 05/09, sem registro de resultado', cor:'vermelho'},
+  {id:'#89', aba:'wam', tit:'Evento de renovação do token do GitHub (~27/11/2026)',
+   desc:'Token vencido = a publicação do painel PARA DE FUNCIONAR EM SILÊNCIO, que é a família de defeito já vista três vezes aqui. Obrigação sem gatilho não existe (régua nº 1).',
+   prazo:'VENCIDA — o evento era para estar criado até 31/08', cor:'vermelho'},
   {id:'#93', aba:'wam', tit:'Responder ao escritório do Dr. Luiz (imobiliária)',
    desc:'PRIMEIRO PASSO É A LACUNA: abrir a mensagem e confirmar de QUEM ela é — o escritório do Dr. Luizmar (Rondônia, #47) ou o escritório ligado à imobiliária (frente do aluguel, #10). A resposta muda a frente inteira. A MESMA dúvida reapareceu como "pagar parcela Dr. Luiz" (#99): são duas portas para o mesmo dado.',
    prazo:'VENCIDA — era 31/08', cor:'vermelho'},
@@ -765,23 +796,23 @@ const ITENS = [
    prazo:'Ancorada no primeiro uso deste painel', cor:'ambar'},
   {id:'#94', aba:'wam', tit:'Venda da máquina de café — técnico amanhã (bomba)',
    desc:'01/09: técnico vê a bomba e entrega o ORÇAMENTO POR ESCRITO. Nenhum real de conserto antes desse número (régua nº 2). Até 02/09, fixar o PREÇO MÍNIMO por escrito antes de anunciar (régua nº 3) — preço que sai da cabeça na hora da proposta vira desconto. Vendida, o papel da venda sai no mesmo ato (régua nº 5).',
-   prazo:'A visita de 01/09 passou sem registro · preço mínimo escrito HOJE, 02/09', cor:'vermelho'},
+   prazo:'VENCIDA EM DOIS ATOS — visita do técnico (01/09) e preço mínimo escrito (02/09), os dois sem registro', cor:'vermelho'},
   {id:'#95', aba:'wam', tit:'Rotina diária de contas a pagar fora do que o BPO sobe',
    desc:'Definir RESPONSÁVEL, GATILHO recorrente e CANAL no mesmo ato — faltando um dos três, a rotina não existe (régua nº 1). Tarefa de concentração: bloco 05h30, ambiente sem demanda de presença. Tirada de 31/08 neste fechamento porque a segunda já carrega prazo processual e nove itens.',
-   prazo:'HOJE — quarta 02/09, 05h30', cor:'vermelho'},
+   prazo:'VENCIDA — era quarta 02/09, 05h30, sem registro de resultado', cor:'vermelho'},
 
   {id:'#59', aba:'wam', tit:'Criar o projeto "Folhados 00 — Painel"',
    desc:'Instruções de 16/08. Estrela só nele e no WAM. O bloco de interface não entra nesta etapa. Reancorar é decisão de Wagner, não do fechamento.',
    prazo:'VENCIDA — era terça 01/09, 05h30, sem registro', cor:'vermelho'},
   {id:'#76', aba:'wam', tit:'Marca "Canto da Vó" — Busca Web do INPI',
    desc:'Gratuita. Titular, nº do processo, classe e DATA DE CONCESSÃO. Da concessão sai a janela de prorrogação — o INPI não avisa.',
-   prazo:'Até 05/09', cor:'ambar'},
+   prazo:'VENCIDA — era 05/09, sem registro de resultado', cor:'vermelho'},
   {id:'#84', aba:'wam', tit:'Trava dos 30% do salário — obter por escrito',
    desc:'Contrato de honorários de 2022, § único da Cl. 3ª. O aditivo de 15/07 mantém o contrato originário incólume. Revogada, ressalvada ou mantida?',
-   prazo:'Até 05/09', cor:'ambar'},
+   prazo:'VENCIDA — era 05/09. É a linha de maior exposição pessoal do mapa e atravessou a janela sem uma palavra', cor:'vermelho'},
   {id:'#83', aba:'wam', tit:'Aba "Por resolver" como caixa de triagem — em uso',
    desc:'Decidida em 28/08 pela opção (c). Os dois botões escrevem no relato; o fechamento decide com data e fonte. Conferir em 05/09 se a triagem está sendo usada ou virou botão morto.',
-   prazo:'Revisão de uso em 05/09', cor:'ambar'},
+   prazo:'VENCIDA — era 05/09. Agravante: sem fechamento não houve relato do dia, logo o dado que a encerraria não foi produzido', cor:'vermelho'},
   {id:'#65', aba:'wam', tit:'Valor da primeira guia da PA 02/2026',
    desc:'Pergunta feita 2× ao Matheus em 21/08 sem resposta. Sem o valor não sai a mensagem nem o pagamento.',
    prazo:'Primeira guia em setembro', cor:'ambar'},
@@ -796,7 +827,7 @@ const ITENS = [
    prazo:'Ciclo de 12/09', cor:'ambar'},
   {id:'#57', aba:'wam', tit:'Rota tributária — fechar o número da empresa',
    desc:'Resta a comparação numérica: Simples cheio × híbrido IBS/CBS por fora, usando produtos, insumos e perfil real dos clientes. Nada se decide sem esse número.',
-   prazo:'Data-limite 15/09', cor:'ambar'},
+   prazo:'Data-limite 15/09 — a janela legal de opção fecha em 30/09 e ninguém pode movê-la. #71 tinha entrega em 10/09 como condição e está vencida desde 31/08', cor:'vermelho'},
   {id:'#26', aba:'wam', tit:'Certidão de casamento original',
    desc:'Primeiro elo: certidão → agendamento da 2ª via da CIN → CIN → certidão de nascimento → apostilamento → viagem.',
    prazo:'O quanto antes', cor:'ambar'},
@@ -825,6 +856,9 @@ const ITENS = [
   {id:'OP', aba:'fabrica', tit:'Massa congelada / dobra — marco de 15/09 SEM GATILHO',
    desc:'O marco de 15/09 não tem evento no Calendar e o destinatário não está definido. Sem gatilho não existe como compromisso (régua nº 1). Operação pela R19 — não abre pendência no WAM; entra no Folhados 00 quando o projeto existir (01/09).',
    prazo:'Criar o evento no ato — hoje ou em 01/09', cor:'ambar'},
+  {id:'OP', aba:'fabrica', tit:'Equipe / processo — conversa com a Luana e canal de sugestões',
+   desc:'INTERFACE DE 09/09. Wagner registra no projeto de RH o resultado da conversa com a Luana (roteiro de 07/09, antes da produção) até 10/09; não tendo ocorrido, reancorar POR DECISÃO, não por deslize. O canal de sugestões de sexta 17h15 só existe se o evento tiver sido criado — condicional não é gatilho, e o default da #58 (sábado 9h) continua vigente. Quatro lacunas sem resposta: a conversa de 07/09 ocorreu? · o evento foi criado? · qual mudança concreta ela não executou? · o processo contestado está escrito (PWA/folha) ou só na cabeça? Risco registrado como fato, sem valor: com a Jack afastada, a Luana é peça crítica numa equipe de três.',
+   prazo:'Registro até 10/09 · marco condicional em 11/09, 17h15', cor:'vermelho'},
   {id:'OP', aba:'fabrica', tit:'Higrômetro e amostra ao Anay',
    desc:'Itens capturados no período e triados como Operação. Ficam aqui até o Folhados 00 existir.',
    prazo:'Sem data', cor:'ambar'}
@@ -877,21 +911,27 @@ const SEM_DATA = [
 
 /* ===== camada integral (v6): urgência e frentes — derivadas do mestre v4 ===== */
 const URG = {
-  '#47':'venc','#36':'venc','#67':'venc','#16':'venc','#49':'venc','#55':'venc',
-  '#54':'venc','#22':'venc','#8':'venc',
-  '#61':'hoje','#39':'hoje','#40':'hoje','#72':'hoje','#75':'hoje','#66':'hoje',
-  '#68':'hoje','#69':'hoje','#71':'hoje','#93':'hoje',
-  '#59':'sem7','#76':'sem7','#84':'sem7','#83':'sem7','#94':'sem7','#95':'sem7',
-  '#34':'dep','#78':'dep','#57':'dep','#65':'dep','#73':'dep',
-  '#37':'aberto','#38':'aberto','#62':'aberto','#79':'aberto','#26':'aberto','#7':'aberto',
- '#96':'hoje','#99':'hoje','#98':'hoje','#97':'sem7','INV-BRUNA':'sem7','#59':'venc'
+  '#47':'venc','#67':'venc','#16':'venc','#49':'venc','#55':'venc',
+  '#54':'venc','#22':'venc','#8':'venc','#61':'venc','#39':'venc','#40':'venc',
+  '#72':'venc','#75':'venc','#66':'venc','#68':'venc','#69':'venc','#71':'venc',
+  '#93':'venc','#59':'venc','#76':'venc','#84':'venc','#83':'venc','#94':'venc',
+  '#95':'venc','#96':'venc','#99':'venc','#98':'venc','#97':'venc',
+  '#86':'venc','#90':'venc','#87':'venc','#88':'venc','#89':'venc',
+  'INV-JUVERLAN':'venc','INV-SICREDI':'venc',
+  '#100':'hoje','#101':'hoje','INV-BRUNA':'hoje',
+  '#57':'sem7','#78':'sem7',
+  '#34':'dep','#65':'dep','#73':'dep',
+  '#37':'aberto','#38':'aberto','#62':'aberto','#79':'aberto','#26':'aberto','#7':'aberto'
 };
 const urgDe = it => URG[it.id] || 'aberto';
 const URG_ORDEM = ['venc','hoje','sem7','dep','aberto'];
-const URG_ROTULO = {venc:'Vencidas', hoje:'Vencem hoje — 02/09',
+const URG_ROTULO = {venc:'Vencidas', hoje:'Vencem hoje — 10/09',
   sem7:'Próximos 7 dias', dep:'Acompanhamento / depois com data', aberto:'Sem data fixa'};
 
 const FRENTES = [
+  {k:'lac', n:'Lacuna 02–08/09 · método', ids:['#100','#86','#90','#87','#88','#89','#83'],
+    extra:'SETE DIAS SEM FECHAMENTO — cinco de dia útil (02, 03, 04, 07 e 08/09) mais a auditoria de sábado 05/09 e a leitura do registro de calibragem. Último fechamento efetivo: 01/09 (v1). DEZESSEIS itens com prazo dentro da janela chegaram sem registro de resultado, e dois deles não são papel: #61 (risco de bloqueio de conta por SISBAJUD, exposição de R$ 8.366,94 + atualização) e #84 (autorização de penhora de até 30% do salário). NADA FOI REANCORADO: as datas ficam estouradas à vista. ERRO DA IA DECLARADO: o cold start desta sessão foi feito sobre 04/09 estando em 09/09 — cinco dias de deslocamento em todas as réguas de prazo; consertado por régua nova (R30) e não por promessa de atenção. A #100 só roda com a declaração expressa de Wagner (§9).',
+    aba:null},
   {k:'cg', n:'Campo Grande', ids:['#61','#96','#97'],
     extra:'AUTOS LIDOS em 31/08 — primeiro número com fonte documental da frente. Execução cobra IPTU de 2020 e 2021, APENAS: CDA R$ 6.504,15, R$ 8.366,94 atualizados (principal 7.606,31 + honorários 760,63, fls. 106). Protesto em 15/05/2025. Matrícula do CRI EM BRANCO na CDA (fls. 2). Prazo de 5 dias DECORRIDO sem pagamento nem nomeação de bens (fls. 109); PGM intimada por 30 dias desde 27/08 para juntar planilha atualizada. RISCO: o próximo ato natural é penhora de ativos por SISBAJUD. Decisão de 31/08: NÃO contratar o advogado indicado pela atendente da Vara — captação por servidora do juízo, com pedido de sigilo, sendo ela quem controla o acesso aos autos. Objetivo da frente: SAIR DO CADASTRO MUNICIPAL, não quitar.'},
   {k:'ro', n:'Rondônia · Citroën', ids:['#47','#98','#34','#37'],
@@ -899,9 +939,9 @@ const FRENTES = [
   {k:'mt', n:'Cáceres · MT', ids:['#16','#49','#55','#54','#8']},
   {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#71','#65','#73','#57']},
   {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38','#93'],
-    extra:'AS QUATRO LINHAS DESTA FRENTE VENCERAM EM 31/08 SEM REGISTRO DE RESULTADO — e é a frente com data dura: certidões limpas até dez/2026 para a garantia locatícia de fev/2027.'},
-  {k:'inv', n:'Inventário (interface)', ids:['#84','INV-JUVERLAN','INV-BRUNA','INV-SICREDI'],
-    extra:'INTERFACE DE 01/09: combinada em 31/08 a nova versão do aditivo com CLÁUSULA DE QUITAÇÃO RECÍPROCA do período suspenso — isenta os honorários do tempo em que a advogada não atuou; texto escrito ainda NÃO recebido, cobrança em 03/09 · três lacunas declaradas pela própria interface: não se sabe se o aditivo e o orçamento foram enviados em 01/09, nem se a ata de 01/09 foi respondida, e a auditoria de cadeia não rodou por falta do par-base de 15/08 · AS TRÊS AÇÕES DE 31/08 FICARAM SEM REGISTRO DE RESULTADO (cobrar o Juverlan às 09h00, ligar para a Sicredi, decidir o conflito das 17h30) — hoje é o FALLBACK da certidão · CND estadual nº 0063507965 VENCIDA em 29/08 e a PREFEITURA CONDICIONA O PAGAMENTO À CERTIDÃO DO LOCADOR — certidão vencida agora trava RECEITA, não só papel · cobrança ao Juverlan hoje 09h00, na MESMA mensagem pedir a via da declaração do ITCD e a elegibilidade ao Refis III; emissão própria da certidão em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · REFIS III/MT: adesão até 29/12/2026, alcança ITCD e débitos vencidos até 31/03/2025, data dura e não cumulável com outro parcelamento estadual · PRECATÓRIO: rota é CESSÃO ONEROSA com deliberação de TODOS os herdeiros, não liberação — e a QUITAÇÃO FEDERAL DE R$ 45.861,18 é PRÉ-REQUISITO, não etapa paralela (teto PGDAU 30/09) · fim do 2º Termo Aditivo 12/12 · lacunas: elegibilidade do ITCD ao Refis III NÃO confirmada; ação de 28/08 (acionar o Juverlan) sem registro de execução; sem lastro documental do objeto dos três pagamentos de R$ 2.000 à advogada local; sem resposta sobre a situação da carta no processo do precatório'},
+    extra:'AS QUATRO LINHAS DESTA FRENTE VENCERAM EM 31/08 E CHEGAM A 09/09 SEM UMA LINHA DE REGISTRO — nove dias. É a frente com data dura: certidões limpas até dez/2026 para a garantia locatícia de fev/2027, e o caminho crítico é levantar a posição real em ago–set/2026. Setembro está na metade.'},
+  {k:'inv', n:'Inventário (interface)', ids:['#84','INV-BRUNA','INV-JUVERLAN','INV-SICREDI'],
+    extra:'INTERFACE DE 09/09: PRAZO AUTOIMPOSTO para HOJE — e-mail à Dra. Bruna até as 12h com a resposta ao aditivo e a proposta de pagamento (e-mail do escritório: ver mestre), precedido da decisão, até as 10h, sobre a ORIGEM DO RECURSO DA FAIXA A: conta do espólio × adiantamento pessoal · ALERTA QUE É DO WAM: adiantamento pessoal é RETIRADA — teto de R$ 6.900 ou válvula Extraordinário, com classificação no Conta Azul no mesmo ato (família da #74) · honorários em atraso de 2022–2023 cobrados CONTRA O ESPÓLIO · NOTIFICAÇÃO MUNICIPAL AMBIENTAL contra o espólio, assinada em 07/08/2026, multa prevista de 100 UFIC — os três ficam como MARCO, não como pendência (mesmo tratamento da PGFN do espólio em 28/08) · quatro lacunas declaradas: origem da Faixa A não decidida · prazo padrão da LC 19/1995 desconhecido e não se sabe se está em curso · sem confirmação de que a Dra. Bruna acusou recebimento da rajada de 09/09 · quanto valem 100 UFIC em reais e de qual município, A LEVANTAR e nunca estimar · O QUE A LINHA NOVA APAGOU, declarado: o fallback de 02/09 às 09h00 (emitir a Certidão Conjunta SEFAZ/PGE-MT, que destrava RECEITA do espólio) e a cobrança à Dra. Bruna em 03/09 passaram os dois SEM REGISTRO DE RESULTADO · MARCOS CARREGADOS DA LINHA ANTERIOR: 30/09 teto PGDAU com quitação federal de R$ 45.861,18 como PRÉ-REQUISITO do precatório · 12/12 fim do 2º Termo Aditivo · 29/12 teto do Refis III/MT, elegibilidade do ITCD NÃO confirmada · trava dos 30% do salário: #84, vencida em 05/09.  --- HISTÓRICO DA LINHA DE 01/09: combinada em 31/08 a nova versão do aditivo com CLÁUSULA DE QUITAÇÃO RECÍPROCA do período suspenso — isenta os honorários do tempo em que a advogada não atuou; texto escrito ainda NÃO recebido, cobrança em 03/09 · três lacunas declaradas pela própria interface: não se sabe se o aditivo e o orçamento foram enviados em 01/09, nem se a ata de 01/09 foi respondida, e a auditoria de cadeia não rodou por falta do par-base de 15/08 · AS TRÊS AÇÕES DE 31/08 FICARAM SEM REGISTRO DE RESULTADO (cobrar o Juverlan às 09h00, ligar para a Sicredi, decidir o conflito das 17h30) — hoje é o FALLBACK da certidão · CND estadual nº 0063507965 VENCIDA em 29/08 e a PREFEITURA CONDICIONA O PAGAMENTO À CERTIDÃO DO LOCADOR — certidão vencida agora trava RECEITA, não só papel · cobrança ao Juverlan hoje 09h00, na MESMA mensagem pedir a via da declaração do ITCD e a elegibilidade ao Refis III; emissão própria da certidão em 02/09 se não houver retorno · bilateral Dra. Bruna 31/08 17h30 (gravar) · 01/09 fecham os extratos de agosto (P.234 e P.312) · REFIS III/MT: adesão até 29/12/2026, alcança ITCD e débitos vencidos até 31/03/2025, data dura e não cumulável com outro parcelamento estadual · PRECATÓRIO: rota é CESSÃO ONEROSA com deliberação de TODOS os herdeiros, não liberação — e a QUITAÇÃO FEDERAL DE R$ 45.861,18 é PRÉ-REQUISITO, não etapa paralela (teto PGDAU 30/09) · fim do 2º Termo Aditivo 12/12 · lacunas: elegibilidade do ITCD ao Refis III NÃO confirmada; ação de 28/08 (acionar o Juverlan) sem registro de execução; sem lastro documental do objeto dos três pagamentos de R$ 2.000 à advogada local; sem resposta sobre a situação da carta no processo do precatório'},
   {k:'ct', n:'Contas & PIX', ids:['#79','#78','#95']},
   {k:'av', n:'Ativo parado · caixa', ids:['#94','#99']},
   {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
@@ -952,7 +992,7 @@ function placarRender(){
   const c = contagens();
   $('#placar').innerHTML =
     `<div class="pz venc"><span class="n">${c.venc}</span><span class="r">vencidas</span></div>`+
-    `<div class="pz hoje"><span class="n">${c.hoje}</span><span class="r">hoje 31/08</span></div>`+
+    `<div class="pz hoje"><span class="n">${c.hoje}</span><span class="r">hoje 10/09</span></div>`+
     `<div class="pz sem7"><span class="n">${c.sem7}</span><span class="r">em 7 dias</span></div>`+
     `<div class="pz trat"><span class="n">${c.trat}</span><span class="r">tratadas</span></div>`;
   const feitasTop = PRIORIDADE_BASE.filter(id=>{
@@ -965,6 +1005,8 @@ function placarRender(){
 
 /* ===== prioridade/âncora dinâmica ===== */
 const HERO_INFO = {
+  '#100':{p:'sete dias sem fechamento significam que não se sabe se houve contratação, pagamento ou protocolo em #61, #96 e #99 nesse período. Executar essas três no escuro é aceitar o risco de pagar ou contratar duas vezes.', d:'a execução do resto do dia, e a Posição Patrimonial de 12/09 (#91), que hoje entraria com oito dias de buraco.'},
+  '#101':{p:'a parcela do dia 10 é paga há anos sem evento, sem responsável nomeado e sem canal registrado — e o dia 10 é hoje.', d:'a régua nº 1 nesta linha, e a #49, que passa a ter data verificável a partir do mês que vem.'},
   '#61':{p:'a leitura acabou e o risco ficou datado: prazo de citação decorrido, PGM intimada — o próximo ato natural é bloqueio de ativos por SISBAJUD.', d:'a decisão entre defender e pagar. Objetivo: sair do cadastro, não quitar.'},
   '#47':{p:'o envio de 31/08 saiu incompleto; a mensagem que carrega o resto foi escrita em 01/09 e não se sabe se saiu.', d:'#32 (cópia integral dos autos) e #48 — as duas estão paradas dentro dessa mesma mensagem.'},
   '#96':{p:'sem parecer não há decisão em Campo Grande, e a exposição corre enquanto isso.', d:'a rota de defesa da #61 inteira.'},
@@ -1048,16 +1090,14 @@ function drawerRender(){
 
 /* ===== régua do tempo proporcional (29/08 → 30/09) ===== */
 function tempoRender(){
-  const ini = new Date('2026-08-29T00:00:00-03:00');
+  const ini = new Date('2026-09-08T00:00:00-03:00');
   const fim = new Date('2026-10-01T00:00:00-03:00');
   const pct = d => Math.min(99, Math.max(1,
     Math.round((new Date(d+'T12:00:00-03:00') - ini) / (fim - ini) * 100)));
   const marcos = [
-    {d:'2026-08-31', lb:'31/08', tx:'#61 + 8 itens', u:'hoje', pos:'cima'},
-    {d:'2026-09-01', lb:'01/09', tx:'#59 05h30 · R24', u:'sem7', pos:'baixo'},
-    {d:'2026-09-05', lb:'05/09', tx:'#76 · #84 · #83', u:'sem7', pos:'cima'},
-    {d:'2026-09-12', lb:'12/09', tx:'#78 SABESP', u:'sem7', pos:'baixo'},
-    {d:'2026-09-15', lb:'15/09', tx:'#57 tributos', u:'sem7', pos:'cima'},
+    {d:'2026-09-10', lb:'10/09', tx:'#100 · #101 · Bruna 12h', u:'hoje', pos:'cima'},
+    {d:'2026-09-12', lb:'12/09', tx:'#91 estratégica · #78', u:'sem7', pos:'baixo'},
+    {d:'2026-09-15', lb:'15/09', tx:'#57 tributos · #98', u:'sem7', pos:'cima'},
     {d:'2026-09-30', lb:'30/09', tx:'regime · PGDAU', u:'sem7', pos:'baixo'}
   ];
   let html = '<div class="linha"></div>';
@@ -1465,7 +1505,7 @@ $('#copiar').addEventListener('click', ()=>{
       L.push('- '+nome(i)+(comNota&&n?'\n  '+n:'')); });
     L.push('');
   };
-  L.push('RELATO DO DIA — 31/08/2026'); L.push('');
+  L.push('RELATO DO DIA — 10/09/2026'); L.push('');
   grupo('FEITO', s=>s.status==='feito', false);
   grupo('FEITO — TEM CONTEÚDO PARA O MESTRE', s=>s.status==='conteudo', true);
   grupo('NÃO FEITO — COM MOTIVO', s=>s.status==='naofeito', true);
