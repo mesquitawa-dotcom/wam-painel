@@ -6,8 +6,14 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 10/09/2026 (v27)</title>
+<title>Painel do dia — 17/09/2026 (v28)</title>
 <!--
+  v28 (16/09/2026) — fechamento depois de 6 dias sem fechamento (10 a 15/09, 4 dias uteis).
+  Conteudo derivado do WAM_MESTRE_16-09-2026_v1. Tres pendencias novas (#102 documento da PGE-MT nao aberto, #103 pasta do projeto sem os arquivos canonicos, #104 boleto de
+  R$ 5.073,00 em 10/10) e a #100 ampliada sem numero novo (corte: chats anteriores a 16/09).
+  R29 cumprida: base v27 recuperada do repositorio, edicao SO de conteudo, bloco style
+  conferido identico byte a byte. Sigilo: numero de referencia e codigo de acesso do
+  documento da PGE NAO entram neste arquivo — o endereco e publico.
   v27 (09/09/2026 — 3a sessao) — interface do Inventario v2, RESPOSTA AO R27. A pergunta do
   paragrafo unico da Cl. 3a voltou INSTALADA na origem como item obrigatorio do e-mail de
   10/09 (P.421): "sem ela o e-mail nao sai". Primeira vez que um item do WAM vira CONDICAO
@@ -538,8 +544,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — quinta, 10/09/2026 <span class="vcarimbo">v27</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_09-09-2026_v1 · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — quinta, 17/09/2026 <span class="vcarimbo">v28</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_16-09-2026_v1 · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -689,38 +695,48 @@ function selosHtml(m){
 }
 const RANK = ['①','②','③'];
 const vinculoHtml = m => m.v ? `<div class="vinculo">${m.v}</div>` : '';
-const PRIORIDADE_BASE = ['#84','#96','#100'];
+const PRIORIDADE_BASE = ['#84','#57','#102'];
 
 const TITULO = document.title;
 
 const REGUA = [
-  {d:'02–05/09', t:'VENCIDO', x:'16 itens passaram sem registro de resultado — nada foi reancorado'},
-  {d:'10/09', t:'HOJE', x:'10h origem do recurso + data de emissão da CND (P.422) · 12h e-mail à Dra. Bruna com a pergunta do § único (P.421) · #101 evento dia 10 · resultado da conversa com a Luana', hoje:true},
-  {d:'11/09', t:'', x:'#100 sessão de consolidação 05h30 · canal de sugestões 17h15 (só se o evento existir)'},
-  {d:'12/09', t:'', x:'#91 sessão estratégica 9h — e os seis vencidos de 05/09 caindo no mesmo bloco · #78 PIX SABESP'},
-  {d:'15/09', t:'', x:'#57 rota tributária — data-limite · #98 reavaliação do patrocínio'},
-  {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026) · teto PGDAU: quitação federal de R$ 45.861,18 do espólio'},
+  {d:'10–15/09', t:'VENCIDO', x:'11 itens passaram sem registro de resultado — #91, #57, #71, #101, #100 e o e-mail de 10/09. Nada foi reancorado'},
+  {d:'17/09', t:'HOJE', x:'#102 abrir o documento da PGE-MT e SALVAR O PDF (05h30) · #84 cobrar por escrito o destino da cláusula dos 30% · #57 a janela do regime fecha em 30/09', hoje:true},
+  {d:'18/09', t:'', x:'#104 criar o evento do boleto de 10/10 (R$ 5.073,00) · teto de retorno da interface do Inventário'},
+  {d:'26/09', t:'', x:'#61 termina o prazo de 30 dias da PGM (desde 27/08) — próximo ato natural é SISBAJUD'},
+  {d:'30/09', t:'', x:'janela de opção do regime (CGSN 186/2026) FECHA · teto PGDAU: quitação federal de R$ 45.861,18 do espólio'},
+  {d:'10/10', t:'', x:'boleto de honorários R$ 5.073,00 — só após as quatro assinaturas, e só com a cláusula dos 30% resolvida por escrito'},
+  {d:'~11/10', t:'', x:'expira o código de acesso do documento da PGE-MT (#102)'},
   {d:'29/12', t:'', x:'Refis III/MT — teto de adesão (ITCD do espólio)'},
   {d:'31/12', t:'', x:'certidões limpas — frente aluguel'}
 ];
 
 const ITENS = [
-  {id:'#84', aba:'wam', ativa:true, tit:'E-mail à Dra. Bruna, 12h — R$ 5.073,00 + cláusula de quitação (condição mínima)',
-   desc:'DOIS FATOS NOVOS com documento. (1) R$ 5.073,00: valor dos honorários de 2022–2023 confirmado COM DOCUMENTO DA PRÓPRIA ADVOGADA — a régua nº 2 está satisfeita; o número existe e a proposta pode ir. (2) O aditivo, se assinado como está, mantém TÍTULO EXECUTIVO EXTRAJUDICIAL e penhora de até 30% do salário — não é "manter o contrato"; é o instrumento que o aditivo CRIA. Por isso a CLÁUSULA DE ACERTO E QUITAÇÃO não é negociação — é CONDIÇÃO MÍNIMA antes de assinar qualquer coisa. Propor os R$ 5.073,00 sem ela é fechar a conta financeira e deixar o título e a penhora de 30% do salário vivos. Perguntar por escrito: com a cláusula, assina; sem ela, não assina. A PERGUNTA JÁ ESTÁ INSTALADA NA ORIGEM como item obrigatório do e-mail (P.421): sem ela o e-mail não sai — mas a #84 só encerra com a RESPOSTA por escrito. ATENÇÃO À LACUNA DE ALINHAMENTO: a linha nova diz "proposta da Faixa A" e a anterior diz "R$ 5.073,00" — não está escrito se são o mesmo valor. Confirmar antes de propor. Decidir também a origem do recurso (conta do espólio × adiantamento pessoal) até 10h — se pessoal, cruza a R19 e o WAM é avisado antes de qualquer passo.',
-   prazo:'HOJE — 10/09, 12h · a pendência está VENCIDA desde 05/09; incluir aqui é executar, não reancorar', cor:'vermelho'},
-  {id:'#96', aba:'wam', ativa:true, tit:'Dra. Elaine — atua ou indica advogado para a exceção em MS?',
+  {id:'#102', aba:'wam', ativa:true, tit:'Abrir o documento da PGE-MT recebido em 11/09 — e salvar o PDF no mesmo ato',
+   desc:'Chegou por e-mail do SIGADOC em 11/09 e está fechado há cinco dias. O CÓDIGO DE ACESSO EXPIRA ~11/10 — o documento, não: baixar o PDF no ato da abertura. Número do documento, referência e código de acesso estão SÓ no mestre (#102) — não entram neste painel, que é público. Vias, nesta ordem: o link do próprio e-mail; www.sigadoc.mt.gov.br/sigaex/public/app/autenticar; protocolo@pge.mt.gov.br ou (65) 3613-0800. AO ABRIR, TRÊS DADOS E SÓ TRÊS: assunto · interessado (Wagner, Eliziany ou o espólio) · frente. Nada se classifica antes disso. DUAS frentes têm PGE-MT em aberto — #55 (a PGE nunca foi consultada) e #56 (crédito do espólio) — e NENHUMA pode ser presumida como origem. Sem abrir, não se sabe se é papel ou se é prazo; o precedente é a notificação ambiental de 07/08, que pode estar correndo há mais de um mês.',
+   prazo:'HOJE — 17/09, 05h30 · data fixada no fechamento de 16/09 por R8', cor:'vermelho'},
+  {id:'#104', aba:'wam', tit:'Boleto de honorários R$ 5.073,00 em 10/10 — criar evento, responsável e canal',
+   desc:'A interface do Inventário de 16/09 trouxe DATA e INSTRUMENTO: boleto de R$ 5.073,00, vencimento 10/10/2026, pela conta do espólio e SÓ APÓS AS QUATRO ASSINATURAS. Régua nº 1: sem evento no Calendar, sem responsável nomeado e sem canal, a obrigação NÃO está feita. TRAVA ESCRITA: não se assina e não se paga enquanto a cláusula dos 30% do salário (#84) não tiver destino POR ESCRITO — as quatro assinaturas são exatamente o ponto em que isso deixa de ser reversível. LACUNA DECLARADA PELA PRÓPRIA INTERFACE: não se conhece o saldo documentado do espólio para honrar o boleto.',
+   prazo:'Evento criado até 18/09 · vencimento 10/10', cor:'vermelho'},
+  {id:'#103', aba:'wam', tit:'Repor o mestre e o arquivo T3 na pasta do projeto',
+   desc:'Em 16/09 a pasta devolveu o DRE, dois PDFs de condomínio, o acordo do Pestalozzi e duas imagens — e NENHUM .md. Não é defasagem de sincronização: é ausência. A R16 salvou o fechamento pelo anexo, mas todo chat que NÃO é fechamento lê da pasta, e hoje leria o nada. Repor os dois vigentes e arquivar as versões anteriores FORA do projeto (R14: arquivar, nunca apagar).',
+   prazo:'No mesmo ato da substituição dos arquivos — 16/09', cor:'vermelho'},
+  {id:'#84', aba:'wam', ativa:true, tit:'Cláusula dos 30% do salário — obter o destino POR ESCRITO antes de qualquer assinatura',
+   desc:'A INTERFACE DE 16/09 RESPONDEU O QUE NÃO SE PERGUNTOU: a cláusula de penhora de até 30% do salário SEGUE VIVA no aditivo v2, e nada está assinado. Isso é o ESTADO DA MINUTA, não a resposta que esta pendência pede — revogada, ressalvada ou mantida, por escrito. A #84 NÃO encerra. O QUE PIOROU: agora existe boleto com data (R$ 5.073,00 em 10/10, #104) e quatro assinaturas como condição — a parte que cobra ganhou calendário e a parte que protege continua sem resposta. A pergunta entrou como CONDIÇÃO DE SAÍDA do e-mail de 10/09 (P.421) e não há registro de envio nem de resposta. Assinar o aditivo como está cria TÍTULO EXECUTIVO EXTRAJUDICIAL com penhora de 30% do salário. Sequência travada: nenhuma assinatura e nenhum pagamento antes do destino da cláusula por escrito.',
+   prazo:'VENCIDA desde 05/09 — 11 dias · e agora com data de pagamento marcada do outro lado', cor:'vermelho'},
+  {id:'#96', aba:'wam', tit:'Dra. Elaine — atua ou indica advogado para a exceção em MS?',
    desc:'Pedido único, com a régua de honorários no mesmo ato: escopo escrito, valor fechado, data de fim. Wagner NÃO propõe valor. RECOMENDAÇÃO DA IA, REITERADA E SEM DECISÃO DE WAGNER: sai em MENSAGEM PRÓPRIA, separada da de honorários — assunto de honorários e prazo de outra frente na mesma conversa faz um dos dois morrer. Do outro lado está o risco de SISBAJUD da #61.',
-   prazo:'VENCIDA desde 02/09 — 8 dias', cor:'vermelho'},
-  {id:'#101', aba:'wam', ativa:true, tit:'Criar o evento recorrente dia 10 — parcela da Dra. Elaine',
+   prazo:'VENCIDA desde 02/09 — 14 dias', cor:'vermelho'},
+  {id:'#101', aba:'wam', tit:'Criar o evento recorrente dia 10 — parcela da Dra. Elaine',
    desc:'Mensal, dia 10: "Dra. Elaine — parcela — conta da fábrica". Valor R$ 1.500 marcado como PROVISÓRIO sob R8, porque não veio do extrato (#49). Régua nº 1: sem evento recorrente + responsável + canal a obrigação não está feita — e esta roda desde 2022 sem nenhum dos três. Fechada a #49 pelo extrato, se data ou valor divergirem o evento muda por decisão datada, nunca por ajuste silencioso.',
-   prazo:'Era 09/09, no mesmo ato da confirmação do pagamento', cor:'vermelho'},
+   prazo:'VENCIDA — era 09/09 e o dia 10 de setembro já correu sem gatilho', cor:'vermelho'},
 
   {id:'#61', aba:'wam', tit:'Campo Grande — parecer sobre a exceção de pré-executividade',
    desc:'A LEITURA ENCERROU: autos obtidos em 31/08. A execução cobra IPTU de 2020 e 2021, APENAS — R$ 8.366,94 atualizados. Matrícula do CRI EM BRANCO na CDA. Prazo de citação decorrido, PGM intimada por 30 dias desde 27/08 (termina ~26/09). Objetivo da frente: sair do cadastro municipal, não quitar. O passo 1 é a #96, que está parada há 8 dias.',
    prazo:'VENCIDA — o parecer era até 03/09 · RISCO: próximo ato natural é SISBAJUD', cor:'vermelho'},
   {id:'#47', aba:'wam', tit:'Confirmar o envio da mensagem complementar ao Dr. Luizmar',
    desc:'A mensagem de quatro pedidos foi redigida em 01/09 e o ENVIO NUNCA FOI CONFIRMADO. Abrir a conversa, conferir se saiu, reenviar se não saiu. Enquanto isso, #32 (cópia integral dos autos) e #48 ficam paradas dentro dela.',
-   prazo:'VENCIDA desde 02/09 — 8 dias', cor:'vermelho'},
+   prazo:'VENCIDA desde 02/09 — 14 dias · e #32 e #48 seguem paradas dentro dela', cor:'vermelho'},
   {id:'#97', aba:'wam', tit:'Portal SIAT/Campo Grande — dimensionar a frente inteira',
    desc:'(a) IPTU de 2022 a 2025 do mesmo imóvel: valor e status; (b) existem outras execuções fiscais do município contra Wagner? (c) situação registral do lote — há matrícula, e em nome de quem? Sem isso não se sabe se os R$ 8.366,94 são o problema ou só a primeira parcela dele.',
    prazo:'VENCIDA desde 03/09', cor:'vermelho'},
@@ -765,13 +781,13 @@ const ITENS = [
    prazo:'VENCIDA desde 05/09', cor:'vermelho'},
   {id:'#91', aba:'wam', tit:'Sessão estratégica de sábado — e a colisão do bloco',
    desc:'Duas entregas: Posição Patrimonial Consolidada (ativos, dívidas, fonte, data, posição líquida) e o Propósito em 2–3 metas numéricas com data. ALERTA REGISTRADO EM 09/09: o alarme de sábado 9h passa a carregar TAMBÉM os seis itens vencidos de 05/09 (#3, #76, #83, #84, #87, #88). Meta-trabalho e execução vencida no mesmo bloco. A decisão é de Wagner: ou a #91 fica com o sábado inteiro e os seis recebem data própria, ou a #91 escorrega.',
-   prazo:'Sábado 12/09, 9h', cor:'ambar'},
-  {id:'#57', aba:'wam', tit:'Rota tributária — a janela mais dura do calendário próximo',
+   prazo:'VENCIDA — era sábado 12/09 às 9h e passou sem registro. Não reancorada aqui', cor:'vermelho'},
+  {id:'#57', aba:'wam', ativa:true, tit:'Rota tributária — a janela mais dura do calendário próximo',
    desc:'Janela de opção do regime: 1º a 30/09/2026 (Resolução CGSN 186/2026), efeitos a partir de 01/01/2027. Data-limite de segurança 15/09. O que trava é a #71: a análise da Prímor tem entrega em 10/09 como CONDIÇÃO CONTRATUAL e está vencida desde 31/08 sem registro. Passada a janela, a decisão trava por um ano inteiro.',
-   prazo:'Data-limite 15/09 — faltam poucos dias', cor:'vermelho'},
+   prazo:'A DATA-LIMITE DE SEGURANÇA (15/09) JÁ PASSOU · a janela legal fecha em 30/09 — 14 dias', cor:'vermelho'},
   {id:'#71', aba:'wam', tit:'Análise tributária da Prímor — condições por escrito',
    desc:'Escopo escrito, ENTREGA ATÉ 10/09 COMO CONDIÇÃO CONTRATUAL, valor fechado. Duas correções exigidas: regime dos clientes e alíquota reduzida dos produtos de panificação. É o insumo que destrava a #57.',
-   prazo:'VENCIDA desde 31/08 — e a entrega que ela condiciona é HOJE', cor:'vermelho'},
+   prazo:'VENCIDA DUAS VEZES — prazo de 31/08 e a ENTREGA CONTRATADA de 10/09, as duas sem registro', cor:'vermelho'},
   {id:'#69', aba:'wam', tit:'SISPAR previdenciário no CPF de Wagner (R$ 276,40)',
    desc:'Venceu em 31/08 sem registro de pagamento. É mensal? está em dia? sai de qual conta? Obrigação pessoal fora do teto de R$ 6.900, e é dívida ativa da União no nome dele.',
    prazo:'VENCIDO desde 31/08 — é dinheiro, não papel', cor:'vermelho'},
@@ -963,7 +979,7 @@ const FRENTES = [
   {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38','#93'],
     extra:'AS QUATRO LINHAS DESTA FRENTE VENCERAM EM 31/08 E CONTINUAM SEM REGISTRO DE RESULTADO — dez dias depois. É a frente com data dura: certidões limpas até dez/2026 para a garantia locatícia de fev/2027, e nada nela andou desde 20/08. Dezembro não é longe: é o teste real, e vem depois de pagar, tirar carta de anuência, dar baixa em cartório e esperar a limpeza nos bureaus.'},
   {k:'inv', n:'Inventário (interface)', ids:['#84','INV-CND','INV-AMB'],
-    extra:'INTERFACE DE 09/09 — O ACHADO MAIS CONSEQUENTE DO FECHAMENTO: o e-mail de 10/09 às 12h leva a resposta ao aditivo e a PROPOSTA DE PAGAMENTO dos honorários em atraso de 2022–2023 cobrados contra o espólio — é o MESMO contrato de 2022 cuja cláusula autoriza penhora de até 30% do salário (#84, vencida desde 05/09). Propor pagamento sem resolver o destino da cláusula é assinar a parte financeira e deixar intacta a que expõe o salário. A pergunta da #84 entra nesse e-mail: não é reancoragem, é execução de pendência vencida no veículo que existe · decidir a origem do recurso da Faixa A até 10h — se for adiantamento pessoal, deixa de ser espólio e vira caixa do sócio (R19) · NOTIFICAÇÃO MUNICIPAL AMBIENTAL contra o espólio assinada em 07/08/2026, multa prevista de 100 UFIC: não se sabe o prazo padrão da LC 19/1995 nem se está em curso — pode estar correndo há um mês · 3ª SESSÃO — A PONTE FECHOU O CICLO NO MESMO DIA: a pergunta do § único da Cl. 3ª voltou INSTALADA como item obrigatório do e-mail de 10/09 (P.421), com a condição escrita "sem ela o e-mail não sai". Primeira vez que um item do WAM vira condição de saída em projeto externo — antes o retorno avisava, agora trava. A #84 não encerra: encerra com a RESPOSTA por escrito. Gatilho da R19 confirmado na origem: se a Faixa A for adiantamento pessoal, o WAM é avisado ANTES de qualquer passo. LACUNA DE ALINHAMENTO DECLARADA: "Faixa A" × "R$ 5.073,00" — não está escrito se são o mesmo valor; não se supõe. MANHÃ DE 10/09 COM TRÊS COISAS ANTES DAS 12h: origem do recurso (10h), data de emissão da CND (10h, P.422), e-mail (12h) · DOIS FATOS COM DOCUMENTO (2ª sessão): (a) R$ 5.073,00 com documento da própria advogada — valor sai de lacuna para número com fonte; (b) o aditivo como está cria TÍTULO EXECUTIVO EXTRAJUDICIAL + penhora de 30% do salário — assinar sem cláusula de acerto e quitação é inaceitável pela régua de honorários · A LINHA DE 09/09 APAGA duas ações de 01/09 sem registro de resultado, e a mais grave fica escrita: a CND estadual nº 0063507965 venceu em 29/08, a Prefeitura CONDICIONA O PAGAMENTO à certidão do locador, e são 11 dias de RECEITA DO ESPÓLIO PARADA · lacuna: origem do recurso (espólio × pessoal) não decidida; prazo da LC 19/1995 desconhecido; sem confirmação de recebimento da rajada de 09/09 · marcos carregados: 30/09 teto PGDAU com quitação federal de R$ 45.861,18 (pré-requisito do precatório) · 12/12 fim do 2º Termo Aditivo · 29/12 teto do Refis III/MT, que é a terceira pergunta da #55'},
+    extra:'INTERFACE DE 16/09 — O PAGAMENTO GANHOU DATA ANTES DE A TRAVA GANHAR RESPOSTA. Boleto de honorários de R$ 5.073,00, vencimento 10/10/2026, pela conta do espólio e SÓ APÓS AS QUATRO ASSINATURAS (#104) · a CLÁUSULA DE PENHORA DE ATÉ 30% DO SALÁRIO SEGUE VIVA no aditivo v2, e nada está assinado — isso é o estado da minuta, NÃO a resposta por escrito que a #84 pede, e por isso a #84 não encerra · em curso: e-mail numerado de 9 itens à Dra. Bruna e conferência dos 8 BOLETOS CONTRA OS EXTRATOS, com teto de retorno em 18/09 · ação de hoje na origem: confirmar se o pacote de prestação de contas foi postado em 15/09 e fotografar o recibo SEDEX/AR. TRÊS LACUNAS DA INTERFACE, NENHUMA PREENCHIDA: não se sabe se o pacote saiu em 15/09 · não se sabe se a Dra. Elaine respondeu sobre o REFIS da Dona Albertina · não se sabe o saldo documentado do espólio para honrar o boleto. QUARTA LACUNA, ACRESCENTADA PELO FECHAMENTO: o nome Dona Albertina NÃO consta do mestre, e não se presume que seja o Refis III/MT da #55. O QUE A LINHA DE 16/09 APAGA DA DE 09/09, e nenhuma tem registro de resultado: decidir a origem do recurso da Faixa A (10/09, 10h) · levantar a data de emissão da CND pelo portal SEFAZ-MT (P.422) · enviar o e-mail das 12h, que era o veículo da pergunta da #84. A CND estadual vencida em 29/08 completa 18 DIAS travando o aluguel, com a Prefeitura condicionando o pagamento à certidão do locador — receita do espólio parada. MARCOS CARREGADOS: 30/09 teto PGDAU com quitação federal de R$ 45.861,18 (pré-requisito do precatório, faltam 14 dias) · 12/12 fim do 2º Termo Aditivo · 29/12 teto do Refis III/MT'},
   {k:'ct', n:'Contas & PIX', ids:['#79','#78','#95']},
   {k:'av', n:'Ativo parado · caixa', ids:['#94','#99','#3','#69']},
   {k:'py', n:'Paraguai', ids:['#22','#26','#7']},
