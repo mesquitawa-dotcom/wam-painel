@@ -6,8 +6,18 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 20/10/2026 (v30)</title>
+<title>Painel do dia — 20/10/2026 (v31)</title>
 <!--
+  v31 (20/10/2026) — SINCRONIZACAO ENTRE APARELHOS, pedida expressamente por Wagner em 20/10
+  ("A", decisao delegada a IA quanto ao momento). Mudanca de MECANICA, nao de conteudo: entra uma
+  terceira via de gravacao. Aberto como artefato no claude.ai, o estado (marcacoes, notas, triagem)
+  sobe para um documento compartilhado na nuvem do Claude e desce ao vivo para qualquer aparelho
+  logado na mesma conta. Fora do claude.ai (endereco fixo do GitHub, arquivo salvo) NADA muda:
+  vale o navegador do aparelho, como antes. Conflito entre aparelhos: a ultima gravacao vence.
+  Marcacoes feitas no endereco do GitHub nao migram para a nuvem (origens diferentes) — o que
+  vale e o relato. Conteudo, contagens, formato do relato e bloco de estilo: intocados em relacao
+  ao v30. A decisao datada (troca do endereco oficial) entra no fechamento de 20/10.
+
   v30 (20/10/2026) — REGISTRO DO RELATO DO PAINEL DE 15/10, SEM FECHAMENTO. Mestre e arquivo NAO foram
   atualizados: o relato (recebido em 14/10 as 18h18, com o titulo "15/10" que era o rotulo do painel)
   so entra no registro no proximo fechamento. Pedido de Wagner: "e apenas para registrar a atividade".
@@ -580,7 +590,7 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — terça, 20/10/2026 <span class="vcarimbo">v30</span></h1>
+      <h1>Painel do dia — terça, 20/10/2026 <span class="vcarimbo">v31</span></h1>
       <div class="sub">Derivado do WAM_MESTRE_14-10-2026_v1 + relato do painel de 15/10, SEM fechamento (mestre e arquivo ainda não o registram) · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
@@ -1647,15 +1657,75 @@ $('#copiar').addEventListener('click', ()=>{
    quando o arquivo é aberto direto no navegador (ou quando o storage falha, como
    falhou no celular em 29/08), cai para o armazenamento do próprio navegador.
    Se as duas falharem, o painel avisa em vez de fingir que gravou. */
-let VIA = null;               /* 'app' · 'navegador' · 'nenhuma' */
+let VIA = null;               /* via local: 'app' · 'navegador' · 'nenhuma' */
 let ultimaGrav = null;
 
-async function viaSet(k,v){
+/* v31: terceira via — a nuvem do Claude (so existe quando o painel roda como artefato
+   no claude.ai). Um documento, "painel/estado", com o mesmo JSON que vai para a via local.
+   Uma gravacao por vez no documento; o que chega enquanto grava espera a vez. */
+let NUVEM = null, NUVEM_OK = false, nuvemT = '', nuvemEscrevendo = false, nuvemPendente = null, nuvemPrimeira = true;
+function viaAtual(){ return NUVEM_OK ? 'nuvem' : VIA; }
+function nuvemGravar(v){
+  if(!NUVEM) return;
+  if(nuvemEscrevendo){ nuvemPendente = v; return; }
+  nuvemEscrevendo = true;
+  const t = new Date().toISOString();
+  nuvemT = t;                                   /* o eco da minha propria gravacao e ignorado */
+  NUVEM.set({v:v, t:t}).then(()=>{
+    NUVEM_OK = true;
+    ultimaGrav = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    gravStatus();
+  }).catch(()=>{
+    NUVEM_OK = false; gravStatus();
+    toast('A nuvem não aceitou a gravação — gravando só neste aparelho.');
+  }).finally(()=>{
+    nuvemEscrevendo = false;
+    if(nuvemPendente !== null){ const p = nuvemPendente; nuvemPendente = null; nuvemGravar(p); }
+  });
+}
+function nuvemAplicar(snap){
+  if(!snap || !snap.exists){                    /* nuvem vazia: sobe o que este aparelho tem */
+    if(nuvemPrimeira){ nuvemPrimeira = false; nuvemGravar(JSON.stringify(estado)); }
+    return;
+  }
+  const d = snap.data() || {};
+  const primeira = nuvemPrimeira; nuvemPrimeira = false;
+  if(!d.v || d.t === nuvemT) return;            /* ja aplicado, ou e a minha propria gravacao */
+  let g = null; try{ g = JSON.parse(d.v); }catch(err){ return; }
+  nuvemT = d.t || '';
+  if(aplicar(g)){
+    if(document.activeElement !== $('#livre')) $('#livre').value = estado.livre;
+    NUVEM_OK = true;
+    render(); gravStatus();
+    viaSetLocal(CHAVE, d.v);                    /* copia local, para abrir rapido na proxima vez */
+    if(!primeira && !(snap.metadata && snap.metadata.fromCache)) toast('Marcações atualizadas de outro aparelho.');
+  }
+}
+let nuvemLigada = false;
+async function nuvemLigar(){
+  if(nuvemLigada) return; nuvemLigada = true;
+  if(!(window.claude && typeof window.claude.use === 'function')) return;
+  let db = null;
+  try{ db = await window.claude.use('db'); }catch(err){ db = null; }
+  if(!db) return;
+  try{ NUVEM = db.doc('painel/estado'); }catch(err){ NUVEM = null; return; }
+  NUVEM.onSnapshot(nuvemAplicar, ()=>{
+    NUVEM = null; NUVEM_OK = false; gravStatus();
+    toast('A nuvem parou de responder — gravando só neste aparelho.');
+  });
+}
+
+async function viaSetLocal(k,v){
   if(window.storage && window.storage.set){
     try{ await window.storage.set(k,v); VIA='app'; return true; }catch(err){}
   }
   try{ localStorage.setItem(k,v); VIA='navegador'; return true; }catch(err){}
   VIA='nenhuma'; return false;
+}
+async function viaSet(k,v){
+  const ok = await viaSetLocal(k,v);
+  if(NUVEM) nuvemGravar(v);                     /* a nuvem grava por cima, sem esperar */
+  return ok || !!NUVEM;
 }
 async function viaGet(k){
   if(window.storage && window.storage.get){
@@ -1666,10 +1736,14 @@ async function viaGet(k){
 }
 function gravStatus(){
   const el = $('#gravAviso');
-  if(VIA==='nenhuma'){
+  const via = viaAtual();
+  if(via==='nuvem'){
+    el.className='gravaviso on';
+    el.textContent='Sincronizado entre seus aparelhos — gravado na nuvem do Claude. (toque para ocultar)';
+  } else if(via==='nenhuma'){
     el.className='gravaviso on ruim';
     el.textContent='Não está sendo possível gravar neste aparelho. As marcações somem se você fechar — copie o relato do dia antes de sair.';
-  } else if(VIA==='navegador'){
+  } else if(via==='navegador'){
     el.className='gravaviso on';
     el.textContent='Gravando no navegador deste aparelho — não sincroniza com o desktop. (toque para ocultar)';
   } else { el.className='gravaviso'; el.textContent=''; }
@@ -1713,12 +1787,18 @@ async function carregar(){
       }catch(err){}
     }
   }
-  if(!ok && VIA===null){ await viaSet(CHAVE, JSON.stringify(estado)); }
+  if(!ok && VIA===null){ await viaSetLocal(CHAVE, JSON.stringify(estado)); }
   gravStatus();
   $('#livre').value = estado.livre;
   render();
+  nuvemLigar();                                  /* v31: so na primeira carga; depois e ao vivo */
 }
-$('#reload').addEventListener('click', async ()=>{ await carregar(); toast('Estado recarregado.'); });
+$('#reload').addEventListener('click', async ()=>{
+  if(NUVEM){
+    try{ nuvemT=''; nuvemPrimeira=false; nuvemAplicar(await NUVEM.get()); toast('Recarregado da nuvem.'); return; }catch(err){}
+  }
+  await carregar(); toast('Estado recarregado.');
+});
 
 /* desktop: a visão integral fica sempre aberta */
 const mqDesk = window.matchMedia('(min-width:900px)');
