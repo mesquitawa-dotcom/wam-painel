@@ -6,8 +6,17 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 20/10/2026 (v31)</title>
+<title>Painel do dia — 21/10/2026 (v32)</title>
 <!--
+  v32 (21/10/2026) — CONTEUDO derivado do WAM_MESTRE_20-10-2026_v1 (fechamento de 20/10 por oito
+  insumos). So conteudo (R29): bloco de estilo identico por MD5 ao v31; mecanica de sincronizacao intocada.
+  Entram #112 (instrucoes da publicacao), #113 (ponte do Drive), #114 (pasta do projeto), #115 (Karla,
+  27/10), #116 (assinaturas — Google One ate 22/10), #117 (condominio), #118 (MRV), #119 (Citroen —
+  alienacao antecipada), #120 (protestos no CNPJ) e #62 com objeto novo (teste no desktop). Saem #58
+  (encerrada pela agenda: evento de RH existe desde 16/08) e #93 (encerrada pelo relato). #104 muda de
+  objeto: o boleto foi pago em 14/10 com a trava aberta — falta comprovante, conta e recibo. #101: nao
+  existe evento mensal da Dra. Elaine (verificado). Sem dado de identificacao no arquivo publicado.
+
   v31 (20/10/2026) — SINCRONIZACAO ENTRE APARELHOS, pedida expressamente por Wagner em 20/10
   ("A", decisao delegada a IA quanto ao momento). Mudanca de MECANICA, nao de conteudo: entra uma
   terceira via de gravacao. Aberto como artefato no claude.ai, o estado (marcacoes, notas, triagem)
@@ -590,8 +599,8 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — terça, 20/10/2026 <span class="vcarimbo">v31</span></h1>
-      <div class="sub">Derivado do WAM_MESTRE_14-10-2026_v1 + relato do painel de 15/10, SEM fechamento (mestre e arquivo ainda não o registram) · marcar aqui alimenta o relato, nunca o mestre</div>
+      <h1>Painel do dia — quarta, 21/10/2026 <span class="vcarimbo">v32</span></h1>
+      <div class="sub">Derivado do WAM_MESTRE_20-10-2026_v1 (fechamento de 20/10) · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
   </header>
@@ -682,7 +691,17 @@ const TETO = 3;
 const NAT = {prazo:'Prazo fatal', destrava:'Destravador', fin:'Financeiro',
   dep:'Aguarda terceiro', mon:'Monitorar'};
 const META = {
- '#104':{a:'Anotar o que foi pago (boleto de 10/10, mensalidade ou os dois), o valor e a conta de origem, e guardar o comprovante. Na mesma mensagem à Dra. Bruna: a cláusula dos 30% — revogada, ressalvada ou mantida, por escrito (#84).', n:'fin', s:'Junto com #84', t:"10′", e:'WhatsApp/e-mail', v:'Origem já decidida: saldo em conta do espólio. Nada se paga nem se assina sem a resposta escrita da #84. Relato de 15/10: "paguei" — comprovante e conta de origem a registrar.'},
+ '#104':{a:'Achar o comprovante do pagamento de 14/10 (conta, data, valor debitado) e pedir à Dra. Bruna o recibo discriminado. Na mesma mensagem: o que é o boleto de R$ 810,50 de 16/10 e o destino da cláusula dos 30%, por escrito (#84).', n:'fin', s:'Junto com #84', t:"15′", e:'WhatsApp', v:'Pago em 14/10 com a trava aberta. Se saiu de conta pessoal, é crédito seu contra o espólio — e precisa estar escrito.'},
+ '#116':{a:'Abrir a página do Google One e escolher A, B ou C — a renovação é dia 23/10.', n:'fin', s:'Até 22/10', t:"10′", e:'clique', v:'No mesmo bloco: print do iFood cancelado (24/10) e, no computador, Any.do → Manage Spaces (até 31/10).'},
+ '#117':{a:'Mandar à advogada da administradora os 4 comprovantes de 20/10, com o mês na legenda, e pedir o demonstrativo das 2 parcelas antigas.', n:'fin', t:"10′", e:'WhatsApp'},
+ '#115':{a:'Pedir à Dra. Bruna, por escrito, a orientação para responder à Karla — antes de mandar qualquer extrato.', n:'prazo', s:'Até 27/10', t:"5′", e:'WhatsApp'},
+ '#112':{a:'Colar nas instruções do projeto o texto novo da publicação do painel (entregue no fechamento de 20/10).', n:'destrava', t:"5′", e:'clique'},
+ '#113':{a:'No projeto Inventário: renomear o documento do Drive para INTERFACE_INVENTARIO_ATUAL e colar o Bloco 1 nas instruções.', n:'destrava', t:"10′", e:'clique'},
+ '#114':{a:'Na pasta do projeto: apagar as cópias em claude/ e os dois insumos de 20/10; deixar só o mestre e o arquivo novos.', n:'destrava', t:"5′", e:'clique'},
+ '#118':{a:'Pedir à MRV, por escrito, a posição do contrato das casas 60 e 61: saldo, parcelas, encargos.', n:'fin', t:"10′", e:'e-mail'},
+ '#119':{a:'Mandar ao advogado de Rondônia a pergunta da alienação antecipada do Citroën, com as fotos de 20/10.', n:'dep', s:'Mesma mensagem da #47', t:"10′", e:'WhatsApp'},
+ '#120':{a:'Tirar a certidão do CENPROT pelo CNPJ da fábrica e anotar credor, valor e cartório de cada protesto.', n:'fin', t:"20′", e:'clique'},
+ '#62':{a:'Abrir o painel no computador e conferir se as marcações do celular aparecem; criar o atalho na tela inicial do celular.', n:'destrava', t:"5′", e:'clique'},
  '#100':{a:'Se a consolidação já foi feita, apontar o chat e a data — sem fonte, o mestre prevalece. Se não foi, escolher a data e a hora da sessão e criar o evento agora (a sessão é de 45′ em chat novo).', n:'destrava', s:'1ª do ciclo (R22)', t:"5′", e:'clique'},
  '#102':{a:'Mandar e-mail ao protocolo da PGE-MT pedindo o documento, com o número que está no mestre.', n:'prazo', t:"10′", e:'e-mail'},
  '#107':{a:'Apontar onde está o extrato de evolução, se já existe. Se não existe, pedir à Caixa, por escrito: parcelas em aberto, saldo para quitação, mora do boleto e por que o débito automático não roda.', n:'fin', t:"10′", e:'e-mail/app'},
@@ -755,31 +774,66 @@ const PRIORIDADE_BASE = ['#104','#84','#100'];
 const TITULO = document.title;
 
 const REGUA = [
-  {d:'até 19/10', t:'VENCIDO', x:'boleto de 10/10 (relato: pago, sem comprovante) · janela do regime de 30/09 (relato: segue no Simples) · PGDAU do espólio (30/09) e código da PGE-MT (~11/10) sem registro · #105 e #106 (15/10) e #107 (16/10) sem registro'},
-  {d:'20/10', t:'HOJE', x:'#104 + #84 numa só mensagem à Dra. Bruna (o que foi pago, comprovante, cláusula por escrito) · #100 apontar a fonte da consolidação ou marcar a sessão', hoje:true},
-  {d:'23/10', t:'', x:'#109 Kia — levantar com o Juverlan a dispensa de IPVA por perda total (data provisória)'},
-  {d:'30/10', t:'', x:'fim do Refis municipal de Cáceres (IPTU da Rua Dona Albertina) — decisão é do Inventário'},
-  {d:'02/11', t:'', x:'próxima parcela da Caixa — débito automático conferido antes (#107)'},
-  {d:'06/11', t:'', x:'aviso ao gerente Bradesco (evento já existe) · #108 cesta e saldo negativo · #1-bis parcelas 1–11'},
-  {d:'13/11', t:'', x:'#110 data-limite de espera do edital · #111 resposta escrita sobre as certidões do aluguel da Prefeitura'},
+  {d:'até 20/10', t:'VENCIDO', x:'#84 cláusula dos 30% (46 dias) · #104 boleto pago em 14/10 sem comprovante e sem recibo · R$ 810,50 vencido em 16/10 · #100 sessão de consolidação sem data · #105 e #106 (15/10) e #107 (16/10) sem registro'},
+  {d:'21/10', t:'HOJE', x:'#104 + #84 numa só mensagem à Dra. Bruna (comprovante, recibo, R$ 810,50, cláusula por escrito) · #117 comprovantes do condomínio à advogada · #112 colar o texto da publicação', hoje:true},
+  {d:'22/10', t:'', x:'#116 decidir o Google One — renova em 23/10'},
+  {d:'23/10', t:'', x:'#109 Kia — dispensa de IPVA com o Juverlan · #117 demonstrativo das 2 parcelas antigas'},
+  {d:'24/10', t:'', x:'#116 prova do cancelamento do iFood · evento "Cobrar Any.do" (já existe)'},
+  {d:'25/10', t:'', x:'guia PGFN de Rondônia, R$ 134,34 — evento existe, responsável e canal a definir (#73)'},
+  {d:'27/10', t:'', x:'#115 resposta à Karla, depois da orientação escrita da Dra. Bruna · #119 pergunta do Citroën · #113 ponte do Drive · #62 teste no computador'},
+  {d:'30/10', t:'', x:'fim do Refis municipal de Cáceres — decisão do Inventário'},
+  {d:'31/10', t:'', x:'#116 cancelar o Workspace do Any.do (antes de 01/11) · #118 MRV por escrito · #120 protestos no CNPJ'},
+  {d:'05/11', t:'', x:'1º evento PAGAR CONDOMÍNIO — falta nomear o responsável (#117)'},
+  {d:'06/11', t:'', x:'aviso ao gerente Bradesco · #108 cesta e negativo · #1-bis parcelas 1–11 (há dois lembretes para a mesma parcela)'},
+  {d:'13/11', t:'', x:'#110 data-limite do edital · #111 certidões do aluguel da Prefeitura'},
   {d:'~27/11', t:'', x:'#89 expira o token de publicação do painel'},
   {d:'12/12', t:'', x:'vence o aditivo do aluguel da Prefeitura, no nome pessoal de Wagner (#111)'},
   {d:'31/12', t:'', x:'certidões limpas — frente aluguel · 29/12 Refis III/MT'}
 ];
 
 const ITENS = [
-  {id:'#104', aba:'wam', ativa:true, tit:'Dra. Bruna — o boleto de 10/10 foi pago? e a mensalidade de setembro?',
-   desc:'RELATO DE 15/10 (Wagner, sem documento): "Paguei, e fiquei de verificar com ela os detalhes. Não quis ficar inadimplente. Vou acertar os detalhes em seguida." NÃO CONSTA qual obrigação foi paga (boleto de 10/10, mensalidade de setembro ou as duas), o valor, a conta de origem nem o comprovante. A TRAVA DO MESTRE não mudou: nada se assina e nada se paga com a cláusula dos 30% do salário sem destino POR ESCRITO (#84), que segue aberta — relato e trava ficam lado a lado, sem juízo; o fechamento decide. Régua nº 5: comprovante e conta de origem entram no ato. Régua nº 1: a mensalidade segue sem evento recorrente, responsável e canal. POSIÇÃO DO MESTRE DE 14/10: Boleto de honorários de R$ 5.073,00, vencimento 10/10, pela conta do espólio (origem decidida por Wagner: saldo em conta do espólio — não é caixa do sócio). NÃO HÁ REGISTRO de pagamento nem de não pagamento. Desde 05/10 há também a MENSALIDADE DE SETEMBRO da Dra. Bruna, vencida desde 16/09 — entra aqui, sem número novo. Pela régua nº 1, nenhuma das duas obrigações tem evento, responsável e canal registrados. TRAVA QUE NÃO MUDA: nada se assina e nada se paga com a cláusula dos 30% do salário sem destino POR ESCRITO (#84). Uma mensagem só resolve as duas.',
-   prazo:'RELATO 15/10: "PAGUEI" — sem comprovante, sem valor e sem dizer qual das duas obrigações · a trava da #84 segue aberta', cor:'vermelho'},
+  {id:'#104', aba:'wam', ativa:true, tit:'Dra. Bruna — o boleto foi pago em 14/10: falta o papel',
+   desc:'Duas fontes dizem que o boleto de R$ 5.073,00 foi pago em 14/10 — sem comprovante, e antes da resposta escrita sobre a cláusula dos 30%. A conta de origem está em divergência: o mestre dizia "saldo do espólio"; o Inventário diz "não confirmado". Se saiu de conta pessoal, é crédito seu contra o espólio. Falta: comprovante (conta, data, valor debitado), recibo discriminado da Dra. Bruna, o que é o boleto de R$ 810,50 vencido em 16/10, e a mensalidade de setembro. O que ainda se segura: nenhuma assinatura do aditivo sem a cláusula por escrito (#84).',
+   prazo:'VENCIDA — pago em 14/10 sem registro · comprovante e recibo até 23/10', cor:'vermelho'},
   {id:'#84', aba:'wam', ativa:true, tit:'Cláusula dos 30% do salário — o destino tem de vir POR ESCRITO',
    desc:'O § único da Cl. 3ª segue VIVO no aditivo v2. Wagner escreveu "vou conversar com a Dra. hoje sobre isso" — conversa não é resposta escrita, e não há data nem resultado registrado. A pergunta é uma só: a cláusula será revogada, ressalvada ou mantida? Vai na MESMA mensagem da #104. Sem a resposta escrita, nenhuma das quatro assinaturas. RELATO DE 15/10: segue aberta ao fim do dia.',
-   prazo:'VENCIDA desde 05/09 — 45 dias (em 20/10)', cor:'vermelho'},
+   prazo:'VENCIDA desde 05/09 — 46 dias (em 21/10) · o boleto já foi pago; resta segurar a assinatura', cor:'vermelho'},
   {id:'#100', aba:'wam', ativa:true, tit:'Sessão de consolidação — 27 dias úteis sem fechamento',
    desc:'RELATO DE 15/10 (Wagner): "esta feito fechamento, inclusive foi feito no chat que gerou esse painel em 14-10-2026". DIVERGÊNCIA DECLARADA, NÃO RESOLVIDA: o FECHAMENTO de 14/10 foi feito — é ele que gerou o mestre vigente —, mas a #100 é outra coisa: a SESSÃO DE CONSOLIDAÇÃO, que recupera o que foi decidido em outros chats entre 02/09 e 13/10. O mestre de 14/10 a mantém pendente e declara que o resto do intervalo não existe para ele até a #100 rodar. Em conflito, o mestre prevalece até haver fonte; se a consolidação foi feita, a fonte é o chat e a data — a informar. POSIÇÃO DO MESTRE DE 14/10: Ampliada pela segunda vez: cobre 02–08/09, 10–15/09 e 17/09–13/10. Corte: chats ANTERIORES A 14/10, exceto os três temáticos já consolidados (veículo/Uberlândia, dívidas Caixa e Bradesco, protestos/IPVA). Abrir chat NOVO no WAM e declarar "sessão de consolidação" — sem a frase a busca em chats antigos não é permitida. Objetivo: insumo de decisão, não reconstituir história. Em conflito, o mestre prevalece. É a primeira pendência do ciclo (R22).',
    prazo:'VENCIDA desde 11/09 · relato de 15/10 diz "feita" — divergência com o mestre (ver detalhes)', cor:'vermelho'},
   {id:'#102', aba:'wam', tit:'Documento da PGE-MT — o código expirou; pedir pelo protocolo',
    desc:'Recebido em 11/09 e nunca aberto. O código de acesso expirou por volta de 11/10 sem registro de abertura. Via que sobra: protocolo da PGE-MT por e-mail ou telefone, citando o número do documento (está só no mestre — não entra aqui, o endereço é público). Ao obter: assunto · interessado (Wagner, Eliziany ou espólio) · frente. Nada se classifica antes.',
    prazo:'VENCIDA — código expirou ~11/10', cor:'vermelho'},
+  {id:'#116', aba:'wam', tit:'Assinaturas — Google One até 22/10, iFood, Any.do, Radarbot',
+   desc:'Decisões de 17/10: cancelar o Any.do (é Workspace de 2 membros, US$ 15,98/mês — no computador, antes de 01/11), manter Filmora e Radarbot, cancelar o iFood (prova pendente). Google One AI Pro (R$ 96,99) renova em 23/10: A mantém, B Premium 2 TB (recomendação da IA, sem aval; uso de 4%), C não cabe. Preços da imprensa — conferir na página. Radarbot da outra conta: de quem é? Valores sem extrato.',
+   prazo:'22/10 Google One · 24/10 iFood · 31/10 Any.do, Radarbot e extrato do cartão', cor:'ambar'},
+  {id:'#117', aba:'wam', tit:'Condomínio das 2 casas — comprovantes, demonstrativo e responsável',
+   desc:'4 guias recentes pagas em 20/10. Faltam: mandar os comprovantes à advogada da administradora (o prazo dela era 19/10); demonstrativo das 2 parcelas antigas; nomear o responsável (você ou Eliziany) — os eventos dos dias 05 e 08 já existem, mas sem responsável o acordo não está feito. A regra "2 em aberto = vermelho" é proposta da IA, ainda sem seu aval.',
+   prazo:'21/10 comprovantes · 23/10 demonstrativo · responsável antes de 05/11', cor:'vermelho'},
+  {id:'#115', aba:'wam', tit:'Karla — extratos e comprovantes até 27/10',
+   desc:'Prazo fixado por ela. O envio depende da orientação escrita da Dra. Bruna. Não se sabe se a confirmação de recebimento à Karla e o encaminhamento à Dra. Bruna já foram feitos.',
+   prazo:'27/10', cor:'ambar'},
+  {id:'#119', aba:'wam', tit:'Citroën — perguntar ao advogado sobre a venda antecipada',
+   desc:'Você levantou três saídas (troca pelo IPVA, ferro-velho, peças); nenhuma decidida. O carro é bem penhorado: não se vende, não se transfere, não se move. A saída legal proposta: pedir ao juízo a alienação antecipada por deterioração, com as fotos de 20/10. Vai na mesma mensagem da #47.',
+   prazo:'27/10 — provisória', cor:'ambar'},
+  {id:'#118', aba:'wam', tit:'MRV — quanto se deve nas casas 60 e 61?',
+   desc:'E-mails de 2025 falam em contrato inadimplente; a MRV mandou minuta da escritura em 25/06/2026. Valor: a levantar. Pedir a posição por escrito. Nada na escritura antes do parecer da #17.',
+   prazo:'31/10 — provisória', cor:'ambar'},
+  {id:'#120', aba:'wam', tit:'Protestos no CNPJ da fábrica — Lactalis e Canto da Vó',
+   desc:'Registrados num chat de 16/10 sem fechamento. Levantar credor, valor e cartório pela certidão do CENPROT por CNPJ. Protesto no CNPJ é o que a seguradora analisa em fev/2027.',
+   prazo:'31/10 — provisória', cor:'ambar'},
+  {id:'#112', aba:'wam', tit:'Instruções do projeto — texto novo da publicação do painel',
+   desc:'O painel agora publica em dois lugares (página com sincronização + GitHub de reserva). A seção das instruções ainda fala só do GitHub. O texto pronto saiu no fechamento de 20/10.',
+   prazo:'21/10', cor:'ambar'},
+  {id:'#113', aba:'wam', tit:'Ponte do Drive — nome do documento, carimbo e selos',
+   desc:'O documento no Drive se chama "Documento sem título" e não traz "Gerado em", "Último fechamento" nem selos. Renomear para INTERFACE_INVENTARIO_ATUAL e confirmar o Bloco 1 nas instruções do Inventário.',
+   prazo:'27/10 — provisória', cor:'ambar'},
+  {id:'#114', aba:'wam', tit:'Pasta do projeto — deixar só o mestre e o arquivo novos',
+   desc:'Há cópias repetidas em claude/ e dois insumos que já foram consolidados. O arquivo T3 e o mestre de 16/09 sumiram da pasta: se foi de propósito, guardar cópia fora do projeto.',
+   prazo:'No ato de trocar os arquivos', cor:'vermelho'},
+  {id:'#62', aba:'wam', tit:'Painel — conferir no computador e criar o atalho no celular',
+   desc:'A sincronização só foi vista no celular. Abrir no computador, ver se as marcações aparecem, e criar o atalho na tela inicial do celular.',
+   prazo:'27/10 — provisória', cor:'ambar'},
   {id:'#107', aba:'wam', tit:'Caixa Pronampe — extrato de evolução + débito automático',
    desc:'RELATO DE 15/10 (Wagner): "Sim ja temos essa informação". O mestre de 14/10 trata as 22 parcelas como DEDUÇÃO, não confirmada pela Caixa. Se a informação é um documento da Caixa (extrato de evolução), apontar onde está; sem o documento, o pedido por escrito segue de pé. POSIÇÃO DO MESTRE DE 14/10: Boleto da parcela 39: R$ 1.516,88 (06/10). DEDUÇÃO, não confirmada pela Caixa: restam 22 parcelas, de 02/11/2026 a 02/08/2028. Todo mês o boleto vem DEPOIS do vencimento e é pago com mora — o contrato prevê débito automático. Pedir por escrito: parcelas em aberto, datas, saldo para quitação, quanto do boleto é mora e por que o débito automático não roda.',
    prazo:'PEDIDO DE 16/10 SEM REGISTRO · relato diz "já temos a informação" (sem documento) · débito automático antes de 02/11', cor:'vermelho'},
@@ -800,7 +854,7 @@ const ITENS = [
    prazo:'Decidir antes de 13/11', cor:'ambar'},
   {id:'#109', aba:'wam', tit:'Kia — pedir dispensa de IPVA por perda total',
    desc:'Lei 13.296/2008, art. 14, § 2º: o Executivo pode dispensar o IPVA a partir do exercício seguinte ao da perda total. Levantar com o Juverlan: prova exigida, exercícios alcançados e se vale para CDA já inscrita. Antes de qualquer adesão a edital: adesão é confissão irrevogável. É a única dívida que se reproduz todo ano.',
-   prazo:'23/10 — data provisória, Wagner confirma', cor:'ambar'},
+   prazo:'23/10 — vence em 2 dias (data provisória)', cor:'ambar'},
   {id:'#108', aba:'wam', tit:'Bradesco — cesta de tarifas e saldo negativo',
    desc:'Em 06/10 entraram cinco tarifas da "Cesta Empresarial 2" de uma vez — R$ 898,35 — e a conta PJ fechou 07/10 negativa em R$ 2.163,63 (extrato). Perguntar ao gerente, junto com o aviso mensal: cancelar ou trocar a cesta, e como zerar o negativo. Régua nº 6: tarifa pequena e recorrente se elimina.',
    prazo:'06/11 — junto com o aviso mensal', cor:'ambar'},
@@ -814,8 +868,8 @@ const ITENS = [
    desc:'RELATO DE 15/10 (Wagner, sem documento): quem atua em MS é o ESCRITÓRIO DO DR. LUIZ — o mesmo que, pelo relato, cuida da locação de um imóvel que o mestre não registra (a rua está no relato e fica fora daqui, porque este painel é público). Isso responde à pergunta feita à Dra. Elaine; não contrata ninguém. O próximo passo passa a ser com esse escritório: escopo escrito, valor fechado e data de fim (régua de honorários). Lacuna: o relato não diz se alguém já falou com ele sobre MS, nem se é o mesmo escritório do Dr. Luiz da imobiliária (#93, #99) — o mestre trata a ambiguidade Luiz × Luizmar como pendente. POSIÇÃO DO MESTRE DE 14/10: Pedido único, com a régua de honorários no mesmo ato: escopo escrito, valor fechado, data de fim. Wagner NÃO propõe valor. RECOMENDAÇÃO DA IA, REITERADA E SEM DECISÃO DE WAGNER: sai em MENSAGEM PRÓPRIA, separada da de honorários — assunto de honorários e prazo de outra frente na mesma conversa faz um dos dois morrer. Do outro lado está o risco de SISBAJUD da #61.',
    prazo:'RELATO 15/10: quem atua em MS é o escritório do Dr. Luiz — falta escopo, valor e data de fim por escrito · vencida desde 02/09', cor:'vermelho'},
   {id:'#101', aba:'wam', tit:'Criar o evento recorrente dia 10 — parcela da Dra. Elaine',
-   desc:'RELATO DE 15/10 (Wagner, sem extrato): "Paguei a minha parcela com ela 1000,00". Fala do pagamento, não do evento: criar o evento recorrente do dia 10 segue sem registro, e pela régua nº 1 a obrigação não está feita sem evento + responsável + canal. O valor de R$ 1.000 diverge do provisório de R$ 1.500 do mestre (R8): registrar a fonte, extrato ou memória; até o extrato os dois ficam lado a lado e o teto de R$ 6.900 não muda. POSIÇÃO DO MESTRE DE 14/10: Mensal, dia 10: "Dra. Elaine — parcela — conta da fábrica". Valor R$ 1.500 marcado como PROVISÓRIO sob R8, porque não veio do extrato (#49). Régua nº 1: sem evento recorrente + responsável + canal a obrigação não está feita — e esta roda desde 2022 sem nenhum dos três. Fechada a #49 pelo extrato, se data ou valor divergirem o evento muda por decisão datada, nunca por ajuste silencioso.',
-   prazo:'RELATO 15/10: parcela de R$ 1.000 PAGA (sem extrato) — o evento recorrente segue sem registro', cor:'vermelho'},
+   desc:'Conferido na agenda em 20/10: NÃO existe evento mensal da Dra. Elaine entre 20/10 e 12/11. A marcação "feito" do painel não se sustenta. Relato de 15/10: parcela de R$ 1.000 paga — sem extrato. Pela régua nº 1, sem evento + responsável + canal a obrigação não está feita.',
+   prazo:'VENCIDA — evento não existe (verificado 20/10)', cor:'vermelho'},
 
   {id:'#61', aba:'wam', tit:'Campo Grande — parecer sobre a exceção de pré-executividade',
    desc:'A LEITURA ENCERROU: autos obtidos em 31/08. A execução cobra IPTU de 2020 e 2021, APENAS — R$ 8.366,94 atualizados. Matrícula do CRI EM BRANCO na CDA. Prazo de citação decorrido, PGM intimada por 30 dias desde 27/08 (termina ~26/09). Objetivo da frente: sair do cadastro municipal, não quitar. O passo 1 é a #96, que está parada há 8 dias.',
@@ -952,8 +1006,8 @@ const ITENS = [
    desc:'Piloto de vídeo da laminação. Critério de aceite: pelo menos um evento marcado no tempo que passou despercebido.',
    prazo:'Confirmar se o piloto aconteceu', cor:'ambar'},
   {id:'OP', aba:'fabrica', tit:'Ritual de RH semanal — o evento de sexta 17h15 foi criado?',
-   desc:'O roteiro de 04/09 previa criar o evento recorrente sexta 17h15 no Calendar e NÃO há registro de criação. Criado, a #58 ganha gatilho e sai do estado "não instalado"; não criado, segue como obrigação inexistente (régua nº 1) e o canal de sugestões de 11/09 é intenção, não compromisso. Default: 20 min do sábado 9h. Maycon, Jack e Luana; dois amarelos seguidos = conversa obrigatória.',
-   prazo:'Sem registro desde 09/09 — interface da Fábrica parada há 35 dias', cor:'ambar'},
+   desc:'Sim — conferido na agenda em 20/10: o evento "RH semanal — clima e comunicação" existe desde 16/08, toda sexta às 11h15, com as quatro perguntas, responsável e canal. A #58 foi encerrada no fechamento de 20/10.',
+   prazo:'Resolvido — evento existe (sexta 11h15)', cor:'ambar'},
   {id:'OP', aba:'fabrica', tit:'Conversa com a Luana — registrar o resultado até 10/09',
    desc:'O roteiro era de 07/09, antes da produção. Não há registro de que a conversa ocorreu nem do resultado. Se não ocorreu, REANCORAR POR DECISÃO, não por deslize. Duas perguntas de 04/09 seguem sem resposta: qual mudança concreta ela não executou, e se o processo contestado está escrito (PWA/folha) ou só na cabeça.',
    prazo:'Sem registro desde 09/09', cor:'ambar'},
@@ -1002,7 +1056,6 @@ const SEM_DATA = [
   ['#52','Papel do Sandro no processo e o instrumento formal da compensação'],
   ['#53','Parcelamento citado ao Jaime — qual débito é esse e qual o status'],
   ['#56','Tratamento do crédito remanescente do espólio na PGE'],
-  ['#58','Confirmar o gatilho do ritual de RH semanal'],
   ['#60','Conferir a agenda antiga contra a tabela de pendências'],
   ['#63','Dar ou negar aval à régua candidata R21 — "volume não é memória"'],
   ['#74','Classificar no Conta Azul o pagamento da transação de outra PJ'],
@@ -1023,39 +1076,43 @@ const URG = {
   '#101':'venc','#91':'venc','#78':'venc','INV-CND':'venc','INV-AMB':'venc',
   '#105':'venc','#106':'venc',
   '#107':'venc','#109':'sem7',
+  '#112':'hoje','#114':'hoje','#117':'hoje','#116':'sem7','#115':'sem7','#119':'sem7','#113':'sem7','#62':'sem7',
+  '#118':'dep','#120':'dep',
   'INV-REFIS':'dep','#110':'dep','#111':'dep','#108':'dep','#1-bis':'dep','#89':'dep',
   '#34':'dep','#65':'dep','#73':'dep',
   '#37':'aberto','#38':'aberto','#79':'aberto','#26':'aberto','#7':'aberto'
 };
 const urgDe = it => URG[it.id] || 'aberto';
 const URG_ORDEM = ['venc','hoje','sem7','dep','aberto'];
-const URG_ROTULO = {venc:'Vencidas', hoje:'Vencem hoje — 20/10',
+const URG_ROTULO = {venc:'Vencidas', hoje:'Vencem hoje — 21/10',
   sem7:'Próximos 7 dias', dep:'Acompanhamento / depois com data', aberto:'Sem data fixa'};
 
 const FRENTES = [
-  {k:'inv', n:'Inventário (interface)', ids:['#104','#84','#111','INV-REFIS','INV-CND','INV-AMB'],
-    extra:'QUATRO BLOCOS EM 27 DIAS, UMA LINHA VIGENTE (13/10). Boleto de R$ 5.073,00 de 10/10: relato de 15/10 diz "paguei", sem comprovante e sem separar da mensalidade de setembro (vencida desde 16/09); cláusula dos 30% viva e sem resposta escrita. "Dona Albertina" resolvida: é a rua do imóvel em Cáceres ocupado pelo Dr. Cleiton — não é o Refis III/MT. Fato novo que atravessa: o aditivo do aluguel da Prefeitura está no NOME PESSOAL de Wagner e vence em 12/12 (#111). E-mail aos herdeiros vencido desde 04/10 (mérito de lá).'},
+  {k:'inv', n:'Inventário (interface)', ids:['#104','#84','#115','#111','INV-REFIS','INV-CND','INV-AMB'],
+    extra:'Interface de 20/10: o boleto de R$ 5.073,00 foi pago em 14/10 sem as travas; a conta de origem não está confirmada. Boleto de R$ 810,50 vencido em 16/10. Karla pediu extratos e comprovantes até 27/10, com orientação escrita da Dra. Bruna antes. Pela decisão de 20/10, nada volta do WAM ao Inventário.'},
   {k:'bc', n:'Bancos · Caixa e Bradesco', ids:['#107','#108','#1-bis'],
     extra:'PRIMEIRA POSIÇÃO BANCÁRIA COM DOCUMENTO. Caixa: boleto R$ 1.516,88, 22 parcelas restantes por dedução, sempre pago com mora. Bradesco: parcela 12 caiu em 07/10, 60 restantes se as anteriores caíram; conta PJ negativa em R$ 2.163,63 e R$ 898,35 de tarifas de uma vez. Evento mensal do gerente (dia 06, 08h30) criado e CONFERIDO na agenda. Relato de 15/10 (#107): "Sim ja temos essa informação" — sem documento; o mestre segue com a dedução.'},
-  {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#38','#110','#109'],
+  {k:'al', n:'Aluguel & nome limpo', ids:['#39','#40','#72','#75','#120','#38','#110','#109'],
     extra:'Dezembro está a 11 semanas e a frente não anda desde 20/08. O que andou em outubro foi PESQUISA: cancelamento de protesto é do devedor, com anuência do credor; IPVA em dívida ativa só por edital — e não há edital de 2026. O alerta diário das 06h50 vigia o edital. Decidir até quando esperar (#110) e separar o Kia (#109).'},
+  {k:'cd', n:'Condomínio & MRV · casas 60/61', ids:['#117','#118']},
+  {k:'as', n:'Assinaturas', ids:['#116']},
   {k:'sp', n:'Spin · troca', ids:['#106','#105'],
     extra:'Necessidade operacional declarada em 13/10 (260 mil km). O WAM só guarda três coisas: o número antes do real, o nome em que se compra e o papel da venda. Modelo e rota são da Fábrica.'},
   {k:'cg', n:'Campo Grande', ids:['#61','#96','#97'],
     extra:'Sem registro desde 01/09. Os 30 dias da PGM terminaram ~26/09; o próximo ato natural é bloqueio de conta por SISBAJUD (R$ 8.366,94 + atualização). O passo 1 continua sendo a #96 — que, pelo relato de 15/10, passa a ser com o escritório do Dr. Luiz (quem atua em MS).'},
-  {k:'ro', n:'Rondônia · Citroën', ids:['#47','#98','#34','#37'],
+  {k:'ro', n:'Rondônia · Citroën', ids:['#47','#119','#98','#34','#37'],
     extra:'Sem registro desde 01/09. A reavaliação do patrocínio era 15/09 e o evento nunca foi criado (#98).'},
   {k:'mt', n:'Cáceres · MT', ids:['#16','#49','#55','#54','#8','#12','#51','#101']},
   {k:'tr', n:'Tributário', ids:['#66','#67','#68','#69','#65','#73'],
-    extra:'A janela de opção do regime fechou em 30/09. Relato de 15/10: a conversa com a Prímor não deu fruto e o regime fica como está (Simples), com análise futura SEM data — #57 e #71 saem do painel como feitas; a decisão entra no mestre no fechamento.'},
+    extra:'A janela de opção do regime fechou em 30/09. Relato de 15/10: a conversa com a Prímor não deu fruto e o regime fica como está (Simples), com análise futura SEM data — #57 e #71 continuam abertas no mestre até você confirmar: manter o Simples em 2027?'},
   {k:'ct', n:'Contas & PIX', ids:['#79','#78','#95']},
   {k:'av', n:'Ativo parado · caixa', ids:['#94','#99','#69']},
   {k:'py', n:'Paraguai', ids:['#26','#7'],
-    extra:'Relato de 15/10: a viagem foi CANCELADA, sem nova data — #22 sai do painel como feita. O parqueamento da frente é por decisão datada no fechamento (R24), não por abandono.'},
+    extra:'Relato de 15/10: a viagem foi CANCELADA, sem nova data. A #22 e o parqueamento da frente esperam a sua palavra — por decisão, não por abandono.'},
   {k:'mk', n:'Marca · INPI', ids:['#76']},
   {k:'fb', n:'Fábrica', aba:'fabrica', ids:[]},
-  {k:'sy', n:'Sistema & método', ids:['#100','#102','#89','#59','#83','#87','#88','#91'],
-    extra:'27 dias sem fechamento. A #100 cobre agora 27 dias úteis. Pasta do projeto conferida em 14/10: um mestre e um arquivo (#103 encerrada). Relato de 15/10 aplicado sem fechamento (v30): feitos #93, #57, #62, #71, #22.'}
+  {k:'sy', n:'Sistema & método', ids:['#100','#112','#113','#114','#62','#102','#89','#59','#83','#87','#88','#91'],
+    extra:'Fechamento de 20/10 feito (mestre e arquivo novos). A #100 tem corte em 20/10 e segue sem data. Decisões de método de 20/10: tudo mora no WAM (nada volta aos outros projetos); painel sincroniza; ponte do Drive ainda sem nome, carimbo e selos.'}
 ];
 let frenteAberta = null;
 
@@ -1100,7 +1157,7 @@ function placarRender(){
   const c = contagens();
   $('#placar').innerHTML =
     `<div class="pz venc"><span class="n">${c.venc}</span><span class="r">vencidas</span></div>`+
-    `<div class="pz hoje"><span class="n">${c.hoje}</span><span class="r">hoje 20/10</span></div>`+
+    `<div class="pz hoje"><span class="n">${c.hoje}</span><span class="r">hoje 21/10</span></div>`+
     `<div class="pz sem7"><span class="n">${c.sem7}</span><span class="r">em 7 dias</span></div>`+
     `<div class="pz trat"><span class="n">${c.trat}</span><span class="r">tratadas</span></div>`;
   const feitasTop = PRIORIDADE_BASE.filter(id=>{
@@ -1113,12 +1170,12 @@ function placarRender(){
 
 /* ===== prioridade/âncora dinâmica ===== */
 const HERO_INFO = {
-  '#104':{p:'o relato de 15/10 diz que você pagou — sem comprovante, sem dizer qual das duas obrigações, e com a cláusula dos 30% (#84) ainda aberta.', d:'o registro do que foi pago (comprovante e conta de origem) e a resposta escrita da #84.'},
+  '#104':{p:'o boleto foi pago em 14/10 sem comprovante e antes da resposta escrita sobre a cláusula dos 30% — e a conta de origem está em divergência.', d:'o papel do pagamento (comprovante, conta, recibo) e a última trava que resta: não assinar o aditivo sem a #84 por escrito.'},
   '#100':{p:'o relato de 15/10 diz que a consolidação está feita; o mestre de 14/10 ainda a mantém pendente — e o intervalo de 02/09 a 13/10 segue sem fonte no projeto.', d:'a fonte que prove que foi feita, ou a recuperação do intervalo como insumo de decisão.'},
   '#106':{p:'carro novo disputa a mesma caixa que dezembro já prometeu ao nome limpo.', d:'uma decisão por escrito, com número, em vez de uma compra por anúncio.'},
   '#84':{p:'o aditivo, se assinado como está, cria TÍTULO EXECUTIVO EXTRAJUDICIAL com penhora de até 30% do salário — e os honorários de 2022–2023 já têm número (R$ 5.073,00) com documento da própria advogada.', d:'a cláusula de acerto e quitação é CONDIÇÃO MÍNIMA antes de assinar. Propor os R$ 5.073,00 sem ela é fechar a conta financeira e deixar o título e a penhora vivos.'},
   '#96':{p:'é o passo 1 da rota de defesa de Campo Grande, vencido desde 02/09, enquanto o próximo ato natural do processo é bloqueio de ativos por SISBAJUD. Relato de 15/10: quem atua em MS é o escritório do Dr. Luiz — falta o escopo por escrito.', d:'a decisão entre defender e pagar (#61). Sem parecer não há decisão.'},
-  '#101':{p:'a obrigação roda desde 2022 sem evento, sem responsável nomeado e sem canal — pela régua nº 1 ela nunca esteve feita. Relato de 15/10: a parcela de R$ 1.000 foi paga, mas o evento segue sem registro.', d:'a única linha do teto de R$ 6.900 que nunca teve gatilho.'},
+  '#101':{p:'a obrigação roda desde 2022 sem evento, sem responsável e sem canal — conferido na agenda em 20/10: o evento mensal não existe.', d:'a única linha do teto de retiradas que nunca teve gatilho.'},
   '#61':{p:'a leitura acabou e o risco ficou datado: prazo de citação decorrido, PGM intimada — o próximo ato natural é bloqueio de ativos por SISBAJUD.', d:'a decisão entre defender e pagar. Objetivo: sair do cadastro, não quitar.'},
   '#47':{p:'a mensagem de quatro pedidos foi escrita em 01/09 e ninguém confirmou se saiu.', d:'#32 (cópia integral dos autos) e #48 — as duas estão paradas dentro dessa mesma mensagem.'},
   '#99':{p:'apareceu uma parcela sendo paga a um profissional que o mestre não identifica, sem valor e sem acordo registrado.', d:'a colisão com a #33 e com a régua nº 2 — nenhum real antes do número escrito.'},
