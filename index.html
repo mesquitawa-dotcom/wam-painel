@@ -6,8 +6,21 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Painel do dia — 21/10/2026 (v32)</title>
+<title>Painel do dia — 21/10/2026 (v33)</title>
 <!--
+  v33 (21/10/2026) - CAIXA DE IDEIAS, pedida por Wagner em 20/10 ("Faz", 17h30) e autorizada como
+  mudanca de MECANICA (R29). Entra: botao fixo + Novo em todas as telas; entrada rapida (um toque,
+  escreve ou dita, Guardar); cada anotacao fica no estado que ja sincroniza, com data e hora; status
+  novo ou triado, com destino registrado (pendencia, lista do dia, parqueado com endereco, descartado
+  com motivo). Nada se apaga. Sem etiqueta, prazo, lembrete ou prioridade. O relato ganha as secoes
+  CAIXA DE IDEIAS (novos e triados), antes de NOVO / OBSERVACOES; o campo Novo / observacoes continua
+  como estava. Anotacao sem triagem levada em 2 relatos aparece marcada, para a abertura a frio
+  cobrar. A uniao por id evita perder anotacao quando dois aparelhos gravam quase juntos. Estado
+  antigo (sem caixa) abre normalmente. Base: v32 do repositorio, MD5 conferido contra o artefato
+  publicado. O bloco de estilo original segue identico por MD5; o CSS novo esta em bloco proprio.
+  Rotulo de data do relato (20/10 para 21/10) corrigido como conteudo. Congelado por 5 dias a partir
+  daqui; o veredito sai por evidencia de uso (#83), nao por impressao.
+
   v32 (21/10/2026) — CONTEUDO derivado do WAM_MESTRE_20-10-2026_v1 (fechamento de 20/10 por oito
   insumos). So conteudo (R29): bloco de estilo identico por MD5 ao v31; mecanica de sincronizacao intocada.
   Entram #112 (instrucoes da publicacao), #113 (ponte do Drive), #114 (pasta do projeto), #115 (Karla,
@@ -591,6 +604,71 @@
   .achado{box-shadow:0 0 0 2px var(--chip);border-radius:10px;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
+<style id="caixa-css">
+  /* v33: caixa de ideias. Bloco novo; nenhuma regra anterior foi alterada.
+     Usa so os tokens que o painel ja tem (--chip, --line, --muted, --hoje, --green, --amber). */
+  .cx-fab{position:fixed;right:max(14px,env(safe-area-inset-right,0px));
+    bottom:calc(70px + env(safe-area-inset-bottom,0px));z-index:70;
+    display:flex;align-items:center;gap:8px;min-height:46px;padding:0 16px;border:none;
+    border-radius:23px;background:var(--chip);color:#fff;font:inherit;font-size:15px;
+    font-weight:800;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.28);}
+  .cx-fab:focus-visible{outline:2px solid var(--ink);outline-offset:3px;}
+  .cx-fab .cx-n{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--hoje);
+    color:#fff;font-size:12.5px;font-weight:800;line-height:22px;text-align:center;
+    font-variant-numeric:tabular-nums;}
+  .cx-fab .cx-n[hidden]{display:none!important;}
+  /* com o modo foco aberto, o botao sobe para o canto de cima e nao cobre as acoes do bloco */
+  body:has(#foco:not([hidden])) .cx-fab{bottom:auto;top:calc(76px + env(safe-area-inset-top,0px));}
+  body.cx-aberta{overflow:hidden;}
+
+  .cx-fundo{position:fixed;inset:0;z-index:80;background:rgba(22,24,29,.45);
+    display:flex;align-items:flex-end;justify-content:center;}
+  .cx-fundo[hidden]{display:none!important;}
+  .cx-folha{width:100%;max-width:720px;max-height:92%;overflow:auto;-webkit-overflow-scrolling:touch;
+    background:var(--bg);color:var(--ink);border-radius:14px 14px 0 0;
+    padding:14px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));}
+  .cx-cab{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+  .cx-cab h2{margin:0;font-size:16px;font-weight:800;letter-spacing:.01em;}
+  .cx-x{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+    min-height:40px;padding:0 13px;font:inherit;font-size:14px;cursor:pointer;}
+  .cx-x:focus-visible,.cx-salvar:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+  .cx-lab{display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin-bottom:4px;}
+  #cxTexto{font-size:16px;min-height:104px;margin-top:0;}
+  .cx-linha{display:flex;align-items:center;gap:12px;margin-top:9px;flex-wrap:wrap;}
+  .cx-salvar{border:none;background:var(--chip);color:#fff;border-radius:8px;min-height:46px;
+    padding:0 22px;font:inherit;font-size:15px;font-weight:800;cursor:pointer;}
+  .cx-dica{font-size:12px;color:var(--muted);flex:1;min-width:150px;}
+  .cx-msg{min-height:20px;font-size:13px;font-weight:700;margin:8px 0 2px;color:var(--green);}
+  .cx-msg.ruim{color:var(--red);}
+
+  .cx-sec{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+    font-weight:700;margin:14px 0 7px;}
+  details.cx-tris>summary{cursor:pointer;list-style:none;}
+  details.cx-tris>summary::-webkit-details-marker{display:none;}
+  details.cx-tris>summary .cx-sec::after{content:"  ▸ ver";}
+  details.cx-tris[open]>summary .cx-sec::after{content:"  ▾";}
+  .cx-item{border:1px solid var(--line);border-left-width:5px;border-radius:10px;
+    padding:9px 11px;margin-bottom:8px;min-width:0;}
+  .cx-item.novo{border-left-color:var(--hoje);}
+  .cx-item.tri{border-left-color:var(--green);background:#fafafa;}
+  .cx-item.velho{border-left-color:var(--red);}
+  .cx-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+  .cx-quando{font-size:11.5px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums;}
+  .cx-pill{font-size:10.5px;font-weight:800;letter-spacing:.04em;border-radius:5px;padding:2px 7px;
+    border:1px solid transparent;white-space:nowrap;}
+  .cx-pill.novo{color:var(--hoje);background:var(--hojebg);border-color:#f6dcc8;}
+  .cx-pill.velho{color:var(--red);background:var(--redbg);border-color:#f3d4d1;}
+  .cx-pill.tri{color:var(--green);background:var(--greenbg);border-color:#cdeeda;}
+  .cx-texto{font-size:14.5px;margin-top:5px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.4;}
+  .cx-dest{font-size:13px;font-weight:700;margin-top:6px;color:#33373f;overflow-wrap:anywhere;}
+  .cx-dest::before{content:"→ ";color:var(--muted);}
+  .cx-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .cx-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px;}
+  .cx-opts button.b{min-height:42px;font-weight:700;}
+  .cx-tri-painel input.campo{margin-top:8px;font-size:16px;min-height:42px;}
+  .cx-vazio{font-size:13px;color:var(--muted);padding:6px 2px;}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -599,7 +677,7 @@
 
   <header class="top">
     <div>
-      <h1>Painel do dia — quarta, 21/10/2026 <span class="vcarimbo">v32</span></h1>
+      <h1>Painel do dia — quarta, 21/10/2026 <span class="vcarimbo">v33</span></h1>
       <div class="sub">Derivado do WAM_MESTRE_20-10-2026_v1 (fechamento de 20/10) · marcar aqui alimenta o relato, nunca o mestre</div>
     </div>
     <button class="reload" id="reload" title="Recarregar o estado gravado">↻</button>
@@ -665,6 +743,25 @@
   <button class="acao mini" id="tnRelato" title="Copiar relato do dia">Relato</button>
   <button class="acao mini" id="tnTela" title="Ganhar altura de tela">⤢</button>
 </nav>
+
+<button class="cx-fab" id="cxFab" type="button" aria-haspopup="dialog" aria-label="Nova ideia"><span class="cx-rot">+ Novo</span><span class="cx-n" id="cxBadge" hidden>0</span></button>
+
+<div class="cx-fundo" id="caixa" hidden>
+  <div class="cx-folha" role="dialog" aria-modal="true" aria-labelledby="cxTit">
+    <div class="cx-cab">
+      <h2 id="cxTit">Caixa de ideias</h2>
+      <button class="cx-x" id="cxFechar" type="button">Fechar ✕</button>
+    </div>
+    <label class="cx-lab" for="cxTexto">Anotar</label>
+    <textarea class="nota" id="cxTexto" rows="4" placeholder="Ideia, fato novo, coisa que não é para agora. Escreva ou dite."></textarea>
+    <div class="cx-linha">
+      <button class="cx-salvar" id="cxSalvar" type="button">Guardar</button>
+      <span class="cx-dica">Só guardar. A triagem é depois, no fechamento.</span>
+    </div>
+    <div class="cx-msg" id="cxMsg" role="status" aria-live="polite"></div>
+    <div id="cxLista"></div>
+  </div>
+</div>
 
 <div id="foco" hidden>
   <div class="topo">
@@ -1116,7 +1213,7 @@ const FRENTES = [
 ];
 let frenteAberta = null;
 
-let estado = {aba:'wam', itens:{}, triagem:{}, livre:''};
+let estado = {aba:'wam', itens:{}, triagem:{}, livre:'', caixa:[]};
 /* v11: o estado passa a ser gravado por ID estável, não por índice.
    Inserir ou remover um item deixa de deslocar as marcações dos vizinhos. */
 const idEstavel = it => it.id !== 'OP' ? it.id : 'OP:'+it.tit;
@@ -1417,6 +1514,7 @@ function render(){
   mapaRender();
   conteudoRender();
   if(!$('#foco').hidden) focoRender();
+  caixaRender();
 }
 
 let toastT;
@@ -1675,7 +1773,7 @@ $('#copiar').addEventListener('click', ()=>{
       L.push('- '+nome(i)+(comNota&&n?'\n  '+n:'')); });
     L.push('');
   };
-  L.push('RELATO DO DIA — 20/10/2026'); L.push('');
+  L.push('RELATO DO DIA — 21/10/2026'); L.push('');
   grupo('FEITO', s=>s.status==='feito', false);
   grupo('FEITO — TEM CONTEÚDO PARA O MESTRE', s=>s.status==='conteudo', true);
   grupo('NÃO FEITO — COM MOTIVO', s=>s.status==='naofeito', true);
@@ -1697,6 +1795,7 @@ $('#copiar').addEventListener('click', ()=>{
       L.push('- '+p[0]+' '+p[1]+'\n  resolvido em '+br(t.data)+' · fonte: '+(t.nota.trim()||'A INFORMAR — sem fonte não encerra')); });
     L.push('');
   }
+  caixaRelato(L);
   L.push('NOVO / OBSERVAÇÕES');
   L.push(estado.livre.trim() || '- nada');
 
@@ -1754,6 +1853,7 @@ function nuvemAplicar(snap){
     if(document.activeElement !== $('#livre')) $('#livre').value = estado.livre;
     NUVEM_OK = true;
     render(); gravStatus();
+    if(caixaExtra){ caixaExtra = false; salvar(); }   /* v33: devolve a nuvem o que ela nao tinha */
     viaSetLocal(CHAVE, d.v);                    /* copia local, para abrir rapido na proxima vez */
     if(!primeira && !(snap.metadata && snap.metadata.fromCache)) toast('Marcações atualizadas de outro aparelho.');
   }
@@ -1831,6 +1931,7 @@ function aplicar(g){
   Object.keys(estado.itens).forEach(k=>{ if(itens[k]) estado.itens[k]=itens[k]; });
   estado.triagem = g.triagem || {};
   estado.livre = g.livre || '';
+  estado.caixa = caixaUnir(estado.caixa, g.caixa);   /* v33: uniao por id, nunca apaga */
   estado.aba = g.aba || 'wam';
   return true;
 }
@@ -1942,6 +2043,12 @@ function bIndice(){
     ix.push({tipo:'livre', onde:'Nota do dia', titulo:'Novo / observa\u00e7\u00f5es do dia',
       campos:[['Escrito hoje', estado.livre]], texto: estado.livre});
   }
+  estado.caixa.forEach(x=>{
+    ix.push({tipo:'caixa', id:x.id, onde:'Caixa de ideias \u00b7 ' + (x.status==='triado' ? 'triada' : 'nova'),
+      titulo:'Anotado em ' + cxFmt(x.t),
+      campos:[['Texto', x.texto]].concat(x.status==='triado' ? [['Destino', cxDestTxt(x)]] : []),
+      texto: x.texto + ' ' + (x.det || '')});
+  });
   return ix;
 }
 let bAtual = [];
@@ -1999,6 +2106,8 @@ function bIr(r){
     const dt = document.querySelector('details.integral'); if(dt) dt.open = true;
     frenteAberta = r.k; mapaRender();
     requestAnimationFrame(()=>bDestacar(document.querySelector('[data-frente="' + r.k + '"]')));
+  } else if(r.tipo === 'caixa'){
+    caixaAbrir();
   } else if(r.tipo === 'livre'){
     tela = 'exec'; telaAplicar(); render();
     requestAnimationFrame(()=>{ const el = $('#livre'); if(el){ el.scrollIntoView({block:'center'}); el.focus(); } });
@@ -2018,6 +2127,211 @@ $('#bres').addEventListener('click', e=>{
   const b = e.target.closest('[data-bk]');
   if(b) bIr(bAtual[+b.dataset.bk]);
 });
+
+/* ===== v33: caixa de ideias =====
+   Botao fixo "+ Novo" em todas as telas. Cada anotacao e gravada no MESMO estado que ja
+   sincroniza (estado.caixa), com data e hora. Status: novo -> triado (com destino registrado).
+   Nada se apaga. Sem etiqueta, prazo, lembrete ou prioridade.
+   Gravacao: so por salvar() — o caminho que ja existia. A uniao por id (caixaUnir) impede que
+   uma anotacao se perca quando dois aparelhos gravam quase juntos. */
+let caixaExtra = false;      /* aplicar() ve algo local que a nuvem nao tinha: precisa regravar */
+let cxTriId = null;          /* anotacao cujo painel de triagem esta aberto */
+let cxDest = '';             /* destino escolhido nesse painel */
+let cxDetVal = '';           /* texto digitado no campo do destino */
+const CX_DEST = {
+  pendencia:  {r:'Pendência',    ph:'Número da pendência, ex.: #121', exige:'Qual o número da pendência?'},
+  lista:      {r:'Lista do dia', ph:'',                              exige:''},
+  parqueado:  {r:'Parqueado',    ph:'Endereço: onde a ideia mora (frente ou linha)', exige:'Parqueada sem endereço não existe. Onde ela mora?'},
+  descartado: {r:'Descartado',   ph:'Motivo do descarte',            exige:'Descarte precisa de motivo.'}
+};
+const cxEsc = s => String(s==null ? '' : s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function cxFmt(iso){
+  try{
+    const d = new Date(iso); if(isNaN(d)) return '';
+    const p = Object.fromEntries(new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',
+      day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})
+      .formatToParts(d).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
+    return p.day+'/'+p.month+' '+p.hour+':'+p.minute;
+  }catch(err){ return ''; }
+}
+function cxMsg(txt, ruim){
+  const el = $('#cxMsg'); if(!el) return;
+  el.textContent = txt || ''; el.className = 'cx-msg' + (ruim ? ' ruim' : '');
+}
+function cxDestTxt(x){
+  const d = CX_DEST[x.destino]; if(!d) return '';
+  return d.r + (x.det ? ' — ' + x.det : '');
+}
+function cxNLev(x){ return Array.isArray(x.lev) ? x.lev.length : 0; }
+
+/* uniao por id: nunca apaga. Em conflito vale a versao com "m" (modificada em) mais recente. */
+function caixaUnir(loc, rem){
+  const mapa = new Map(), vistos = new Set();
+  let extra = false;
+  (Array.isArray(loc) ? loc : []).forEach(x=>{ if(x && x.id) mapa.set(x.id, x); });
+  (Array.isArray(rem) ? rem : []).forEach(x=>{
+    if(!x || !x.id) return;
+    vistos.add(x.id);
+    const l = mapa.get(x.id);
+    if(!l){ mapa.set(x.id, x); return; }
+    if((l.m || '') > (x.m || '')) extra = true; else mapa.set(x.id, x);
+  });
+  mapa.forEach((v,k)=>{ if(!vistos.has(k)) extra = true; });
+  caixaExtra = extra;
+  return Array.from(mapa.values()).sort((p,q)=> (p.t||'') < (q.t||'') ? -1 : ((p.t||'') > (q.t||'') ? 1 : 0));
+}
+
+function caixaAdd(){
+  const ta = $('#cxTexto'), tx = (ta.value || '').trim();
+  if(!tx){ cxMsg('Escreva algo antes de guardar.', true); ta.focus(); return; }
+  const agora = new Date().toISOString();
+  estado.caixa.push({id:'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+    t:agora, m:agora, texto:tx, status:'novo'});
+  ta.value = '';
+  salvar(); caixaFechar(); caixaRender(true); caixaFlash(); toast('Anotado.');
+}
+let cxFlashT;
+function caixaFlash(){
+  const f = $('#cxFab .cx-rot'); if(!f) return;
+  f.textContent = 'Anotado ✓';
+  clearTimeout(cxFlashT); cxFlashT = setTimeout(()=>{ f.textContent = '+ Novo'; }, 1800);
+}
+function caixaAbrir(){
+  cxMsg('');
+  $('#caixa').hidden = false;
+  document.body.classList.add('cx-aberta');
+  caixaRender(true);
+  try{ $('#cxTexto').focus(); }catch(err){}
+}
+function caixaFechar(){
+  $('#caixa').hidden = true;
+  document.body.classList.remove('cx-aberta');
+  cxTriId = null; cxDest = ''; cxDetVal = '';
+}
+
+function cxItemHtml(x){
+  const triado = x.status === 'triado', n = cxNLev(x), velho = !triado && n >= 2;
+  const cls = triado ? 'tri' : (velho ? 'velho' : 'novo');
+  const pill = triado ? 'TRIADO' : (velho ? 'SEM TRIAGEM HÁ ' + n + ' RELATOS' : 'NOVO');
+  let h = '<div class="cx-item ' + cls + '" data-cxid="' + cxEsc(x.id) + '">' +
+    '<div class="cx-top"><span class="cx-quando">' + cxEsc(cxFmt(x.t)) + '</span>' +
+    '<span class="cx-pill ' + cls + '">' + pill + '</span></div>' +
+    '<div class="cx-texto">' + cxEsc(x.texto) + '</div>';
+  if(triado){
+    h += '<div class="cx-dest">' + cxEsc(cxDestTxt(x)) + '</div>' +
+      '<div class="cx-acoes"><button type="button" class="b ghost" data-cx="voltar">Voltar a novo</button></div>';
+  } else if(cxTriId === x.id){
+    h += '<div class="cx-tri-painel"><div class="cx-opts">' +
+      Object.keys(CX_DEST).map(k=>'<button type="button" class="b' + (cxDest===k ? ' on' : '') +
+        '" data-cx="dest" data-d="' + k + '">' + CX_DEST[k].r + '</button>').join('') + '</div>';
+    if(cxDest && CX_DEST[cxDest].ph){
+      h += '<input class="campo" id="cxDet" type="text" autocomplete="off" value="' + cxEsc(cxDetVal) +
+        '" placeholder="' + cxEsc(CX_DEST[cxDest].ph) + '" aria-label="' + cxEsc(CX_DEST[cxDest].r) + '">';
+    }
+    h += '<div class="cx-acoes"><button type="button" class="b on" data-cx="registrar">Registrar destino</button>' +
+      '<button type="button" class="b ghost" data-cx="cancelar">Cancelar</button></div></div>';
+  } else {
+    h += '<div class="cx-acoes"><button type="button" class="b" data-cx="triar">Triar ›</button></div>';
+  }
+  return h + '</div>';
+}
+function caixaRender(forca){
+  const novos = estado.caixa.filter(x=>x.status !== 'triado');
+  const n = novos.length, b = $('#cxBadge');
+  if(b){ b.textContent = n; b.hidden = !n; }
+  const fab = $('#cxFab');
+  if(fab) fab.setAttribute('aria-label', 'Nova ideia' + (n ? ' — ' + n + ' sem triagem' : ''));
+  const cx = $('#caixa');
+  if(!cx || cx.hidden) return;
+  const lista = $('#cxLista');
+  /* chegada de outro aparelho nao pode destruir o que esta sendo digitado na triagem */
+  if(!forca && lista.contains(document.activeElement) && document.activeElement !== lista) return;
+  const rec = (a,b2) => (a.t < b2.t ? 1 : (a.t > b2.t ? -1 : 0));
+  const tri = estado.caixa.filter(x=>x.status === 'triado').sort(rec);
+  let h = '<div class="cx-sec">Novos — sem triagem (' + n + ')</div>';
+  h += n ? novos.slice().sort(rec).map(cxItemHtml).join('')
+         : '<div class="cx-vazio">Nada esperando triagem.</div>';
+  if(tri.length){
+    h += '<details class="cx-tris"><summary><div class="cx-sec">Triados (' + tri.length + ')</div></summary>' +
+      tri.map(cxItemHtml).join('') + '</details>';
+  }
+  const aberto = lista.querySelector('details.cx-tris');
+  const eraAberto = aberto ? aberto.open : false;
+  lista.innerHTML = h;
+  if(eraAberto){ const d2 = lista.querySelector('details.cx-tris'); if(d2) d2.open = true; }
+}
+function cxRegistrar(){
+  const x = estado.caixa.find(i=>i.id === cxTriId); if(!x) return;
+  if(!cxDest){ cxMsg('Escolha o destino.', true); return; }
+  const d = CX_DEST[cxDest];
+  let det = (cxDetVal || '').trim();
+  if(d.ph && !det){ cxMsg(d.exige, true); return; }
+  if(cxDest === 'pendencia' && /^\d+$/.test(det)) det = '#' + det;
+  const agora = new Date().toISOString();
+  x.status = 'triado'; x.destino = cxDest; x.det = det; x.td = agora; x.m = agora;
+  cxTriId = null; cxDest = ''; cxDetVal = '';
+  salvar(); caixaRender(true); cxMsg('Destino registrado.');
+}
+$('#cxFab').addEventListener('click', caixaAbrir);
+$('#cxFechar').addEventListener('click', caixaFechar);
+$('#cxSalvar').addEventListener('click', caixaAdd);
+$('#caixa').addEventListener('click', e=>{
+  if(e.target === $('#caixa')){ caixaFechar(); return; }
+  const b = e.target.closest('[data-cx]'); if(!b) return;
+  const el = b.closest('[data-cxid]'), id = el ? el.dataset.cxid : null, ac = b.dataset.cx;
+  const x = id ? estado.caixa.find(i=>i.id === id) : null;
+  cxMsg('');
+  if(ac === 'triar'){ cxTriId = id; cxDest = ''; cxDetVal = ''; caixaRender(true); }
+  else if(ac === 'cancelar'){ cxTriId = null; cxDest = ''; cxDetVal = ''; caixaRender(true); }
+  else if(ac === 'dest'){
+    if(cxDest !== b.dataset.d) cxDetVal = '';
+    cxDest = b.dataset.d; caixaRender(true);
+    const di = $('#cxDet'); if(di) di.focus();
+  }
+  else if(ac === 'registrar'){ cxRegistrar(); }
+  else if(ac === 'voltar' && x){
+    x.status = 'novo'; delete x.destino; delete x.det; delete x.td; x.m = new Date().toISOString();
+    salvar(); caixaRender(true);
+  }
+});
+$('#cxLista').addEventListener('input', e=>{ if(e.target.id === 'cxDet') cxDetVal = e.target.value; });
+$('#cxTexto').addEventListener('keydown', e=>{
+  if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); caixaAdd(); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape' && !$('#caixa').hidden){ caixaFechar(); }
+});
+
+/* relato: o formato antigo fica como estava. As secoes da caixa so aparecem quando ha o que dizer,
+   antes de "NOVO / OBSERVAÇÕES". Anotacao nova sai em todo relato ate ser triada; a triada sai uma
+   vez (e se o relato for copiado de novo no mesmo dia, sai igual). */
+function caixaRelato(L){
+  const dia = hoje(), agora = new Date().toISOString();
+  const novos = estado.caixa.filter(x=>x.status !== 'triado');
+  const tri = estado.caixa.filter(x=>x.status === 'triado' && (!x.rep || x.rep === dia));
+  if(!novos.length && !tri.length) return;
+  let mudou = false;
+  const corpo = t => String(t).replace(/\n/g, '\n  ');
+  if(novos.length){
+    L.push('CAIXA DE IDEIAS — NOVOS, SEM TRIAGEM (' + novos.length + ')');
+    novos.forEach(x=>{
+      const lev = Array.isArray(x.lev) ? x.lev.slice() : [];
+      if(lev.indexOf(dia) < 0){ lev.push(dia); x.lev = lev; x.m = agora; mudou = true; }
+      L.push('- [' + cxFmt(x.t) + '] ' + corpo(x.texto) +
+        (lev.length >= 2 ? '\n  levada em ' + lev.length + ' relatos sem triagem' : ''));
+    });
+    L.push('');
+  }
+  if(tri.length){
+    L.push('CAIXA DE IDEIAS — TRIADOS NO PAINEL (' + tri.length + ')');
+    tri.forEach(x=>{
+      if(x.rep !== dia){ x.rep = dia; x.m = agora; mudou = true; }
+      L.push('- [' + cxFmt(x.t) + '] ' + corpo(x.texto) + '\n  → ' + cxDestTxt(x));
+    });
+    L.push('');
+  }
+  if(mudou) salvar();
+}
 
 reguaRender();
 tempoRender();
