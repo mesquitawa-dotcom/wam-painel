@@ -12,7 +12,8 @@
   mudanca de MECANICA (R29). Entra: botao fixo + Novo em todas as telas; entrada rapida (um toque,
   escreve ou dita, Guardar); cada anotacao fica no estado que ja sincroniza, com data e hora; status
   novo ou triado, com destino registrado (pendencia, lista do dia, parqueado com endereco, descartado
-  com motivo). Nada se apaga. Sem etiqueta, prazo, lembrete ou prioridade. O relato ganha as secoes
+  com motivo). Nada se apaga. O botao Arquivar o que ja foi ao fechamento tira da lista, do selo e do
+  relato so o que ja saiu num relato, com confirmacao; a anotacao continua no estado. Sem etiqueta, prazo, lembrete ou prioridade. O relato ganha as secoes
   CAIXA DE IDEIAS (novos e triados), antes de NOVO / OBSERVACOES; o campo Novo / observacoes continua
   como estava. Anotacao sem triagem levada em 2 relatos aparece marcada, para a abertura a frio
   cobrar. A uniao por id evita perder anotacao quando dois aparelhos gravam quase juntos. Estado
@@ -668,6 +669,8 @@
   .cx-opts button.b{min-height:42px;font-weight:700;}
   .cx-tri-painel input.campo{margin-top:8px;font-size:16px;min-height:42px;}
   .cx-vazio{font-size:13px;color:var(--muted);padding:6px 2px;}
+  .cx-arq{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);}
+  .cx-arq .cx-dica{margin-bottom:2px;}
 </style>
 </head>
 <body>
@@ -2043,7 +2046,7 @@ function bIndice(){
     ix.push({tipo:'livre', onde:'Nota do dia', titulo:'Novo / observa\u00e7\u00f5es do dia',
       campos:[['Escrito hoje', estado.livre]], texto: estado.livre});
   }
-  estado.caixa.forEach(x=>{
+  estado.caixa.filter(x=>!x.arq).forEach(x=>{
     ix.push({tipo:'caixa', id:x.id, onde:'Caixa de ideias \u00b7 ' + (x.status==='triado' ? 'triada' : 'nova'),
       titulo:'Anotado em ' + cxFmt(x.t),
       campos:[['Texto', x.texto]].concat(x.status==='triado' ? [['Destino', cxDestTxt(x)]] : []),
@@ -2138,6 +2141,9 @@ let caixaExtra = false;      /* aplicar() ve algo local que a nuvem nao tinha: p
 let cxTriId = null;          /* anotacao cujo painel de triagem esta aberto */
 let cxDest = '';             /* destino escolhido nesse painel */
 let cxDetVal = '';           /* texto digitado no campo do destino */
+let cxArqPronto = false;     /* primeiro toque em Arquivar feito: falta confirmar */
+const cxVivas = () => estado.caixa.filter(x=>!x.arq);                       /* arquivada sai da lista, do selo e do relato; continua no estado */
+const cxLevaveis = () => cxVivas().filter(x=>x.status==='triado' ? !!x.rep : cxNLev(x)>=1);   /* so o que ja foi a um relato */
 const CX_DEST = {
   pendencia:  {r:'Pendência',    ph:'Número da pendência, ex.: #121', exige:'Qual o número da pendência?'},
   lista:      {r:'Lista do dia', ph:'',                              exige:''},
@@ -2206,7 +2212,7 @@ function caixaAbrir(){
 function caixaFechar(){
   $('#caixa').hidden = true;
   document.body.classList.remove('cx-aberta');
-  cxTriId = null; cxDest = ''; cxDetVal = '';
+  cxTriId = null; cxDest = ''; cxDetVal = ''; cxArqPronto = false;
 }
 
 function cxItemHtml(x){
@@ -2236,7 +2242,7 @@ function cxItemHtml(x){
   return h + '</div>';
 }
 function caixaRender(forca){
-  const novos = estado.caixa.filter(x=>x.status !== 'triado');
+  const novos = cxVivas().filter(x=>x.status !== 'triado');
   const n = novos.length, b = $('#cxBadge');
   if(b){ b.textContent = n; b.hidden = !n; }
   const fab = $('#cxFab');
@@ -2247,7 +2253,7 @@ function caixaRender(forca){
   /* chegada de outro aparelho nao pode destruir o que esta sendo digitado na triagem */
   if(!forca && lista.contains(document.activeElement) && document.activeElement !== lista) return;
   const rec = (a,b2) => (a.t < b2.t ? 1 : (a.t > b2.t ? -1 : 0));
-  const tri = estado.caixa.filter(x=>x.status === 'triado').sort(rec);
+  const tri = cxVivas().filter(x=>x.status === 'triado').sort(rec);
   let h = '<div class="cx-sec">Novos — sem triagem (' + n + ')</div>';
   h += n ? novos.slice().sort(rec).map(cxItemHtml).join('')
          : '<div class="cx-vazio">Nada esperando triagem.</div>';
@@ -2255,6 +2261,15 @@ function caixaRender(forca){
     h += '<details class="cx-tris"><summary><div class="cx-sec">Triados (' + tri.length + ')</div></summary>' +
       tri.map(cxItemHtml).join('') + '</details>';
   }
+  const lev = cxLevaveis().length, arqN = estado.caixa.length - cxVivas().length;
+  if(lev){
+    h += '<div class="cx-arq">' + (cxArqPronto
+      ? '<div class="cx-dica">Tira ' + lev + (lev===1 ? ' anotação' : ' anotações') + ' da lista. Nada é apagado. Só confirme depois que o fechamento triou.</div>' +
+        '<div class="cx-acoes"><button type="button" class="b on" data-cx="arquivar-ok">Confirmar: arquivar ' + lev + '</button>' +
+        '<button type="button" class="b ghost" data-cx="arquivar-nao">Cancelar</button></div>'
+      : '<button type="button" class="b" data-cx="arquivar">Arquivar o que já foi ao fechamento (' + lev + ')</button>') + '</div>';
+  }
+  if(arqN) h += '<div class="cx-vazio">' + arqN + (arqN===1 ? ' anotação arquivada' : ' anotações arquivadas') + ' (guardadas no estado).</div>';
   const aberto = lista.querySelector('details.cx-tris');
   const eraAberto = aberto ? aberto.open : false;
   lista.innerHTML = h;
@@ -2289,8 +2304,16 @@ $('#caixa').addEventListener('click', e=>{
     const di = $('#cxDet'); if(di) di.focus();
   }
   else if(ac === 'registrar'){ cxRegistrar(); }
+  else if(ac === 'arquivar'){ cxArqPronto = true; caixaRender(true); }
+  else if(ac === 'arquivar-nao'){ cxArqPronto = false; caixaRender(true); }
+  else if(ac === 'arquivar-ok'){
+    const agora = new Date().toISOString(), alvo = cxLevaveis();
+    alvo.forEach(x=>{ x.arq = agora; x.m = agora; });
+    cxArqPronto = false; salvar(); caixaRender(true);
+    cxMsg(alvo.length + (alvo.length===1 ? ' anotação arquivada.' : ' anotações arquivadas.'));
+  }
   else if(ac === 'voltar' && x){
-    x.status = 'novo'; delete x.destino; delete x.det; delete x.td; x.m = new Date().toISOString();
+    x.status = 'novo'; delete x.destino; delete x.det; delete x.td; delete x.rep; x.m = new Date().toISOString();
     salvar(); caixaRender(true);
   }
 });
@@ -2307,8 +2330,8 @@ document.addEventListener('keydown', e=>{
    vez (e se o relato for copiado de novo no mesmo dia, sai igual). */
 function caixaRelato(L){
   const dia = hoje(), agora = new Date().toISOString();
-  const novos = estado.caixa.filter(x=>x.status !== 'triado');
-  const tri = estado.caixa.filter(x=>x.status === 'triado' && (!x.rep || x.rep === dia));
+  const novos = cxVivas().filter(x=>x.status !== 'triado');
+  const tri = cxVivas().filter(x=>x.status === 'triado' && (!x.rep || x.rep === dia));
   if(!novos.length && !tri.length) return;
   let mudou = false;
   const corpo = t => String(t).replace(/\n/g, '\n  ');
